@@ -10,7 +10,7 @@ FLEX_SRC=src/parser/lexer.flex
 FLEX_OUT=bin/Lexer.java
 JFLEX=$(LIBDIR)/jflex/bin/jflex -d bin/
 
-CUP_SRC=src/parser/calc.cup
+CUP_SRC=src/parser/parser.cup
 CUP_OUT=bin/Parser.java bin/Symbols.java
 CUP=java -jar $(LIBDIR)/cup/java-cup-11b.jar -destdir bin/
 
