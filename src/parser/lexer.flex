@@ -33,6 +33,7 @@ IntLiteral = 0 | [1-9][0-9]*
 
 <YYINITIAL>
 {
+    "+"             { return symbol( Symbols.PLUS ); }
     ";"             { return symbol( Symbols.SEMI ); }
     {IntLiteral}    { return symbol( Symbols.NUMBER, new Integer( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }

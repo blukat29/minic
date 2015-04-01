@@ -1,8 +1,7 @@
 /* Simple +/-/* expression language; parser evaluates constant expressions on the fly*/
 package parser;
 import java_cup.runtime.*;
-import ast.Node;
-import ast.IntExp;
+import ast.*;
 
 parser code {:
     // Connect this parser to a scanner!
@@ -15,12 +14,15 @@ init with {: s.init(); :};
 scan with {: return s.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI;
+terminal            SEMI, PLUS;
 terminal Integer    NUMBER;        // our scanner provides numbers as integers
 
 /* Non terminals */
 non terminal            expr_list;
-non terminal Node       expr;      // used to store evaluated subexpressions
+non terminal Exp        expr;      // used to store evaluated subexpressions
+
+/* precedence */
+precedence left PLUS;
 
 /* The grammar rules */
 expr_list ::= expr_list expr:e SEMI         {: System.out.println(e);:}
@@ -28,5 +30,6 @@ expr_list ::= expr_list expr:e SEMI         {: System.out.println(e);:}
             ;
 
 expr      ::= NUMBER:n                      {: RESULT = new IntExp(n); :}
+            | expr:e1 PLUS expr:e2          {: RESULT = new BinOpExp(e1, e2, BinOpExp.PLUS); :}
             ;
 
