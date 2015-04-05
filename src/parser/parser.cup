@@ -28,6 +28,12 @@ non terminal            identifier;
 non terminal            Function;
 non terminal            ParamList;
 non terminal            CompoundStmt;
+non terminal            StmtList;
+non terminal            Stmt;
+non terminal            CallStmt;
+non terminal            Call;
+non terminal            Expr;
+non terminal            ArgList;
 
 /* Top level grammar rules */
 Program      ::= DeclList FuncList          {: :}
@@ -61,6 +67,26 @@ ParamList    ::= TYPE ID                    {: :}
                ;
 
 /* Statements */
-CompoundStmt ::= LBRACE RBRACE              {: :}
+CompoundStmt ::= LBRACE StmtList RBRACE              {: :}
+               | LBRACE DeclList StmtList RBRACE     {: :}
+               ;
+StmtList     ::= StmtList Stmt              {: :}
+               |
+               ;
+Stmt         ::= SEMI                       {: :}
+               | CallStmt                   {: :}
                ;
 
+/* Call statements */
+CallStmt     ::= Call SEMI                  {: :}
+               ;
+Call         ::= ID LPAREN RPAREN           {: :}
+               | ID LPAREN ArgList RPAREN   {: :}
+               ;
+ArgList      ::= Expr
+               | ArgList COMMA Expr
+               ;
+
+/* Expressions */
+Expr         ::= ID
+               ;

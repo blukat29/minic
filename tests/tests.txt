@@ -3,3 +3,4 @@ decl_list_bad
 decl_array
 empty
 func_head
+call
