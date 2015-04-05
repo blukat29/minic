@@ -42,6 +42,9 @@ run:
 install:
 	./install-lib.sh
 
+test:
+	tests/run.py
+
 clean:
 	rm -rf bin/
 

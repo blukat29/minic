@@ -13,6 +13,7 @@ Mini-C compiler
 make install
 make
 make run < input_file.c
+make test
 make clean
 ```
 

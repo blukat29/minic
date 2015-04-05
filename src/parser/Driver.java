@@ -7,6 +7,13 @@ public class Driver
   {
     Reader input = new BufferedReader(new InputStreamReader(System.in));
     Parser p = new Parser(new Lexer(input));
-    System.out.println(p.parse());
+    try
+    {
+      System.out.println(p.parse());
+    }
+    catch (Exception e)
+    {
+      System.err.println("Error: " + e.getMessage());
+    }
   }
 }
