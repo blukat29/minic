@@ -49,6 +49,8 @@ INTNUM = [0-9]+
     "while"         { return symbol( Symbols.WHILE ); }
     "do"            { return symbol( Symbols.DO ); }
     "for"           { return symbol( Symbols.FOR ); }
+    "if"            { return symbol( Symbols.IF ); }
+    "else"          { return symbol( Symbols.ELSE ); }
     {ID}            { return symbol( Symbols.ID, yytext() ); }
     {INTNUM}        { return symbol( Symbols.INTNUM, new Integer( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }

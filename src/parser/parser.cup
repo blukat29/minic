@@ -16,7 +16,7 @@ scan with {: return s.next_token(); :};
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, COMMA, EQUALS,
                     LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE,
-                    RETURN, WHILE, DO, FOR;
+                    RETURN, WHILE, DO, FOR, IF, ELSE;
 terminal String     TYPE, ID;
 terminal Integer    INTNUM;
 
@@ -39,8 +39,12 @@ non terminal            Call;
 non terminal            RetStmt;
 non terminal            WhileStmt;
 non terminal            ForStmt;
+non terminal            IfStmt;
 non terminal            Expr;
 non terminal            ArgList;
+
+precedence nonassoc IF;
+precedence nonassoc ELSE;
 
 /* Top level grammar rules */
 Program      ::= DeclList FuncList
@@ -86,6 +90,7 @@ Stmt         ::= SEMI
                | RetStmt
                | WhileStmt
                | ForStmt
+               | IfStmt
                | CompoundStmt
                ;
 
@@ -114,6 +119,12 @@ WhileStmt    ::= WHILE LPAREN Expr RPAREN Stmt
                | DO Stmt WHILE LPAREN Expr RPAREN SEMI
                ;
 ForStmt      ::= FOR LPAREN Assign SEMI Expr SEMI Assign RPAREN Stmt
+               ;
+
+/* Shift/Reduce conflict between two cases. */
+/* Assigned precedence IF < IF-ELSE to resolve the ambiguity. */
+IfStmt       ::= IF LPAREN Expr RPAREN Stmt            %prec IF
+               | IF LPAREN Expr RPAREN Stmt ELSE Stmt
                ;
 
 /* Expressions */
