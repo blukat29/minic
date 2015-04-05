@@ -10,3 +10,4 @@ if
 switch
 switch_bad
 expr
+sample_avg

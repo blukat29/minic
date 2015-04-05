@@ -1,11 +1,12 @@
 int main()
 {
-  for (i=0; 1; i=2)
+  for (i=0; i < 10; i= i + 1)
   {
     b = 3;
   }
-  while (1)
+  while (c < 9)
   {
+    c = c + 1;
     a = 1;
   }
 }

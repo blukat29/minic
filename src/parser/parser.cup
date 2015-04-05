@@ -90,7 +90,7 @@ Function     ::= TYPE ID LPAREN RPAREN CompoundStmt
                | TYPE ID LPAREN ParamList RPAREN CompoundStmt
                ;
 ParamList    ::= TYPE ID
-               | ParamList COMMA TYPE ID
+               | ParamList COMMA TYPE identifier
                ;
 
 /* Statements */
