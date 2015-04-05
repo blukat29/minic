@@ -19,19 +19,37 @@ def compile(input_data):
 def run_single_test(name):
     input_file = open(os.path.join(inputs_dir, name + ".c"), "r")
     output_file = open(os.path.join(outputs_dir, name + ".py"), "r")
+    input_code = input_file.read()
     check_code = "(" + output_file.read() + ")"
-    out, err = compile(input_file.read())
     input_file.close()
     output_file.close()
+
+    out, err = compile(input_code)
     success = eval(check_code)
+    if "Exception" in err:
+        success = False
+
+    if not success:
+        print "==input=========================="
+        print input_code
+        print "==check=========================="
+        print check_code
+        print "==output========================="
+        print out
+        print err
     return success
 
 if __name__ == '__main__':
+    pass_cnt = 0
+    fail_cnt = 0
     for case in tests:
         success = run_single_test(case)
         if success:
-            print "pass", case
+            print "\x1b[1;32m", "pass", case, "\x1b[0m"
+            pass_cnt += 1
         else:
-            print "FAIL", case
+            print "\x1b[1;31m", "FAIL", case, "\x1b[0m"
+            fail_cnt += 1
+    print "pass %d fail %d" % (pass_cnt, fail_cnt)
 
 
