@@ -1,0 +1,3 @@
+decl_list
+decl_list_bad
+decl_array

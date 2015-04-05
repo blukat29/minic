@@ -28,6 +28,7 @@ LineTerminator = \r|\n|\r\n
 WhiteSpace     = {LineTerminator} | [ \t\f]
 
 ID = [A-Za-z][A-Za-z0-9_]*
+INTNUM = [0-9]+
 
 %%
 
@@ -37,6 +38,7 @@ ID = [A-Za-z][A-Za-z0-9_]*
     "float"         { return symbol( Symbols.TYPE, "float" ); }
     ";"             { return symbol( Symbols.SEMI ); }
     {ID}            { return symbol( Symbols.ID, yytext() ); }
+    {INTNUM}        { return symbol( Symbols.INTNUM, new Integer( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }
 }
 

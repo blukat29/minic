@@ -9,11 +9,8 @@ inputs_dir = os.path.join(base_dir, "inputs")
 outputs_dir = os.path.join(base_dir, "outputs")
 os.chdir(os.path.join(base_dir, ".."))
 
-tests = """
-decl_list
-decl_list_bad
-"""
-tests = filter(None, tests.splitlines())
+tests = open(os.path.join(base_dir, "tests.txt"), "r").read()
+tests = filter(None, tests.split('\n'))
 
 def compile(input_data):
     p = Popen(["make", "run"], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=False)
@@ -24,6 +21,8 @@ def run_single_test(name):
     output_file = open(os.path.join(outputs_dir, name + ".py"), "r")
     check_code = "(" + output_file.read() + ")"
     out, err = compile(input_file.read())
+    input_file.close()
+    output_file.close()
     success = eval(check_code)
     return success
 

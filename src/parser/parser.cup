@@ -14,8 +14,9 @@ init with {: s.init(); :};
 scan with {: return s.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI;
+terminal            SEMI, COMMA, LBRACKET, RBRACKET;
 terminal String     TYPE, ID;
+terminal Integer    INTNUM;
 
 /* Non terminals */
 non terminal            Program;
@@ -28,11 +29,14 @@ non terminal            identifier;
 Program      ::= DeclList                   {: :}
                ;
 DeclList     ::= Declaration                {: :}
+               | DeclList Declaration       {: :}
                ;
 Declaration  ::= TYPE IdentList SEMI        {: :}
                ;
 IdentList    ::= identifier                 {: :}
+               | IdentList COMMA identifier {: :}
                ;
 identifier   ::= ID                         {: :}
+               | ID LBRACKET INTNUM RBRACKET {: :}
                ;
 
