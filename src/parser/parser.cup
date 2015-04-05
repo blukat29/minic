@@ -14,23 +14,35 @@ init with {: s.init(); :};
 scan with {: return s.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI, COMMA, LBRACKET, RBRACKET;
+terminal            SEMI, COMMA, LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE;
 terminal String     TYPE, ID;
 terminal Integer    INTNUM;
 
 /* Non terminals */
 non terminal            Program;
 non terminal            DeclList;
+non terminal            FuncList;
 non terminal            Declaration;
 non terminal            IdentList;
 non terminal            identifier;
+non terminal            Function;
+non terminal            ParamList;
+non terminal            CompoundStmt;
 
-/* The grammar rules */
-Program      ::= DeclList                   {: :}
+/* Top level grammar rules */
+Program      ::= DeclList FuncList          {: :}
+               | DeclList                   {: :}
+               | FuncList                   {: :}
+               |                            {: :}
                ;
 DeclList     ::= Declaration                {: :}
                | DeclList Declaration       {: :}
                ;
+FuncList     ::= Function                   {: :}
+               | FuncList Function          {: :}
+               ;
+
+/* Variable declarations */
 Declaration  ::= TYPE IdentList SEMI        {: :}
                ;
 IdentList    ::= identifier                 {: :}
@@ -38,5 +50,17 @@ IdentList    ::= identifier                 {: :}
                ;
 identifier   ::= ID                         {: :}
                | ID LBRACKET INTNUM RBRACKET {: :}
+               ;
+
+/* Function definition */
+Function     ::= TYPE ID LPAREN RPAREN CompoundStmt {: :}
+               | TYPE ID LPAREN ParamList RPAREN CompoundStmt {: :}
+               ;
+ParamList    ::= TYPE ID                    {: :}
+               | ParamList COMMA TYPE ID    {: :}
+               ;
+
+/* Statements */
+CompoundStmt ::= LBRACE RBRACE              {: :}
                ;
 

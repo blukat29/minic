@@ -37,6 +37,13 @@ INTNUM = [0-9]+
     "int"           { return symbol( Symbols.TYPE, "int" ); }
     "float"         { return symbol( Symbols.TYPE, "float" ); }
     ";"             { return symbol( Symbols.SEMI ); }
+    "["             { return symbol( Symbols.LBRACKET ); }
+    "]"             { return symbol( Symbols.RBRACKET ); }
+    "{"             { return symbol( Symbols.LBRACE ); }
+    "}"             { return symbol( Symbols.RBRACE ); }
+    "("             { return symbol( Symbols.LPAREN ); }
+    ")"             { return symbol( Symbols.RPAREN ); }
+    ","             { return symbol( Symbols.COMMA ); }
     {ID}            { return symbol( Symbols.ID, yytext() ); }
     {INTNUM}        { return symbol( Symbols.INTNUM, new Integer( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }
