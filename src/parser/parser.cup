@@ -14,9 +14,9 @@ init with {: s.init(); :};
 scan with {: return s.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI, COMMA, EQUALS,
+terminal            SEMI, COMMA, EQUALS, COLON,
                     LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE,
-                    RETURN, WHILE, DO, FOR, IF, ELSE;
+                    RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT;
 terminal String     TYPE, ID;
 terminal Integer    INTNUM;
 
@@ -40,8 +40,13 @@ non terminal            RetStmt;
 non terminal            WhileStmt;
 non terminal            ForStmt;
 non terminal            IfStmt;
+non terminal            SwitchStmt;
+non terminal            CaseList;
 non terminal            Expr;
 non terminal            ArgList;
+non terminal            CaseBlockList;
+non terminal            CaseBlock;
+non terminal            DefaultBlock;
 
 precedence nonassoc IF;
 precedence nonassoc ELSE;
@@ -91,6 +96,7 @@ Stmt         ::= SEMI
                | WhileStmt
                | ForStmt
                | IfStmt
+               | SwitchStmt
                | CompoundStmt
                ;
 
@@ -119,6 +125,20 @@ WhileStmt    ::= WHILE LPAREN Expr RPAREN Stmt
                | DO Stmt WHILE LPAREN Expr RPAREN SEMI
                ;
 ForStmt      ::= FOR LPAREN Assign SEMI Expr SEMI Assign RPAREN Stmt
+               ;
+SwitchStmt   ::= SWITCH LPAREN identifier RPAREN LBRACE CaseList RBRACE
+               ;
+CaseList     ::= CaseBlockList
+               | CaseBlockList DefaultBlock
+               ;
+CaseBlockList ::= CaseBlockList CaseBlock
+                |
+                ;
+CaseBlock    ::= CASE INTNUM COLON StmtList
+               | CASE INTNUM COLON StmtList BREAK SEMI
+               ;
+DefaultBlock ::= DEFAULT COLON StmtList
+               | DEFAULT COLON StmtList BREAK SEMI
                ;
 
 /* Shift/Reduce conflict between two cases. */

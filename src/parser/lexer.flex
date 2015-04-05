@@ -45,12 +45,17 @@ INTNUM = [0-9]+
     ")"             { return symbol( Symbols.RPAREN ); }
     ","             { return symbol( Symbols.COMMA ); }
     "="             { return symbol( Symbols.EQUALS ); }
+    ":"             { return symbol( Symbols.COLON ); }
     "return"        { return symbol( Symbols.RETURN ); }
     "while"         { return symbol( Symbols.WHILE ); }
     "do"            { return symbol( Symbols.DO ); }
     "for"           { return symbol( Symbols.FOR ); }
     "if"            { return symbol( Symbols.IF ); }
     "else"          { return symbol( Symbols.ELSE ); }
+    "switch"        { return symbol( Symbols.SWITCH ); }
+    "case"          { return symbol( Symbols.CASE ); }
+    "break"         { return symbol( Symbols.BREAK ); }
+    "default"       { return symbol( Symbols.DEFAULT ); }
     {ID}            { return symbol( Symbols.ID, yytext() ); }
     {INTNUM}        { return symbol( Symbols.INTNUM, new Integer( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }
