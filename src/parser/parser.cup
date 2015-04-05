@@ -16,7 +16,7 @@ scan with {: return s.next_token(); :};
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, COMMA, EQUALS,
                     LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE,
-                    RETURN;
+                    RETURN, WHILE, DO, FOR;
 terminal String     TYPE, ID;
 terminal Integer    INTNUM;
 
@@ -37,6 +37,8 @@ non terminal            Assign;
 non terminal            CallStmt;
 non terminal            Call;
 non terminal            RetStmt;
+non terminal            WhileStmt;
+non terminal            ForStmt;
 non terminal            Expr;
 non terminal            ArgList;
 
@@ -82,6 +84,9 @@ Stmt         ::= SEMI
                | AssignStmt
                | CallStmt
                | RetStmt
+               | WhileStmt
+               | ForStmt
+               | CompoundStmt
                ;
 
 /* Assignments */
@@ -104,6 +109,11 @@ ArgList      ::= Expr
 /* Control Structures */
 RetStmt      ::= RETURN SEMI
                | RETURN Expr SEMI
+               ;
+WhileStmt    ::= WHILE LPAREN Expr RPAREN Stmt
+               | DO Stmt WHILE LPAREN Expr RPAREN SEMI
+               ;
+ForStmt      ::= FOR LPAREN Assign SEMI Expr SEMI Assign RPAREN Stmt
                ;
 
 /* Expressions */
