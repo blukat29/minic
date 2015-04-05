@@ -29,6 +29,7 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 
 ID = [A-Za-z][A-Za-z0-9_]*
 INTNUM = [0-9]+
+FLOATNUM = [0-9]+\.[0-9]+
 
 %%
 
@@ -36,6 +37,7 @@ INTNUM = [0-9]+
 {
     "int"           { return symbol( Symbols.TYPE, "int" ); }
     "float"         { return symbol( Symbols.TYPE, "float" ); }
+
     ";"             { return symbol( Symbols.SEMI ); }
     "["             { return symbol( Symbols.LBRACKET ); }
     "]"             { return symbol( Symbols.RBRACKET ); }
@@ -46,6 +48,7 @@ INTNUM = [0-9]+
     ","             { return symbol( Symbols.COMMA ); }
     "="             { return symbol( Symbols.EQUALS ); }
     ":"             { return symbol( Symbols.COLON ); }
+
     "return"        { return symbol( Symbols.RETURN ); }
     "while"         { return symbol( Symbols.WHILE ); }
     "do"            { return symbol( Symbols.DO ); }
@@ -56,8 +59,21 @@ INTNUM = [0-9]+
     "case"          { return symbol( Symbols.CASE ); }
     "break"         { return symbol( Symbols.BREAK ); }
     "default"       { return symbol( Symbols.DEFAULT ); }
+
+    "-"             { return symbol( Symbols.MINUS ); }
+    "*"             { return symbol( Symbols.TIMES ); }
+    "/"             { return symbol( Symbols.DIVIDE ); }
+    "+"             { return symbol( Symbols.PLUS ); }
+    "<"             { return symbol( Symbols.LT ); }
+    ">"             { return symbol( Symbols.GT ); }
+    "<="            { return symbol( Symbols.LE ); }
+    ">="            { return symbol( Symbols.GE ); }
+    "=="            { return symbol( Symbols.EQEQ ); }
+    "!="            { return symbol( Symbols.NE ); }
+
     {ID}            { return symbol( Symbols.ID, yytext() ); }
     {INTNUM}        { return symbol( Symbols.INTNUM, new Integer( yytext() ) ); }
+    {FLOATNUM}      { return symbol( Symbols.INTNUM, new Float( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }
 }
 

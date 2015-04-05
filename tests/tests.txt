@@ -9,3 +9,4 @@ loop
 if
 switch
 switch_bad
+expr

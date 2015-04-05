@@ -16,9 +16,11 @@ scan with {: return s.next_token(); :};
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, COMMA, EQUALS, COLON,
                     LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE,
-                    RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT;
+                    RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT,
+                    MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
 terminal String     TYPE, ID;
 terminal Integer    INTNUM;
+terminal Float      FLOATNUM;
 
 /* Non terminals */
 non terminal            Program;
@@ -48,8 +50,17 @@ non terminal            CaseBlockList;
 non terminal            CaseBlock;
 non terminal            DefaultBlock;
 
+/* Precedence. From lower to higher. */
 precedence nonassoc IF;
 precedence nonassoc ELSE;
+
+precedence right    EQUALS;
+precedence left     EQEQ, NE;
+precedence left     LT, GT, LE, GE;
+precedence left     PLUS, MINUS;
+precedence left     TIMES, DIVIDE;
+precedence right    MINUS;
+precedence left     LPAREN, RPAREN;
 
 /* Top level grammar rules */
 Program      ::= DeclList FuncList
@@ -148,6 +159,21 @@ IfStmt       ::= IF LPAREN Expr RPAREN Stmt            %prec IF
                ;
 
 /* Expressions */
-Expr         ::= ID
+Expr         ::= MINUS Expr
+               | Expr MINUS Expr
+               | Expr TIMES Expr
+               | Expr DIVIDE Expr
+               | Expr PLUS Expr
+               | Expr LT Expr
+               | Expr GT Expr
+               | Expr LE Expr
+               | Expr GE Expr
+               | Expr EQEQ Expr
+               | Expr NE Expr
+               | Call
                | INTNUM
+               | FLOATNUM
+               | ID
+               | ID LBRACKET Expr RBRACKET
+               | LPAREN Expr RPAREN
                ;
