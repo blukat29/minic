@@ -27,15 +27,16 @@ import java_cup.runtime.*;
 LineTerminator = \r|\n|\r\n
 WhiteSpace     = {LineTerminator} | [ \t\f]
 
-IntLiteral = 0 | [1-9][0-9]*
+ID = [A-Za-z][A-Za-z0-9_]*
 
 %%
 
 <YYINITIAL>
 {
-    "+"             { return symbol( Symbols.PLUS ); }
+    "int"           { return symbol( Symbols.TYPE, "int" ); }
+    "float"         { return symbol( Symbols.TYPE, "float" ); }
     ";"             { return symbol( Symbols.SEMI ); }
-    {IntLiteral}    { return symbol( Symbols.NUMBER, new Integer( yytext() ) ); }
+    {ID}            { return symbol( Symbols.ID, yytext() ); }
     {WhiteSpace}    { /* ignore */ }
 }
 

@@ -14,22 +14,25 @@ init with {: s.init(); :};
 scan with {: return s.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI, PLUS;
-terminal Integer    NUMBER;        // our scanner provides numbers as integers
+terminal            SEMI;
+terminal String     TYPE, ID;
 
 /* Non terminals */
-non terminal            expr_list;
-non terminal Exp        expr;      // used to store evaluated subexpressions
-
-/* precedence */
-precedence left PLUS;
+non terminal            Program;
+non terminal            DeclList;
+non terminal            Declaration;
+non terminal            IdentList;
+non terminal            identifier;
 
 /* The grammar rules */
-expr_list ::= expr_list expr:e SEMI         {: System.out.println(e);:}
-            | expr:e SEMI                   {: System.out.println(e);:}
-            ;
-
-expr      ::= NUMBER:n                      {: RESULT = new IntExp(n); :}
-            | expr:e1 PLUS expr:e2          {: RESULT = new BinOpExp(e1, e2, BinOpExp.PLUS); :}
-            ;
+Program      ::= DeclList                   {: :}
+               ;
+DeclList     ::= Declaration                {: :}
+               ;
+Declaration  ::= TYPE IdentList SEMI        {: :}
+               ;
+IdentList    ::= identifier                 {: :}
+               ;
+identifier   ::= ID                         {: :}
+               ;
 
