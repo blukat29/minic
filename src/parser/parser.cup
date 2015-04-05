@@ -36,52 +36,52 @@ non terminal            Expr;
 non terminal            ArgList;
 
 /* Top level grammar rules */
-Program      ::= DeclList FuncList          {: :}
-               | DeclList                   {: :}
-               | FuncList                   {: :}
-               |                            {: :}
+Program      ::= DeclList FuncList
+               | DeclList
+               | FuncList
+               |
                ;
-DeclList     ::= Declaration                {: :}
-               | DeclList Declaration       {: :}
+DeclList     ::= Declaration
+               | DeclList Declaration
                ;
-FuncList     ::= Function                   {: :}
-               | FuncList Function          {: :}
+FuncList     ::= Function
+               | FuncList Function
                ;
 
 /* Variable declarations */
-Declaration  ::= TYPE IdentList SEMI        {: :}
+Declaration  ::= TYPE IdentList SEMI
                ;
-IdentList    ::= identifier                 {: :}
-               | IdentList COMMA identifier {: :}
+IdentList    ::= identifier
+               | IdentList COMMA identifier
                ;
-identifier   ::= ID                         {: :}
-               | ID LBRACKET INTNUM RBRACKET {: :}
+identifier   ::= ID
+               | ID LBRACKET INTNUM RBRACKET
                ;
 
 /* Function definition */
-Function     ::= TYPE ID LPAREN RPAREN CompoundStmt {: :}
-               | TYPE ID LPAREN ParamList RPAREN CompoundStmt {: :}
+Function     ::= TYPE ID LPAREN RPAREN CompoundStmt
+               | TYPE ID LPAREN ParamList RPAREN CompoundStmt
                ;
-ParamList    ::= TYPE ID                    {: :}
-               | ParamList COMMA TYPE ID    {: :}
+ParamList    ::= TYPE ID
+               | ParamList COMMA TYPE ID
                ;
 
 /* Statements */
-CompoundStmt ::= LBRACE StmtList RBRACE              {: :}
-               | LBRACE DeclList StmtList RBRACE     {: :}
+CompoundStmt ::= LBRACE StmtList RBRACE
+               | LBRACE DeclList StmtList RBRACE
                ;
-StmtList     ::= StmtList Stmt              {: :}
+StmtList     ::= StmtList Stmt
                |
                ;
-Stmt         ::= SEMI                       {: :}
-               | CallStmt                   {: :}
+Stmt         ::= SEMI
+               | CallStmt
                ;
 
 /* Call statements */
-CallStmt     ::= Call SEMI                  {: :}
+CallStmt     ::= Call SEMI
                ;
-Call         ::= ID LPAREN RPAREN           {: :}
-               | ID LPAREN ArgList RPAREN   {: :}
+Call         ::= ID LPAREN RPAREN
+               | ID LPAREN ArgList RPAREN
                ;
 ArgList      ::= Expr
                | ArgList COMMA Expr
