@@ -14,7 +14,9 @@ init with {: s.init(); :};
 scan with {: return s.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI, COMMA, LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE;
+terminal            SEMI, COMMA, EQUALS,
+                    LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE,
+                    RETURN;
 terminal String     TYPE, ID;
 terminal Integer    INTNUM;
 
@@ -30,8 +32,11 @@ non terminal            ParamList;
 non terminal            CompoundStmt;
 non terminal            StmtList;
 non terminal            Stmt;
+non terminal            AssignStmt;
+non terminal            Assign;
 non terminal            CallStmt;
 non terminal            Call;
+non terminal            RetStmt;
 non terminal            Expr;
 non terminal            ArgList;
 
@@ -74,7 +79,16 @@ StmtList     ::= StmtList Stmt
                |
                ;
 Stmt         ::= SEMI
+               | AssignStmt
                | CallStmt
+               | RetStmt
+               ;
+
+/* Assignments */
+AssignStmt   ::= Assign SEMI
+               ;
+Assign       ::= ID EQUALS Expr
+               | ID LBRACKET Expr RBRACKET EQUALS Expr
                ;
 
 /* Call statements */
@@ -87,6 +101,12 @@ ArgList      ::= Expr
                | ArgList COMMA Expr
                ;
 
+/* Control Structures */
+RetStmt      ::= RETURN SEMI
+               | RETURN Expr SEMI
+               ;
+
 /* Expressions */
 Expr         ::= ID
+               | INTNUM
                ;

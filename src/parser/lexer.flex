@@ -44,6 +44,8 @@ INTNUM = [0-9]+
     "("             { return symbol( Symbols.LPAREN ); }
     ")"             { return symbol( Symbols.RPAREN ); }
     ","             { return symbol( Symbols.COMMA ); }
+    "="             { return symbol( Symbols.EQUALS ); }
+    "return"        { return symbol( Symbols.RETURN ); }
     {ID}            { return symbol( Symbols.ID, yytext() ); }
     {INTNUM}        { return symbol( Symbols.INTNUM, new Integer( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }

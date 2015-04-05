@@ -4,3 +4,4 @@ decl_array
 empty
 func_head
 call
+assignret
