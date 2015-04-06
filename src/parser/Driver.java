@@ -20,13 +20,7 @@ public class Driver
       XMLElement e = (XMLElement)s.value;
       XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
       XMLStreamWriter sw = outFactory.createXMLStreamWriter(new FileOutputStream("ast.xml"));
-      XMLElement.dump(lexer, sw, e, "Expr");
-
-      Transformer tr = TransformerFactory.newInstance()
-        .newTransformer(new StreamSource(new File("tree.xsl")));
-      Source text = new StreamSource(new File("ast.xml"));
-      tr.transform(text, new StreamResult(new File("view.html")));
-
+      XMLElement.dump(lexer, sw, e);
     }
     catch (Exception e)
     {

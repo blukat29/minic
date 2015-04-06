@@ -12,6 +12,7 @@ JFLEX=$(LIBDIR)/jflex/bin/jflex -d bin/
 
 CUP_SRC=src/parser/parser.cup
 CUP_OUT=bin/Parser.java bin/Symbols.java
+CUP_OPT=-locations -interface -parser Parser -symbols Symbols -xmlactions -genericlabels
 CUP=java -jar $(LIBDIR)/cup/java-cup-11b.jar -destdir bin/
 
 # =========== Configurables end ==================
@@ -31,7 +32,7 @@ $(FLEX_OUT): $(FLEX_SRC)
 	$(JFLEX) $(FLEX_SRC)
 
 $(CUP_OUT): $(CUP_SRC)
-	$(CUP) -locations -interface -parser Parser -symbols Symbols -xmlactions $(CUP_SRC)
+	$(CUP) $(CUP_OPT) $(CUP_SRC)
 #	$(CUP) -parser Parser -symbols Symbols $(CUP_SRC)
 
 classes: $(FLEX_OUT) $(CUP_OUT) $(SOURCES)
