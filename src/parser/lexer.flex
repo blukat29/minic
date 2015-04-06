@@ -78,5 +78,5 @@ FLOATNUM = [0-9]+\.[0-9]+
 }
 
 /* error fallback */
-.|\n                             { throw new Error("Illegal character <"+
+[^]                             { throw new Error("Illegal character <"+
                                                     yytext()+">"); }
