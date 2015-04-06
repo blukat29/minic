@@ -31,7 +31,8 @@ $(FLEX_OUT): $(FLEX_SRC)
 	$(JFLEX) $(FLEX_SRC)
 
 $(CUP_OUT): $(CUP_SRC)
-	$(CUP) -parser Parser -symbols Symbols $(CUP_SRC)
+	$(CUP) -locations -interface -parser Parser -symbols Symbols -xmlactions $(CUP_SRC)
+#	$(CUP) -parser Parser -symbols Symbols $(CUP_SRC)
 
 classes: $(FLEX_OUT) $(CUP_OUT) $(SOURCES)
 	$(CC) $(SOURCES) $(FLEX_OUT) $(CUP_OUT)

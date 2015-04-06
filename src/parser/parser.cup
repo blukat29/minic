@@ -4,13 +4,11 @@ import java_cup.runtime.*;
 
 parser code {:
     // Connect this parser to a scanner!
-    Lexer s;
-    Parser(Lexer s){ this.s=s; }
+    // Following CUP v0.11 documentation.
+    public Parser(Lexer lexer, ComplexSymbolFactory sf) {
+      super(lexer, sf);
+    }
 :}
-
-/* define how to connect to the scanner! */
-init with {: s.init(); :};
-scan with {: return s.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, COMMA, EQUALS, COLON,

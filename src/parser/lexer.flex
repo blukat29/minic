@@ -1,5 +1,7 @@
 package parser;
+import java.io.*;
 import java_cup.runtime.*;
+import java_cup.runtime.ComplexSymbolFactory.*;
 
 %%
 %public
@@ -13,12 +15,27 @@ import java_cup.runtime.*;
 
 %{
   StringBuffer string = new StringBuffer();
+  ComplexSymbolFactory sf;
+
+  public Lexer(Reader in, ComplexSymbolFactory sf) {
+    this(in);
+    this.sf = sf;
+  }
 
   private Symbol symbol(int type) {
-    return new Symbol(type, yyline, yycolumn);
+    Location left = new Location(yyline+1, yycolumn+1, yychar);
+    Location right = new Location(yyline+1, yycolumn+yylength(), yychar+yylength());
+    return sf.newSymbol(Symbols.terminalNames[type], type, left, right);
   }
+
   private Symbol symbol(int type, Object value) {
-    return new Symbol(type, yyline, yycolumn, value);
+    Location left = new Location(yyline+1, yycolumn+1, yychar);
+    Location right = new Location(yyline+1, yycolumn+yylength(), yychar+yylength());
+    return sf.newSymbol(Symbols.terminalNames[type], type, left, right, value);
+  }
+
+  private void error(String message) {
+    System.err.println("Lexer error at line " + (yyline+1) + ", column " + (yycolumn+1) + " : " + message);
   }
 
   public static void init() throws java.io.IOException {}
