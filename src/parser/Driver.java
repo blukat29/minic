@@ -30,7 +30,7 @@ public class Driver
     }
     catch (Exception e)
     {
-      System.err.println("error writing XML file");
+      System.err.println("Cannot write XML file");
     }
   }
 

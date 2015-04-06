@@ -90,7 +90,7 @@ FLOATNUM = [0-9]+\.[0-9]+
 
     {ID}            { return symbol( Symbols.ID, yytext() ); }
     {INTNUM}        { return symbol( Symbols.INTNUM, new Integer( yytext() ) ); }
-    {FLOATNUM}      { return symbol( Symbols.INTNUM, new Float( yytext() ) ); }
+    {FLOATNUM}      { return symbol( Symbols.FLOATNUM, new Float( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }
 }
 
