@@ -24,8 +24,8 @@ non terminal Program    Program;
 non terminal DeclList   DeclList;
 non terminal            FuncList;
 non terminal Declaration Declaration;
-non terminal            IdentList;
-non terminal            identifier;
+non terminal IdentList  IdentList;
+non terminal Identifier identifier;
 non terminal            Function;
 non terminal            ParamList;
 non terminal            CompoundStmt;
@@ -73,13 +73,13 @@ FuncList     ::= Function
                ;
 
 /* Variable declarations */
-Declaration  ::= TYPE:ty IdentList SEMI  {: RESULT = new Declaration(ty); :}
+Declaration  ::= TYPE:ty IdentList:il SEMI  {: RESULT = new Declaration(ty, il); :}
                ;
-IdentList    ::= identifier
-               | IdentList COMMA identifier
+IdentList    ::= identifier:id                    {: RESULT = (new IdentList()).append(id); :}
+               | IdentList:l COMMA identifier:id  {: RESULT = l.append(id); :}
                ;
-identifier   ::= ID
-               | ID LBRACKET INTNUM RBRACKET
+identifier   ::= ID:id                            {: RESULT = new Identifier(id); :}
+               | ID:id LBRACKET INTNUM:n RBRACKET {: RESULT = new Identifier(id, n); :}
                ;
 
 /* Function definition */
