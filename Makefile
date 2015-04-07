@@ -1,8 +1,6 @@
 
 # =========== Configurables start ==================
 
-# Directories
-# Make sure they have a slash at the end.
 LIBDIR=lib/
 
 # Lex & Yacc files
@@ -33,7 +31,6 @@ $(FLEX_OUT): $(FLEX_SRC)
 
 $(CUP_OUT): $(CUP_SRC)
 	$(CUP) $(CUP_OPT) $(CUP_SRC)
-#	$(CUP) -parser Parser -symbols Symbols $(CUP_SRC)
 
 classes: $(FLEX_OUT) $(CUP_OUT) $(SOURCES)
 	$(CC) $(SOURCES) $(FLEX_OUT) $(CUP_OUT)

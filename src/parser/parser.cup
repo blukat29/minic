@@ -1,10 +1,7 @@
-/* Simple +/-/* expression language; parser evaluates constant expressions on the fly*/
 package parser;
 import java_cup.runtime.*;
 
 parser code {:
-    // Connect this parser to a scanner!
-    // Following CUP v0.11 documentation.
     public Parser(Lexer lexer, ComplexSymbolFactory sf) {
       super(lexer, sf);
     }
