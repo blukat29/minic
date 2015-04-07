@@ -18,8 +18,10 @@ CUP=java -jar $(LIBDIR)/cup/java-cup-11b.jar -destdir bin/
 CLASSPATH=".:$(LIBDIR)/cup/java-cup-11b-runtime.jar:bin/"
 CC=javac -cp $(CLASSPATH) -d bin/
 
-SOURCES=$(shell find src -name "*.java")
-CLASSES=$(patsubst src/%.java, bin/%.class, $(SOURCES))
+AST_SRC=$(shell find src/ast -name "*.java")
+PARSER_SRC=$(shell find src/parser -name "*.java")
+AST_CLS=$(patsubst src/%.java, bin/%.class, $(AST_SRC))
+PARSER_CLS=$(patsubst src/%.java, bin/%.class, $(PARSER_SRC))
 
 all: bin classes
 
@@ -32,8 +34,13 @@ $(FLEX_OUT): $(FLEX_SRC)
 $(CUP_OUT): $(CUP_SRC)
 	$(CUP) $(CUP_OPT) $(CUP_SRC)
 
-classes: $(FLEX_OUT) $(CUP_OUT) $(SOURCES)
-	$(CC) $(SOURCES) $(FLEX_OUT) $(CUP_OUT)
+classes: $(PARSER_CLS)
+
+$(AST_CLS): $(AST_SRC)
+	$(CC) $(AST_SRC)
+
+$(PARSER_CLS): $(FLEX_OUT) $(CUP_OUT) $(AST_CLS) $(PARSER_SRC)
+	$(CC) $(PARSER_SRC) $(FLEX_OUT) $(CUP_OUT)
 
 run:
 	java -cp $(CLASSPATH) parser.Driver
