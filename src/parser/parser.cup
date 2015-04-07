@@ -20,7 +20,7 @@ terminal IntNum     INTNUM;
 terminal FloatNum   FLOATNUM;
 
 /* Non terminals */
-non terminal            Program;
+non terminal Program    Program;
 non terminal            DeclList;
 non terminal            FuncList;
 non terminal            Declaration;
@@ -60,10 +60,10 @@ precedence right    MINUS;
 precedence left     LPAREN, RPAREN;
 
 /* Top level grammar rules */
-Program      ::= DeclList FuncList
-               | DeclList
-               | FuncList
-               |
+Program      ::= DeclList FuncList    {: RESULT = new Program(); :}
+               | DeclList             {: RESULT = new Program(); :}
+               | FuncList             {: RESULT = new Program(); :}
+               |                      {: RESULT = new Program(); :}
                ;
 DeclList     ::= Declaration
                | DeclList Declaration

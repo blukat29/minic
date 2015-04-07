@@ -38,8 +38,7 @@ public class Driver
     try
     {
       s = (ComplexSymbol)p.parse();
-      System.out.println(s);
-      writeXML("out.html", lexer, s);
+      System.out.println(s.value);
     }
     catch (Exception e)
     {
