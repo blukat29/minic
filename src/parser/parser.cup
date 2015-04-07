@@ -16,7 +16,7 @@ terminal            SEMI, COMMA, EQUALS, COLON,
                     MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
 terminal String     TYPE, ID;
 terminal IntNum     INTNUM;
-terminal Float      FLOATNUM;
+terminal FloatNum   FLOATNUM;
 
 /* Non terminals */
 non terminal            Program;
