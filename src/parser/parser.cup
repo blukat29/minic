@@ -14,7 +14,8 @@ terminal            SEMI, COMMA, EQUALS, COLON,
                     LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE,
                     RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT,
                     MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
-terminal String     TYPE, ID;
+terminal String     TYPE;
+terminal IdExpr     ID;
 terminal IntNum     INTNUM;
 terminal FloatNum   FLOATNUM;
 
