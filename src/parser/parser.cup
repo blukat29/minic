@@ -21,9 +21,9 @@ terminal FloatNum   FLOATNUM;
 
 /* Non terminals */
 non terminal Program    Program;
-non terminal            DeclList;
+non terminal DeclList   DeclList;
 non terminal            FuncList;
-non terminal            Declaration;
+non terminal Declaration Declaration;
 non terminal            IdentList;
 non terminal            identifier;
 non terminal            Function;
@@ -60,20 +60,20 @@ precedence right    MINUS;
 precedence left     LPAREN, RPAREN;
 
 /* Top level grammar rules */
-Program      ::= DeclList FuncList    {: RESULT = new Program(); :}
-               | DeclList             {: RESULT = new Program(); :}
+Program      ::= DeclList:dl FuncList    {: RESULT = new Program(dl); :}
+               | DeclList:dl             {: RESULT = new Program(dl); :}
                | FuncList             {: RESULT = new Program(); :}
                |                      {: RESULT = new Program(); :}
                ;
-DeclList     ::= Declaration
-               | DeclList Declaration
+DeclList     ::= Declaration:d        {: RESULT = (new DeclList()).append(d); :}
+               | DeclList:l Declaration:d  {: RESULT = l.append(d); :}
                ;
 FuncList     ::= Function
                | FuncList Function
                ;
 
 /* Variable declarations */
-Declaration  ::= TYPE IdentList SEMI
+Declaration  ::= TYPE IdentList SEMI  {: RESULT = new Declaration(); :}
                ;
 IdentList    ::= identifier
                | IdentList COMMA identifier
