@@ -3,6 +3,8 @@ import java.io.*;
 import java_cup.runtime.*;
 import java_cup.runtime.ComplexSymbolFactory.*;
 
+import ast.*;
+
 %%
 %public
 %class Lexer
@@ -89,7 +91,7 @@ FLOATNUM = [0-9]+\.[0-9]+
     "!="            { return symbol( Symbols.NE ); }
 
     {ID}            { return symbol( Symbols.ID, yytext() ); }
-    {INTNUM}        { return symbol( Symbols.INTNUM, new Integer( yytext() ) ); }
+    {INTNUM}        { return symbol( Symbols.INTNUM, new IntNum( yytext() ) ); }
     {FLOATNUM}      { return symbol( Symbols.FLOATNUM, new Float( yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }
 }

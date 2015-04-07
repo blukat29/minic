@@ -1,6 +1,8 @@
 package parser;
 import java_cup.runtime.*;
 
+import ast.*;
+
 parser code {:
     public Parser(Lexer lexer, ComplexSymbolFactory sf) {
       super(lexer, sf);
@@ -13,7 +15,7 @@ terminal            SEMI, COMMA, EQUALS, COLON,
                     RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT,
                     MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
 terminal String     TYPE, ID;
-terminal Integer    INTNUM;
+terminal IntNum     INTNUM;
 terminal Float      FLOATNUM;
 
 /* Non terminals */
