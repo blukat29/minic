@@ -54,8 +54,8 @@ FLOATNUM = [0-9]+\.[0-9]+
 
 <YYINITIAL>
 {
-    "int"           { return symbol( Symbols.TYPE, "int" ); }
-    "float"         { return symbol( Symbols.TYPE, "float" ); }
+    "int"           { return symbol( Symbols.TYPE, new TypeInfo( TypeInfo.INT ) ); }
+    "float"         { return symbol( Symbols.TYPE, new TypeInfo( TypeInfo.FLOAT ) ); }
 
     ";"             { return symbol( Symbols.SEMI ); }
     "["             { return symbol( Symbols.LBRACKET ); }
