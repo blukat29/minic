@@ -28,9 +28,9 @@ non terminal IdentList  IdentList;
 non terminal Identifier identifier;
 non terminal Function   Function;
 non terminal ParamList  ParamList;
-non terminal            CompoundStmt;
-non terminal            StmtList;
-non terminal            Stmt;
+non terminal CompoundStmt CompoundStmt;
+non terminal StmtList   StmtList;
+non terminal Stmt       Stmt;
 non terminal            AssignStmt;
 non terminal            Assign;
 non terminal            CallStmt;
@@ -84,30 +84,30 @@ identifier   ::= ID:id                            {: RESULT = new Identifier(id)
 
 /* Function definition */
 Function     ::= TYPE:ty ID:id LPAREN RPAREN CompoundStmt:body
-                    {: RESULT = new Function(ty, id); :}
+                    {: RESULT = new Function(ty, id, body); :}
                | TYPE:ty ID:id LPAREN ParamList:params RPAREN CompoundStmt:body
-                    {: RESULT = new Function(ty, id, params); :}
+                    {: RESULT = new Function(ty, id, params, body); :}
                ;
 ParamList    ::= TYPE:ty identifier:id                     {: RESULT = (new ParamList()).append(ty, id); :}
                | ParamList:pl COMMA TYPE:ty identifier:id  {: RESULT = pl.append(ty, id); :}
                ;
 
 /* Statements */
-CompoundStmt ::= LBRACE StmtList RBRACE
-               | LBRACE DeclList StmtList RBRACE
+CompoundStmt ::= LBRACE StmtList:sl RBRACE              {: RESULT = new CompoundStmt(sl); :}
+               | LBRACE DeclList:dl StmtList:sl RBRACE  {: RESULT = new CompoundStmt(dl, sl); :}
                ;
-StmtList     ::= StmtList Stmt
-               |
+StmtList     ::= StmtList:sl Stmt:s  {: RESULT = sl.append(s); :}
+               |                     {: RESULT = new StmtList(); :}
                ;
-Stmt         ::= SEMI
-               | AssignStmt
-               | CallStmt
-               | RetStmt
-               | WhileStmt
-               | ForStmt
-               | IfStmt
-               | SwitchStmt
-               | CompoundStmt
+Stmt         ::= SEMI                {: RESULT = new Stmt(); :}
+               | AssignStmt          {: RESULT = new Stmt(); :}
+               | CallStmt            {: RESULT = new Stmt(); :}
+               | RetStmt             {: RESULT = new Stmt(); :}
+               | WhileStmt           {: RESULT = new Stmt(); :}
+               | ForStmt             {: RESULT = new Stmt(); :}
+               | IfStmt              {: RESULT = new Stmt(); :}
+               | SwitchStmt          {: RESULT = new Stmt(); :}
+               | CompoundStmt:cs     {: RESULT = cs; :}
                ;
 
 /* Assignments */
