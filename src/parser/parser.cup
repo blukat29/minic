@@ -31,8 +31,8 @@ non terminal ParamList  ParamList;
 non terminal CompoundStmt CompoundStmt;
 non terminal StmtList   StmtList;
 non terminal Stmt       Stmt;
-non terminal            AssignStmt;
-non terminal            Assign;
+non terminal AssignStmt AssignStmt;
+non terminal Assign     Assign;
 non terminal            CallStmt;
 non terminal            Call;
 non terminal            RetStmt;
@@ -41,7 +41,7 @@ non terminal            ForStmt;
 non terminal            IfStmt;
 non terminal            SwitchStmt;
 non terminal            CaseList;
-non terminal            Expr;
+non terminal Expr       Expr;
 non terminal            ArgList;
 non terminal            CaseBlockList;
 non terminal            CaseBlock;
@@ -100,7 +100,7 @@ StmtList     ::= StmtList:sl Stmt:s  {: RESULT = sl.append(s); :}
                |                     {: RESULT = new StmtList(); :}
                ;
 Stmt         ::= SEMI                {: RESULT = new Stmt(); :}
-               | AssignStmt          {: RESULT = new Stmt(); :}
+               | AssignStmt:as       {: RESULT = as; :}
                | CallStmt            {: RESULT = new Stmt(); :}
                | RetStmt             {: RESULT = new Stmt(); :}
                | WhileStmt           {: RESULT = new Stmt(); :}
@@ -111,10 +111,12 @@ Stmt         ::= SEMI                {: RESULT = new Stmt(); :}
                ;
 
 /* Assignments */
-AssignStmt   ::= Assign SEMI
+AssignStmt   ::= Assign:a SEMI       {: RESULT = new AssignStmt(a); :}
                ;
-Assign       ::= ID EQUALS Expr
-               | ID LBRACKET Expr RBRACKET EQUALS Expr
+Assign       ::= ID:id EQUALS Expr:val
+                    {: RESULT = new Assign(id, val); :}
+               | ID:id LBRACKET Expr:idx RBRACKET EQUALS Expr:val
+                    {: RESULT = new Assign(id, idx, val); :}
                ;
 
 /* Call statements */
@@ -158,21 +160,21 @@ IfStmt       ::= IF LPAREN Expr RPAREN Stmt            %prec IF
                ;
 
 /* Expressions */
-Expr         ::= MINUS Expr
-               | Expr MINUS Expr
-               | Expr TIMES Expr
-               | Expr DIVIDE Expr
-               | Expr PLUS Expr
-               | Expr LT Expr
-               | Expr GT Expr
-               | Expr LE Expr
-               | Expr GE Expr
-               | Expr EQEQ Expr
-               | Expr NE Expr
-               | Call
-               | INTNUM
-               | FLOATNUM
-               | ID
-               | ID LBRACKET Expr RBRACKET
-               | LPAREN Expr RPAREN
+Expr         ::= MINUS Expr                     {: RESULT = new Expr(); :}
+               | Expr MINUS Expr                {: RESULT = new Expr(); :}
+               | Expr TIMES Expr                {: RESULT = new Expr(); :}
+               | Expr DIVIDE Expr               {: RESULT = new Expr(); :}
+               | Expr PLUS Expr                 {: RESULT = new Expr(); :}
+               | Expr LT Expr                   {: RESULT = new Expr(); :}
+               | Expr GT Expr                   {: RESULT = new Expr(); :}
+               | Expr LE Expr                   {: RESULT = new Expr(); :}
+               | Expr GE Expr                   {: RESULT = new Expr(); :}
+               | Expr EQEQ Expr                 {: RESULT = new Expr(); :}
+               | Expr NE Expr                   {: RESULT = new Expr(); :}
+               | Call                           {: RESULT = new Expr(); :}
+               | INTNUM                         {: RESULT = new Expr(); :}
+               | FLOATNUM                       {: RESULT = new Expr(); :}
+               | ID                             {: RESULT = new Expr(); :}
+               | ID LBRACKET Expr RBRACKET      {: RESULT = new Expr(); :}
+               | LPAREN Expr RPAREN             {: RESULT = new Expr(); :}
                ;
