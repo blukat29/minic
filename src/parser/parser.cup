@@ -22,12 +22,12 @@ terminal FloatNum   FLOATNUM;
 /* Non terminals */
 non terminal Program    Program;
 non terminal DeclList   DeclList;
-non terminal            FuncList;
+non terminal FuncList   FuncList;
 non terminal Declaration Declaration;
 non terminal IdentList  IdentList;
 non terminal Identifier identifier;
-non terminal            Function;
-non terminal            ParamList;
+non terminal Function   Function;
+non terminal ParamList  ParamList;
 non terminal            CompoundStmt;
 non terminal            StmtList;
 non terminal            Stmt;
@@ -60,16 +60,16 @@ precedence right    MINUS;
 precedence left     LPAREN, RPAREN;
 
 /* Top level grammar rules */
-Program      ::= DeclList:dl FuncList    {: RESULT = new Program(dl); :}
+Program      ::= DeclList:dl FuncList:fl {: RESULT = new Program(dl, fl); :}
                | DeclList:dl             {: RESULT = new Program(dl); :}
-               | FuncList             {: RESULT = new Program(); :}
-               |                      {: RESULT = new Program(); :}
+               | FuncList:fl             {: RESULT = new Program(fl); :}
+               |                         {: RESULT = new Program(); :}
                ;
 DeclList     ::= Declaration:d        {: RESULT = (new DeclList()).append(d); :}
                | DeclList:l Declaration:d  {: RESULT = l.append(d); :}
                ;
-FuncList     ::= Function
-               | FuncList Function
+FuncList     ::= Function:f               {: RESULT = (new FuncList()).append(f); :}
+               | FuncList:fl Function:f   {: RESULT = fl.append(f); :}
                ;
 
 /* Variable declarations */
@@ -83,11 +83,13 @@ identifier   ::= ID:id                            {: RESULT = new Identifier(id)
                ;
 
 /* Function definition */
-Function     ::= TYPE ID LPAREN RPAREN CompoundStmt
-               | TYPE ID LPAREN ParamList RPAREN CompoundStmt
+Function     ::= TYPE:ty ID:id LPAREN RPAREN CompoundStmt:body
+                    {: RESULT = new Function(ty, id); :}
+               | TYPE:ty ID:id LPAREN ParamList:params RPAREN CompoundStmt:body
+                    {: RESULT = new Function(ty, id, params); :}
                ;
-ParamList    ::= TYPE ID
-               | ParamList COMMA TYPE identifier
+ParamList    ::= TYPE:ty identifier:id                     {: RESULT = (new ParamList()).append(ty, id); :}
+               | ParamList:pl COMMA TYPE:ty identifier:id  {: RESULT = pl.append(ty, id); :}
                ;
 
 /* Statements */
