@@ -79,16 +79,16 @@ FLOATNUM = [0-9]+\.[0-9]+
     "break"         { return symbol( Symbols.BREAK ); }
     "default"       { return symbol( Symbols.DEFAULT ); }
 
-    "-"             { return symbol( Symbols.MINUS ); }
-    "*"             { return symbol( Symbols.TIMES ); }
-    "/"             { return symbol( Symbols.DIVIDE ); }
-    "+"             { return symbol( Symbols.PLUS ); }
-    "<"             { return symbol( Symbols.LT ); }
-    ">"             { return symbol( Symbols.GT ); }
-    "<="            { return symbol( Symbols.LE ); }
-    ">="            { return symbol( Symbols.GE ); }
-    "=="            { return symbol( Symbols.EQEQ ); }
-    "!="            { return symbol( Symbols.NE ); }
+    "-"             { return symbol( Symbols.MINUS, "-" ); }
+    "*"             { return symbol( Symbols.TIMES, "*" ); }
+    "/"             { return symbol( Symbols.DIVIDE, "/" ); }
+    "+"             { return symbol( Symbols.PLUS, "+" ); }
+    "<"             { return symbol( Symbols.LT, "<" ); }
+    ">"             { return symbol( Symbols.GT, ">" ); }
+    "<="            { return symbol( Symbols.LE, "<=" ); }
+    ">="            { return symbol( Symbols.GE, ">=" ); }
+    "=="            { return symbol( Symbols.EQEQ, "==" ); }
+    "!="            { return symbol( Symbols.NE, "!=" ); }
 
     {ID}            { return symbol( Symbols.ID, new IdExpr( yytext() ) ); }
     {INTNUM}        { return symbol( Symbols.INTNUM, new IntNum( yytext() ) ); }

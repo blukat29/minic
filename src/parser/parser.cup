@@ -12,8 +12,8 @@ parser code {:
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, COMMA, EQUALS, COLON,
                     LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE,
-                    RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT,
-                    MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
+                    RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT;
+terminal String     MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
 terminal TypeInfo   TYPE;
 terminal IdExpr     ID;
 terminal IntNum     INTNUM;
@@ -160,21 +160,21 @@ IfStmt       ::= IF LPAREN Expr RPAREN Stmt            %prec IF
                ;
 
 /* Expressions */
-Expr         ::= MINUS Expr                     {: RESULT = new Expr(); :}
-               | Expr MINUS Expr                {: RESULT = new Expr(); :}
-               | Expr TIMES Expr                {: RESULT = new Expr(); :}
-               | Expr DIVIDE Expr               {: RESULT = new Expr(); :}
-               | Expr PLUS Expr                 {: RESULT = new Expr(); :}
-               | Expr LT Expr                   {: RESULT = new Expr(); :}
-               | Expr GT Expr                   {: RESULT = new Expr(); :}
-               | Expr LE Expr                   {: RESULT = new Expr(); :}
-               | Expr GE Expr                   {: RESULT = new Expr(); :}
-               | Expr EQEQ Expr                 {: RESULT = new Expr(); :}
-               | Expr NE Expr                   {: RESULT = new Expr(); :}
+Expr         ::= MINUS:op Expr:r                {: RESULT = new UnOpExpr(op, r); :}
+               | Expr:l MINUS:op Expr:r         {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l TIMES:op Expr:r         {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l DIVIDE:op Expr:r        {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l PLUS:op Expr:r          {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l LT:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l GT:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l LE:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l GE:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l EQEQ:op Expr:r          {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l NE:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
                | Call                           {: RESULT = new Expr(); :}
-               | INTNUM                         {: RESULT = new Expr(); :}
-               | FLOATNUM                       {: RESULT = new Expr(); :}
-               | ID                             {: RESULT = new Expr(); :}
+               | INTNUM:i                       {: RESULT = i; :}
+               | FLOATNUM:f                     {: RESULT = f; :}
+               | ID:id                          {: RESULT = id; :}
                | ID LBRACKET Expr RBRACKET      {: RESULT = new Expr(); :}
-               | LPAREN Expr RPAREN             {: RESULT = new Expr(); :}
+               | LPAREN Expr:e RPAREN           {: RESULT = e; :}
                ;
