@@ -1,6 +1,10 @@
 Mini-C compiler
 ===============
 
+KAIST CS420 Compiler Design 2015 Spring
+
+20130598 Jeong Yunjong
+
 ### Requirements
 - java
 - javac
@@ -9,16 +13,14 @@ Mini-C compiler
 - tar
 
 ### How to use
-```
-make install
-make
-make run < input_file.c
-make test
-make clean
-```
+`make install` to install libraries.
+`make` to build.
+`make run < tests/inputs/sample_avg.c` to compile specific file.
+`make test` to run predefined tests.
+`make clean` to clear build directory.
+`cd utils && python view.py` to view generated parse tree.
 
-### Based on
+### Depends on
 - JFlex
 - CUP
-- Sample code from "Modern Compiler Implementation in Java” written by Andrew Appel
 
