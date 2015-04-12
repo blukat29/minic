@@ -9,4 +9,7 @@ int main()
     c = c + 1;
     a = 1;
   }
+  do {
+    b = b - 1;
+  } while (b > 0);
 }

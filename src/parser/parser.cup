@@ -35,10 +35,10 @@ non terminal AssignStmt AssignStmt;
 non terminal Assign     Assign;
 non terminal CallStmt   CallStmt;
 non terminal CallExpr   Call;
-non terminal            RetStmt;
-non terminal            WhileStmt;
-non terminal            ForStmt;
-non terminal            IfStmt;
+non terminal RetStmt    RetStmt;
+non terminal WhileStmt  WhileStmt;
+non terminal ForStmt    ForStmt;
+non terminal IfStmt     IfStmt;
 non terminal            SwitchStmt;
 non terminal            CaseList;
 non terminal Expr       Expr;
@@ -102,10 +102,10 @@ StmtList     ::= StmtList:sl Stmt:s  {: RESULT = sl.append(s); :}
 Stmt         ::= SEMI                {: RESULT = new Stmt(); :}
                | AssignStmt:as       {: RESULT = as; :}
                | CallStmt:cs         {: RESULT = cs; :}
-               | RetStmt             {: RESULT = new Stmt(); :}
-               | WhileStmt           {: RESULT = new Stmt(); :}
-               | ForStmt             {: RESULT = new Stmt(); :}
-               | IfStmt              {: RESULT = new Stmt(); :}
+               | RetStmt:rs          {: RESULT = rs; :}
+               | WhileStmt:ws        {: RESULT = ws; :}
+               | ForStmt:fs          {: RESULT = fs; :}
+               | IfStmt:is           {: RESULT = is; :}
                | SwitchStmt          {: RESULT = new Stmt(); :}
                | CompoundStmt:cs     {: RESULT = cs; :}
                ;
@@ -130,13 +130,16 @@ ArgList      ::= Expr:e                  {: RESULT = (new ArgList()).append(e); 
                ;
 
 /* Control Structures */
-RetStmt      ::= RETURN SEMI
-               | RETURN Expr SEMI
+RetStmt      ::= RETURN SEMI             {: RESULT = new RetStmt(); :}
+               | RETURN Expr:e SEMI      {: RESULT = new RetStmt(e); :}
                ;
-WhileStmt    ::= WHILE LPAREN Expr RPAREN Stmt
-               | DO Stmt WHILE LPAREN Expr RPAREN SEMI
+WhileStmt    ::= WHILE LPAREN Expr:e RPAREN Stmt:s
+                   {: RESULT = new WhileStmt(e, s, false); :}
+               | DO Stmt:s WHILE LPAREN Expr:e RPAREN SEMI
+                   {: RESULT = new WhileStmt(e, s, true); :}
                ;
-ForStmt      ::= FOR LPAREN Assign SEMI Expr SEMI Assign RPAREN Stmt
+ForStmt      ::= FOR LPAREN Assign:init SEMI Expr:cond SEMI Assign:incr RPAREN Stmt:body
+                   {: RESULT = new ForStmt(init, cond, incr, body); :}
                ;
 SwitchStmt   ::= SWITCH LPAREN identifier RPAREN LBRACE CaseList RBRACE
                ;
@@ -155,8 +158,10 @@ DefaultBlock ::= DEFAULT COLON StmtList
 
 /* Shift/Reduce conflict between two cases. */
 /* Assigned precedence IF < IF-ELSE to resolve the ambiguity. */
-IfStmt       ::= IF LPAREN Expr RPAREN Stmt            %prec IF
-               | IF LPAREN Expr RPAREN Stmt ELSE Stmt
+IfStmt       ::= IF LPAREN Expr:c RPAREN Stmt:t
+                   {: RESULT = new IfStmt(c, t); :}           %prec IF
+               | IF LPAREN Expr:c RPAREN Stmt:t ELSE Stmt:e
+                   {: RESULT = new IfStmt(c, t, e); :}
                ;
 
 /* Expressions */
