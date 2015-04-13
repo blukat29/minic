@@ -99,7 +99,7 @@ CompoundStmt ::= LBRACE StmtList:sl RBRACE              {: RESULT = new Compound
 StmtList     ::= StmtList:sl Stmt:s  {: RESULT = sl.append(s); :}
                |                     {: RESULT = new StmtList(); :}
                ;
-Stmt         ::= SEMI                {: RESULT = new Stmt(); :}
+Stmt         ::= SEMI                {: RESULT = new EmptyStmt(); :}
                | AssignStmt:as       {: RESULT = as; :}
                | CallStmt:cs         {: RESULT = cs; :}
                | RetStmt:rs          {: RESULT = rs; :}
