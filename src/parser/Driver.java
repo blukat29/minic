@@ -1,33 +1,11 @@
 package parser;
 import java.io.*;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.*;
-import javax.xml.transform.stream.*;
-
 import java_cup.runtime.ScannerBuffer;
-import java_cup.runtime.XMLElement;
-import java_cup.runtime.Symbol;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 public class Driver
 {
-  public static void writeXML(String filename, ScannerBuffer lexer, ComplexSymbol s)
-  {
-    try
-    {
-      XMLElement e = (XMLElement)s.value;
-      XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
-      XMLStreamWriter sw = outFactory.createXMLStreamWriter(new FileOutputStream("ast.xml"));
-      XMLElement.dump(lexer, sw, e);
-    }
-    catch (Exception e)
-    {
-      System.err.println("Cannot write XML file");
-    }
-  }
-
   public static void main(String[] args) throws Exception
   {
     Reader input = new BufferedReader(new InputStreamReader(System.in));
