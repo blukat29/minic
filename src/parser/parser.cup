@@ -39,13 +39,13 @@ non terminal RetStmt    RetStmt;
 non terminal WhileStmt  WhileStmt;
 non terminal ForStmt    ForStmt;
 non terminal IfStmt     IfStmt;
-non terminal            SwitchStmt;
-non terminal            CaseList;
+non terminal SwitchStmt SwitchStmt;
+non terminal CaseList   CaseList;
 non terminal Expr       Expr;
 non terminal ArgList    ArgList;
-non terminal            CaseBlockList;
-non terminal            CaseBlock;
-non terminal            DefaultBlock;
+non terminal CaseBlockList CaseBlockList;
+non terminal CaseBlock  CaseBlock;
+non terminal DefaultBlock DefaultBlock;
 
 /* Precedence. From lower to higher. */
 precedence nonassoc IF;
@@ -106,7 +106,7 @@ Stmt         ::= SEMI                {: RESULT = new Stmt(); :}
                | WhileStmt:ws        {: RESULT = ws; :}
                | ForStmt:fs          {: RESULT = fs; :}
                | IfStmt:is           {: RESULT = is; :}
-               | SwitchStmt          {: RESULT = new Stmt(); :}
+               | SwitchStmt:ss       {: RESULT = ss; :}
                | CompoundStmt:cs     {: RESULT = cs; :}
                ;
 
@@ -141,19 +141,20 @@ WhileStmt    ::= WHILE LPAREN Expr:e RPAREN Stmt:s
 ForStmt      ::= FOR LPAREN Assign:init SEMI Expr:cond SEMI Assign:incr RPAREN Stmt:body
                    {: RESULT = new ForStmt(init, cond, incr, body); :}
                ;
-SwitchStmt   ::= SWITCH LPAREN identifier RPAREN LBRACE CaseList RBRACE
+SwitchStmt   ::= SWITCH LPAREN identifier:id RPAREN LBRACE CaseList:cl RBRACE
+                   {: RESULT = new SwitchStmt(id, cl); :}
                ;
-CaseList     ::= CaseBlockList
-               | CaseBlockList DefaultBlock
+CaseList     ::= CaseBlockList:cbl                    {: RESULT = new CaseList(cbl); :}
+               | CaseBlockList:cbl DefaultBlock:db    {: RESULT = new CaseList(cbl, db); :}
                ;
-CaseBlockList ::= CaseBlockList CaseBlock
-                |
+CaseBlockList ::= CaseBlockList:cbl CaseBlock:cb      {: RESULT = cbl.append(cb); :}
+                |                                     {: RESULT = new CaseBlockList(); :}
                 ;
-CaseBlock    ::= CASE INTNUM COLON StmtList
-               | CASE INTNUM COLON StmtList BREAK SEMI
+CaseBlock    ::= CASE INTNUM:n COLON StmtList:sl            {: RESULT = new CaseBlock(n, sl, false); :}
+               | CASE INTNUM:n COLON StmtList:sl BREAK SEMI {: RESULT = new CaseBlock(n, sl, true); :}
                ;
-DefaultBlock ::= DEFAULT COLON StmtList
-               | DEFAULT COLON StmtList BREAK SEMI
+DefaultBlock ::= DEFAULT COLON StmtList:sl            {: RESULT = new DefaultBlock(sl, false); :}
+               | DEFAULT COLON StmtList:sl BREAK SEMI {: RESULT = new DefaultBlock(sl, true); :}
                ;
 
 /* Shift/Reduce conflict between two cases. */
