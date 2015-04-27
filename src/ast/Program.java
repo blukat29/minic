@@ -16,6 +16,11 @@ public class Program extends Node {
     this.funcList = funcList;
   }
   public String toString() {
-    return "The Program(" + declList + "\n" + funcList + ")";
+    String s = "";
+    if(declList != null)
+      s += declList + "\n";
+    if(funcList != null)
+      s += funcList;
+    return s;
   }
 }

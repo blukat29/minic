@@ -14,6 +14,6 @@ public class Function extends Node {
     this.body = body;
   }
   public String toString() {
-    return "Function " + retTy + " " + name + " " + params + "\n" + body;
+    return "function " + retTy + " " + name + " " + params + "\n" + body;
   }
 }

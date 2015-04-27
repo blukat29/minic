@@ -5,6 +5,6 @@ public class AssignStmt extends Stmt {
     this.assign = assign;
   }
   public String toString() {
-    return assign.toString();
+    return assign + ";\n";
   }
 }

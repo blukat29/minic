@@ -10,8 +10,8 @@ public class WhileStmt extends Stmt {
   }
   public String toString() {
     if (isDoWhile)
-      return String.format("do{\n%s } while( %s );", body, cond);
+      return String.format("do\n{\n%s} while( %s );\n", body, cond);
     else
-      return String.format("while( %s ) {\n %s }", cond, body);
+      return String.format("while( %s )\n{\n%s}\n", cond, body);
   }
 }

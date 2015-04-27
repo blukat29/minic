@@ -5,6 +5,6 @@ public class IdExpr extends Expr {
     this.name = name;
   }
   public String toString() {
-    return "id:" + name;
+    return name;
   }
 }

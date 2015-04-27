@@ -10,10 +10,9 @@ public class StmtList extends Node {
     return this;
   }
   public String toString() {
-    String s = "StmtList[";
+    String s = "";
     for (Stmt stmt : stmtList)
-      s += "\n  " + stmt;
-    s += "\n]";
+      s += stmt.toString();
     return s;
   }
 }

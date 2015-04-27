@@ -10,10 +10,9 @@ public class FuncList extends Node {
     return this;
   }
   public String toString() {
-    String s = "FuncList[";
+    String s = "";
     for (Function func : funcList)
-      s += "\n  " + func;
-    s += "\n]";
+      s += func + "\n\n";
     return s;
   }
 }

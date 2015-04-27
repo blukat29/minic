@@ -13,9 +13,9 @@ public class IfStmt extends Stmt {
   }
   public String toString() {
     String s = "if( " + cond + " )";
-    s += "\n{ " + thenStmt + " }";
+    s += "\n{\n" + thenStmt + "}\n";
     if (elseStmt != null)
-      s += "\nelse { " + elseStmt + " }";
+      s += "else\n{\n" + elseStmt + "}\n";
     return s;
   }
 }

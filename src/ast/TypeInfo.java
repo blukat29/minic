@@ -8,10 +8,10 @@ public class TypeInfo extends Node {
   }
   public String toString() {
     if (this.ty == INT)
-      return "typeinfo:INT";
+      return "int";
     else if (this.ty == FLOAT)
-      return "typeinfo:FLOAT";
+      return "float";
     else
-      return "typeinfo:UNKNOWN";
+      return "unknown-type";
   }
 }

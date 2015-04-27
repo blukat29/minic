@@ -8,6 +8,6 @@ public class Declaration extends Node {
     this.identList = il;
   }
   public String toString() {
-    return "Declares " + ty + " " + identList;
+    return "declare " + ty + " " + identList + ";\n";
   }
 }

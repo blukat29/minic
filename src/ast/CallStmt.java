@@ -5,6 +5,6 @@ public class CallStmt extends Stmt {
     this.call = call;
   }
   public String toString() {
-    return call.toString();
+    return call + ";\n";
   }
 }

@@ -10,6 +10,10 @@ public class CompoundStmt extends Stmt {
     stmtList = sl;
   }
   public String toString() {
-    return declList + "\n" + stmtList;
+    String s = "{\n";
+    if (declList != null)
+      s += declList + "\n";
+    s += stmtList + "}\n";
+    return s;
   }
 }

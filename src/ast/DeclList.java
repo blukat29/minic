@@ -10,10 +10,9 @@ public class DeclList extends Node {
     return this;
   }
   public String toString() {
-    String s = "DeclList[";
+    String s = "";
     for (Declaration decl : declList)
-      s += "\n  " + decl;
-    s += "\n]";
+      s += decl.toString();
     return s;
   }
 }

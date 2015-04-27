@@ -11,6 +11,8 @@ public class ForStmt extends Stmt {
     this.body = body;
   }
   public String toString() {
-    return String.format("for ( %s ; %s ; %s ) {\n %s }", init, cond, incr, body);
+    String s = String.format("for ( %s ; %s ; %s )", init, cond, incr);
+    s += "\n{\n" + body + "}\n";
+    return s;
   }
 }

@@ -7,6 +7,6 @@ public class SwitchStmt extends Stmt {
     this.caseList = caseList;
   }
   public String toString() {
-    return String.format("switch( %s ) {\n%s }", id, caseList);
+    return String.format("switch( %s ) {\n%s}\n", id, caseList);
   }
 }

@@ -9,8 +9,8 @@ public class RetStmt extends Stmt {
   }
   public String toString() {
     if (expr == null)
-      return "ret";
+      return "return;\n";
     else
-      return "ret " + expr;
+      return "return " + expr + ";\n";
   }
 }
