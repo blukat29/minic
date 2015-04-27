@@ -20,7 +20,8 @@ public class Driver
     try {
       startSymbol = (ComplexSymbol)parser.parse();
       program = (Program)startSymbol.value;
-      tree.write(program.toString());
+      ASTWriter.setWriter(tree);
+      program.dumpAST(0);
     }
     catch (Exception e) {
       System.err.println("Parse error: " + e.getMessage());

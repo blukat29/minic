@@ -17,13 +17,11 @@ public class Program extends Node {
     this.declList = declList;
     this.funcList = funcList;
   }
-  public String toString() {
-    String s = "";
-    if(declList != null)
-      s += declList + "\n";
-    if(funcList != null)
-      s += funcList;
-    return s;
+  public void dumpAST(int indent) {
+    if (declList != null)
+      declList.dumpAST(indent);
+    if (funcList != null)
+      funcList.dumpAST(indent);
   }
 
   public void compile() {

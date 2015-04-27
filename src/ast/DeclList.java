@@ -11,11 +11,8 @@ public class DeclList extends Node {
     declList.add(decl);
     return this;
   }
-  public String toString() {
-    String s = "";
-    for (Declaration decl : declList)
-      s += decl.toString();
-    return s;
+  public void dumpAST(int indent) {
+    ASTWriter.write("declList", indent);
   }
 
   public void compile(Scope scope) {
