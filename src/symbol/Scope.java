@@ -18,6 +18,10 @@ class ScopeLevel {
   public String toString() {
     return String.format("%s(%d)", name, id);
   }
+
+  public boolean equals(ScopeLevel other) {
+    return (this.id == other.id);
+  }
 }
 
 public class Scope {
@@ -36,6 +40,23 @@ public class Scope {
 
   public void pop() {
     stack.pop();
+  }
+
+  public boolean isParentOf(Scope other) {
+    if (this.stack.empty())  // Any scope is under global scope
+      return true;
+
+    Iterator<ScopeLevel> thisIter = this.stack.iterator();
+    Iterator<ScopeLevel> otherIter = other.stack.iterator();
+    while (thisIter.hasNext()) {
+      ScopeLevel thisLevel = thisIter.next();
+      if (!otherIter.hasNext())
+        return false;
+      ScopeLevel otherLevel = otherIter.next();
+      if (!thisLevel.equals(otherLevel))
+        return false;
+    }
+    return true;
   }
 
   @SuppressWarnings("unchecked")

@@ -23,6 +23,14 @@ public class Symbol {
     this.arraySize = arraySize;
   }
 
+  public Scope getScope() {
+    return scope;
+  }
+
+  public String getName() {
+    return name;
+  }
+
   public String toString() {
     if (!isArray)
       return String.format("Symbol(%s %s %s)", scope, ty, name);

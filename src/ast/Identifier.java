@@ -25,6 +25,10 @@ public class Identifier extends Node {
     }
   }
 
+  public String getName() {
+    return id.getName();
+  }
+
   public Symbol toSymbol(Scope scope, TypeInfo ty) {
     if (!isArray)
       return new Symbol(scope, ty, id.getName());
