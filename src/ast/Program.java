@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class Program extends Node {
   private DeclList declList;
   private FuncList funcList;
@@ -22,5 +24,11 @@ public class Program extends Node {
     if(funcList != null)
       s += funcList;
     return s;
+  }
+
+  public void compile() {
+    Scope scope = new Scope();
+    if (declList != null)
+      declList.compile(scope);
   }
 }

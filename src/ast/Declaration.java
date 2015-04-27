@@ -8,15 +8,15 @@ public class Declaration extends Node {
   public Declaration(TypeInfo ty, List<Identifier> il) {
     this.ty = ty;
     this.identList = il;
-    registerSymbols();
   }
   public String toString() {
     return "declare " + ty + " " + identList + ";\n";
   }
-  private void registerSymbols() {
+
+  public void compile(Scope scope) {
     SymbolTable table = SymbolTable.getInstance();
     for (Identifier id : identList) {
-      table.addSymbol(id.toSymbol(ty));
+      table.addSymbol(id.toSymbol(scope, ty));
     }
   }
 }

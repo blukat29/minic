@@ -20,10 +20,10 @@ public class Identifier extends Node {
       s += "[" + n + "]";
     return s;
   }
-  public Symbol toSymbol(TypeInfo ty) {
+  public Symbol toSymbol(Scope scope, TypeInfo ty) {
     if (!isArray)
-      return new Symbol(ty, id.getName());
+      return new Symbol(scope, ty, id.getName());
     else
-      return new Symbol(ty, id.getName(), n.getValue());
+      return new Symbol(scope, ty, id.getName(), n.getValue());
   }
 }

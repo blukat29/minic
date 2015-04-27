@@ -1,28 +1,32 @@
 package symbol;
 import ast.*;
 public class Symbol {
+  private Scope scope;
   private TypeInfo ty;
   private String name;
   private boolean isArray;
   private int arraySize;
 
-  public Symbol(TypeInfo ty, String name) {
-    this.ty = ty;
-    this.name = name;
-    this.isArray = false;
+  public Symbol(Scope scope, TypeInfo ty, String name) {
+    this(scope, ty, name, false, 0);
   }
 
-  public Symbol(TypeInfo ty, String name, int size) {
+  public Symbol(Scope scope, TypeInfo ty, String name, int size) {
+    this(scope, ty, name, true, size);
+  }
+
+  private Symbol(Scope scope, TypeInfo ty, String name, boolean isArray, int arraySize) {
+    this.scope = scope;
     this.ty = ty;
     this.name = name;
-    this.isArray = true;
-    this.arraySize = size;
+    this.isArray = isArray;
+    this.arraySize = arraySize;
   }
 
   public String toString() {
     if (!isArray)
-      return String.format("Symbol(%s %s)", ty, name);
+      return String.format("Symbol(%s %s %s)", scope, ty, name);
     else
-      return String.format("Symbol(%s %s[%d])", ty, name, arraySize);
+      return String.format("Symbol(%s %s %s[%d])", scope, ty, name, arraySize);
   }
 }

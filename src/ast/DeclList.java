@@ -1,5 +1,7 @@
 package ast;
+import symbol.*;
 import java.util.*;
+
 public class DeclList extends Node {
   private List<Declaration> declList;
   public DeclList() {
@@ -14,5 +16,10 @@ public class DeclList extends Node {
     for (Declaration decl : declList)
       s += decl.toString();
     return s;
+  }
+
+  public void compile(Scope scope) {
+    for (Declaration decl : declList)
+      decl.compile(scope);
   }
 }

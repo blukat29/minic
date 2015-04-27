@@ -18,6 +18,7 @@ public class Driver
     {
       ComplexSymbol startSymbol = (ComplexSymbol)parser.parse();
       Program p = (Program)startSymbol.value;
+      p.compile();
       System.out.println(p);
       System.out.println(SymbolTable.getInstance());
     }
