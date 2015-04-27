@@ -38,6 +38,7 @@ public class Scope {
     stack.pop();
   }
 
+  @SuppressWarnings("unchecked")
   public Scope clone() {
     Scope n = new Scope();
     n.stack = (Stack<ScopeLevel>)this.stack.clone();

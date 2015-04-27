@@ -8,23 +8,41 @@ import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 public class Driver
 {
-  public static void main(String[] args) throws Exception
+  private static void run(InputStream source, Writer tree, Writer table)
   {
-    Reader input = new BufferedReader(new InputStreamReader(System.in));
+    Reader input = new BufferedReader(new InputStreamReader(source));
     ComplexSymbolFactory csf = new ComplexSymbolFactory();
     ScannerBuffer lexer = new ScannerBuffer(new Lexer(input, csf));
     Parser parser = new Parser(lexer, csf);
-    try
-    {
-      ComplexSymbol startSymbol = (ComplexSymbol)parser.parse();
-      Program p = (Program)startSymbol.value;
-      p.compile();
-      System.out.println(p);
-      System.out.println(SymbolTable.getInstance());
+
+    ComplexSymbol startSymbol = null;
+    Program program = null;
+    try {
+      startSymbol = (ComplexSymbol)parser.parse();
+      program = (Program)startSymbol.value;
+      tree.write(program.toString());
     }
-    catch (Exception e)
-    {
-      System.err.println("error: " + e.getMessage());
+    catch (Exception e) {
+      System.err.println("Parse error: " + e.getMessage());
+      return;
     }
+
+    try {
+      program.compile();
+      table.write(SymbolTable.getInstance().toString());
+    }
+    catch (Exception e) {
+      System.err.println("Compile error: " + e.getMessage());
+      return;
+    }
+  }
+
+  public static void main(String[] args) throws Exception
+  {
+    Writer tree = new BufferedWriter(new FileWriter("tree.txt"));
+    Writer table = new BufferedWriter(new FileWriter("table.txt"));
+    run(System.in, tree, table);
+    tree.close();
+    table.close();
   }
 }

@@ -17,7 +17,8 @@ CUP=java -jar $(LIBDIR)/cup/java-cup-11b.jar -destdir bin/
 # =========== Configurables end ==================
 
 CLASSPATH=".:$(LIBDIR)/cup/java-cup-11b-runtime.jar:bin/"
-CC=javac -cp $(CLASSPATH) -d bin/
+CCOPT=
+CC=javac $(CCOPT) -cp $(CLASSPATH) -d bin/
 
 AST_SRC=$(shell find src/ast -name "*.java")
 SYMBOL_SRC=$(shell find src/symbol -name "*.java")
@@ -55,5 +56,5 @@ test:
 	tests/run.py
 
 clean:
-	rm -rf bin/
+	rm -rf bin/ tree.txt table.txt
 
