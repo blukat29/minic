@@ -1,5 +1,6 @@
 package parser;
 import java_cup.runtime.*;
+import java.util.*;
 
 import ast.*;
 
@@ -20,32 +21,32 @@ terminal IntNum     INTNUM;
 terminal FloatNum   FLOATNUM;
 
 /* Non terminals */
-non terminal Program    Program;
-non terminal DeclList   DeclList;
-non terminal FuncList   FuncList;
-non terminal Declaration Declaration;
-non terminal IdentList  IdentList;
-non terminal Identifier identifier;
-non terminal Function   Function;
-non terminal ParamList  ParamList;
-non terminal CompoundStmt CompoundStmt;
-non terminal StmtList   StmtList;
-non terminal Stmt       Stmt;
-non terminal AssignStmt AssignStmt;
-non terminal Assign     Assign;
-non terminal CallStmt   CallStmt;
-non terminal CallExpr   Call;
-non terminal RetStmt    RetStmt;
-non terminal WhileStmt  WhileStmt;
-non terminal ForStmt    ForStmt;
-non terminal IfStmt     IfStmt;
-non terminal SwitchStmt SwitchStmt;
-non terminal CaseList   CaseList;
-non terminal Expr       Expr;
-non terminal ArgList    ArgList;
-non terminal CaseBlockList CaseBlockList;
-non terminal CaseBlock  CaseBlock;
-non terminal DefaultBlock DefaultBlock;
+non terminal Program             Program;
+non terminal DeclList            DeclList;
+non terminal FuncList            FuncList;
+non terminal Declaration         Declaration;
+non terminal List<Identifier>    IdentList;
+non terminal Identifier          identifier;
+non terminal Function            Function;
+non terminal ParamList           ParamList;
+non terminal CompoundStmt        CompoundStmt;
+non terminal StmtList            StmtList;
+non terminal Stmt                Stmt;
+non terminal AssignStmt          AssignStmt;
+non terminal Assign              Assign;
+non terminal CallStmt            CallStmt;
+non terminal CallExpr            Call;
+non terminal RetStmt             RetStmt;
+non terminal WhileStmt           WhileStmt;
+non terminal ForStmt             ForStmt;
+non terminal IfStmt              IfStmt;
+non terminal SwitchStmt          SwitchStmt;
+non terminal CaseList            CaseList;
+non terminal Expr                Expr;
+non terminal List<Expr>          ArgList;
+non terminal List<CaseBlock>     CaseBlockList;
+non terminal CaseBlock           CaseBlock;
+non terminal DefaultBlock        DefaultBlock;
 
 /* Precedence. From lower to higher. */
 precedence nonassoc IF;
@@ -75,8 +76,10 @@ FuncList     ::= Function:f               {: RESULT = (new FuncList()).append(f)
 /* Variable declarations */
 Declaration  ::= TYPE:ty IdentList:il SEMI  {: RESULT = new Declaration(ty, il); :}
                ;
-IdentList    ::= identifier:id                    {: RESULT = (new IdentList()).append(id); :}
-               | IdentList:l COMMA identifier:id  {: RESULT = l.append(id); :}
+IdentList    ::= identifier:id
+                   {: List<Identifier> l = new ArrayList<Identifier>();
+                      l.add(id); RESULT = l; :}
+               | IdentList:l COMMA identifier:id  {: l.add(id); RESULT = l; :}
                ;
 identifier   ::= ID:id                            {: RESULT = new Identifier(id); :}
                | ID:id LBRACKET INTNUM:n RBRACKET {: RESULT = new Identifier(id, n); :}
@@ -125,8 +128,10 @@ CallStmt     ::= Call:c SEMI             {: RESULT = new CallStmt(c); :}
 Call         ::= ID:id LPAREN RPAREN            {: RESULT = new CallExpr(id); :}
                | ID:id LPAREN ArgList:al RPAREN {: RESULT = new CallExpr(id, al); :}
                ;
-ArgList      ::= Expr:e                  {: RESULT = (new ArgList()).append(e); :}
-               | ArgList:al COMMA Expr:e {: RESULT = al.append(e); :}
+ArgList      ::= Expr:e
+                  {: List<Expr> l = new ArrayList<Expr>(); l.add(e); RESULT = l; :}
+               | ArgList:al COMMA Expr:e
+                  {: al.add(e); RESULT = al; :}
                ;
 
 /* Control Structures */
@@ -147,8 +152,8 @@ SwitchStmt   ::= SWITCH LPAREN identifier:id RPAREN LBRACE CaseList:cl RBRACE
 CaseList     ::= CaseBlockList:cbl                    {: RESULT = new CaseList(cbl); :}
                | CaseBlockList:cbl DefaultBlock:db    {: RESULT = new CaseList(cbl, db); :}
                ;
-CaseBlockList ::= CaseBlockList:cbl CaseBlock:cb      {: RESULT = cbl.append(cb); :}
-                |                                     {: RESULT = new CaseBlockList(); :}
+CaseBlockList ::= CaseBlockList:cbl CaseBlock:cb      {: cbl.add(cb); RESULT = cbl; :}
+                |                                     {: RESULT = new ArrayList<CaseBlock>(); :}
                 ;
 CaseBlock    ::= CASE INTNUM:n COLON StmtList:sl            {: RESULT = new CaseBlock(n, sl, false); :}
                | CASE INTNUM:n COLON StmtList:sl BREAK SEMI {: RESULT = new CaseBlock(n, sl, true); :}

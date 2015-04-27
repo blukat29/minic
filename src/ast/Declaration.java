@@ -1,8 +1,9 @@
 package ast;
+import java.util.*;
 public class Declaration extends Node {
   private TypeInfo ty;
-  private IdentList identList;
-  public Declaration(TypeInfo ty, IdentList il) {
+  private List<Identifier> identList;
+  public Declaration(TypeInfo ty, List<Identifier> il) {
     this.ty = ty;
     this.identList = il;
   }
