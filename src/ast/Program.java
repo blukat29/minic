@@ -30,5 +30,7 @@ public class Program extends Node {
     Scope scope = new Scope();
     if (declList != null)
       declList.compile(scope);
+    if (funcList != null)
+      funcList.compile(scope);
   }
 }

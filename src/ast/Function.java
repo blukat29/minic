@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class Function extends Node {
   private TypeInfo retTy;
   private IdExpr name;
@@ -15,5 +17,14 @@ public class Function extends Node {
   }
   public String toString() {
     return "function " + retTy + " " + name + " " + params + "\n" + body;
+  }
+  public String getName() {
+    return name.getName();
+  }
+
+  public void compile(Scope scope) {
+    scope.push(this);
+    body.compile(scope);
+    scope.pop();
   }
 }

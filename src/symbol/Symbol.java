@@ -16,7 +16,7 @@ public class Symbol {
   }
 
   private Symbol(Scope scope, TypeInfo ty, String name, boolean isArray, int arraySize) {
-    this.scope = scope;
+    this.scope = scope.clone();
     this.ty = ty;
     this.name = name;
     this.isArray = isArray;

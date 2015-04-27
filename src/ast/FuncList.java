@@ -1,5 +1,7 @@
 package ast;
+import symbol.*;
 import java.util.*;
+
 public class FuncList extends Node {
   private List<Function> funcList;
   public FuncList() {
@@ -14,5 +16,10 @@ public class FuncList extends Node {
     for (Function func : funcList)
       s += func + "\n\n";
     return s;
+  }
+
+  public void compile(Scope scope) {
+    for (Function func : funcList)
+      func.compile(scope);
   }
 }

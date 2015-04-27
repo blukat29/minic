@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class CompoundStmt extends Stmt {
   private DeclList declList;
   private StmtList stmtList;
@@ -15,5 +17,12 @@ public class CompoundStmt extends Stmt {
       s += declList + "\n";
     s += stmtList + "}\n";
     return s;
+  }
+
+  public void compile(Scope scope) {
+    scope.push(this);
+    if (declList != null)
+      declList.compile(scope);
+    scope.pop();
   }
 }
