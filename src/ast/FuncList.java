@@ -11,8 +11,12 @@ public class FuncList extends Node {
     funcList.add(decl);
     return this;
   }
+
   public void dumpAST(int indent) {
-    ASTWriter.write("FuncList", indent);
+    for (Function func : funcList) {
+      func.dumpAST(indent);
+      ASTWriter.write("\n", indent);
+    }
   }
 
   public void compile(Scope scope) {

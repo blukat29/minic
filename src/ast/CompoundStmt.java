@@ -4,6 +4,7 @@ import symbol.*;
 public class CompoundStmt extends Stmt {
   private DeclList declList;
   private StmtList stmtList;
+
   public CompoundStmt(StmtList sl) {
     this(null, sl);
   }
@@ -11,12 +12,12 @@ public class CompoundStmt extends Stmt {
     declList = dl;
     stmtList = sl;
   }
-  public String toString() {
-    String s = "{\n";
+
+  public void dumpAST(int indent) {
+    ASTWriter.write("{\n", indent);
     if (declList != null)
-      s += declList + "\n";
-    s += stmtList + "}\n";
-    return s;
+      declList.dumpAST(indent + 1);
+    ASTWriter.write("}\n", indent);
   }
 
   public void compile(Scope scope) {

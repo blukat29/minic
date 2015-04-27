@@ -6,6 +6,7 @@ public class Function extends Node {
   private IdExpr name;
   private ParamList params;
   private CompoundStmt body;
+
   public Function(TypeInfo retTy, IdExpr name, CompoundStmt body) {
     this(retTy, name, null, body);
   }
@@ -15,11 +16,19 @@ public class Function extends Node {
     this.params = params;
     this.body = body;
   }
-  public String toString() {
-    return "function " + retTy + " " + name + " " + params + "\n" + body;
-  }
   public String getName() {
     return name.getName();
+  }
+
+  public void dumpAST(int indent) {
+    retTy.dumpAST(indent);
+    ASTWriter.write(name.getName() + " ", indent);
+    if (params != null)
+      params.dumpAST(indent);
+    else
+      ASTWriter.write("(void)");
+    ASTWriter.write("\n");
+    body.dumpAST(indent);
   }
 
   public void compile(Scope scope) {

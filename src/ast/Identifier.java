@@ -5,6 +5,7 @@ public class Identifier extends Node {
   private IdExpr id;
   private boolean isArray;
   private IntNum n;
+
   public Identifier(IdExpr id) {
     this.id = id;
     isArray = false;
@@ -14,12 +15,14 @@ public class Identifier extends Node {
     isArray = true;
     this.n = n;
   }
-  public String toString() {
-    String s = id.toString();
+
+  public void dumpAST(int indent) {
+    String s = id.getName();
     if (isArray)
       s += "[" + n + "]";
-    return s;
+    ASTWriter.write(s);
   }
+
   public Symbol toSymbol(Scope scope, TypeInfo ty) {
     if (!isArray)
       return new Symbol(scope, ty, id.getName());

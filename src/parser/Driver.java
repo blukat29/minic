@@ -21,12 +21,12 @@ public class Driver
       startSymbol = (ComplexSymbol)parser.parse();
       program = (Program)startSymbol.value;
       ASTWriter.setWriter(tree);
-      program.dumpAST(0);
     }
     catch (Exception e) {
       System.err.println("Parse error: " + e.getMessage());
       return;
     }
+    program.dumpAST(0);
 
     try {
       program.compile();

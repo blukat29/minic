@@ -12,12 +12,17 @@ public class ParamList extends Node {
     idList.add(id);
     return this;
   }
-  public String toString() {
-    String s = "Params[";
-    for (int i=0; i<tyList.size(); i++) {
-      s += tyList.get(i) + " " + idList.get(i) + ",";
+  public void dumpAST(int indent) {
+    ASTWriter.write("(");
+    if (tyList.size() > 0) {
+      tyList.get(0).dumpAST(0);
+      idList.get(0).dumpAST(0);
     }
-    s += "]";
-    return s;
+    for (int i=1; i<tyList.size(); i++) {
+      ASTWriter.write(", ");
+      tyList.get(i).dumpAST(0);
+      idList.get(i).dumpAST(0);
+    }
+    ASTWriter.write(")");
   }
 }
