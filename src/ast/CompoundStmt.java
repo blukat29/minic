@@ -17,6 +17,7 @@ public class CompoundStmt extends Stmt {
     ASTWriter.write("{\n", indent);
     if (declList != null)
       declList.dumpAST(indent + 1);
+    stmtList.dumpAST(indent + 1);
     ASTWriter.write("}\n", indent);
   }
 

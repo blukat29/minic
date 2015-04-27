@@ -17,10 +17,12 @@ public class Identifier extends Node {
   }
 
   public void dumpAST(int indent) {
-    String s = id.getName();
-    if (isArray)
-      s += "[" + n + "]";
-    ASTWriter.write(s);
+    id.dumpAST(indent);
+    if (isArray) {
+      ASTWriter.write("[");
+      n.dumpAST(0);
+      ASTWriter.write("]");
+    }
   }
 
   public Symbol toSymbol(Scope scope, TypeInfo ty) {

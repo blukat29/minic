@@ -10,4 +10,7 @@ public class IntNum extends Expr {
   public String toString() {
     return value + "i";
   }
+  public void dumpAST(int indent) {
+    ASTWriter.write(value + "i", indent);
+  }
 }

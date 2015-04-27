@@ -4,7 +4,8 @@ public class CallStmt extends Stmt {
   public CallStmt(CallExpr call) {
     this.call = call;
   }
-  public String toString() {
-    return call + ";\n";
+  public void dumpAST(int indent) {
+    call.dumpAST(indent);
+    ASTWriter.write(";\n");
   }
 }

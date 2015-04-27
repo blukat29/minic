@@ -7,7 +7,7 @@ public class IdExpr extends Expr {
   public String getName() {
     return name;
   }
-  public String toString() {
-    return name;
+  public void dumpAST(int indent) {
+    ASTWriter.write(name, indent);
   }
 }

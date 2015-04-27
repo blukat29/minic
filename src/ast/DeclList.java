@@ -14,6 +14,7 @@ public class DeclList extends Node {
   public void dumpAST(int indent) {
     for (Declaration decl : declList)
       decl.dumpAST(indent);
+    ASTWriter.write("\n", indent);
   }
 
   public void compile(Scope scope) {

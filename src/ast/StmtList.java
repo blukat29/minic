@@ -2,6 +2,7 @@ package ast;
 import java.util.*;
 public class StmtList extends Node {
   private List<Stmt> stmtList;
+
   public StmtList() {
     stmtList = new ArrayList<Stmt>();
   }
@@ -9,10 +10,9 @@ public class StmtList extends Node {
     stmtList.add(stmt);
     return this;
   }
-  public String toString() {
-    String s = "";
+
+  public void dumpAST(int indent) {
     for (Stmt stmt : stmtList)
-      s += stmt.toString();
-    return s;
+      stmt.dumpAST(indent);
   }
 }

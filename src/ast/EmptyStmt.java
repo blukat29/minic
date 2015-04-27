@@ -2,7 +2,7 @@ package ast;
 public class EmptyStmt extends Stmt {
   public EmptyStmt() {
   }
-  public String toString() {
-    return "nop();";
+  public void dumpAST(int indent) {
+    ASTWriter.write(";\n", indent);
   }
 }

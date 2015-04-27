@@ -3,6 +3,7 @@ public class IfStmt extends Stmt {
   private Expr cond;
   private Stmt thenStmt;
   private Stmt elseStmt;
+
   public IfStmt(Expr c, Stmt t) {
     this(c, t, null);
   }
@@ -11,11 +12,19 @@ public class IfStmt extends Stmt {
     thenStmt = t;
     elseStmt = e;
   }
-  public String toString() {
-    String s = "if( " + cond + " )";
-    s += "\n{\n" + thenStmt + "}\n";
-    if (elseStmt != null)
-      s += "else\n{\n" + elseStmt + "}\n";
-    return s;
+
+  public void dumpAST(int indent) {
+    ASTWriter.write("if ( ", indent);
+    ASTWriter.write("expr");
+    ASTWriter.write(" )\n");
+    ASTWriter.write("{\n", indent);
+    thenStmt.dumpAST(indent + 1);
+    ASTWriter.write("}\n", indent);
+    if (elseStmt != null) {
+      ASTWriter.write("else\n", indent);
+      ASTWriter.write("{\n", indent);
+      elseStmt.dumpAST(indent + 1);
+      ASTWriter.write("}\n", indent);
+    }
   }
 }

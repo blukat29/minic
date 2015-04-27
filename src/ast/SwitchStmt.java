@@ -2,11 +2,18 @@ package ast;
 public class SwitchStmt extends Stmt {
   private Identifier id;
   private CaseList caseList;
+
   public SwitchStmt(Identifier id, CaseList caseList) {
     this.id = id;
     this.caseList = caseList;
   }
-  public String toString() {
-    return String.format("switch( %s ) {\n%s}\n", id, caseList);
+
+  public void dumpAST(int indent) {
+    ASTWriter.write("switch ( ", indent);
+    id.dumpAST(0);
+    ASTWriter.write(" )\n");
+    ASTWriter.write("{\n", indent);
+    ASTWriter.write("caseList", indent + 1);
+    ASTWriter.write("}\n", indent);
   }
 }

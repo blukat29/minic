@@ -14,10 +14,10 @@ public class Declaration extends Node {
   public void dumpAST(int indent) {
     ty.dumpAST(indent);
 
-    identList.get(0).dumpAST(indent);
+    identList.get(0).dumpAST(0);
     for (int i=1; i<identList.size(); i++) {
       ASTWriter.write(", ");
-      identList.get(i).dumpAST(indent);
+      identList.get(i).dumpAST(0);
     }
 
     ASTWriter.write(";\n");

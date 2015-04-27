@@ -4,7 +4,8 @@ public class AssignStmt extends Stmt {
   public AssignStmt(Assign assign) {
     this.assign = assign;
   }
-  public String toString() {
-    return assign + ";\n";
+  public void dumpAST(int indent) {
+    assign.dumpAST(indent);
+    ASTWriter.write(";\n");
   }
 }
