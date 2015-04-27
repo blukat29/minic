@@ -6,10 +6,10 @@ public class DefaultBlock extends Node {
     this.stmtList = stmtList;
     this.hasBreak = hasBreak;
   }
-  public String toString() {
-    String s = "default:\n" + stmtList;
+  public void dumpAST(int indent) {
+    ASTWriter.write("default:\n", indent);
+    stmtList.dumpAST(indent + 1);
     if (hasBreak)
-      s += "\nbreak;";
-    return s;
+      ASTWriter.write("break;\n", indent + 1);
   }
 }

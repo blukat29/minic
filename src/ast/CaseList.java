@@ -10,7 +10,10 @@ public class CaseList extends Node {
     this.caseBlocks = caseBlocks;
     this.defaultBlock = defaultBlock;
   }
-  public String toString() {
-    return caseBlocks + "\n" + defaultBlock;
+  public void dumpAST(int indent) {
+    for (CaseBlock caseBlock : caseBlocks)
+      caseBlock.dumpAST(indent);
+    if (defaultBlock != null)
+      defaultBlock.dumpAST(indent);
   }
 }

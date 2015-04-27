@@ -8,10 +8,12 @@ public class CaseBlock extends Node {
     this.stmtList = stmtList;
     this.hasBreak = hasBreak;
   }
-  public String toString() {
-    String s = String.format("case %s:\n", num) + stmtList;
+  public void dumpAST(int indent) {
+    ASTWriter.write("case ", indent);
+    num.dumpAST(0);
+    ASTWriter.write(":\n");
+    stmtList.dumpAST(indent + 1);
     if (hasBreak)
-      s += "\nbreak;";
-    return s;
+      ASTWriter.write("break;\n", indent + 1);
   }
 }

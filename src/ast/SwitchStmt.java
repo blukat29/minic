@@ -13,7 +13,7 @@ public class SwitchStmt extends Stmt {
     id.dumpAST(0);
     ASTWriter.write(" )\n");
     ASTWriter.write("{\n", indent);
-    ASTWriter.write("caseList", indent + 1);
+    caseList.dumpAST(indent + 1);
     ASTWriter.write("}\n", indent);
   }
 }

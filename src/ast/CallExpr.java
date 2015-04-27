@@ -16,14 +16,12 @@ public class CallExpr extends Expr {
     id.dumpAST(indent);
     ASTWriter.write("(");
     if (args != null) {
-      ASTWriter.write("args");
+      args.get(0).dumpAST(0);
+      for (int i=1; i<args.size(); i++) {
+        ASTWriter.write(", ");
+        args.get(i).dumpAST(0);
+      }
     }
     ASTWriter.write(")");
   }
-
-  public String toString() {
-    return String.format("call %s(%s)", id, args);
-  }
 }
-
-
