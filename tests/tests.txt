@@ -1,6 +1,5 @@
-decl_list
-decl_list_bad
-decl_array
+decl
+decl_bad
 empty
 func_head
 call

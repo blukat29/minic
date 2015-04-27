@@ -29,13 +29,11 @@ def run_single_test(name):
     if "Exception" in err:
         success = False
 
-    if not success or success:
+    if not success:
         print "==input=========================="
         print input_code
         print "==check=========================="
         print check_code
-        print "==output========================="
-        print out
         print "==error=========================="
         print err
     return success
@@ -53,6 +51,7 @@ if __name__ == '__main__':
         else:
             print "\x1b[1;31m", "FAIL", case, "\x1b[0m"
             fail_cnt += 1
+    print "\n==========summary=========="
     for i in range(len(tests)):
         if results[i]:
             print "\x1b[1;32m", "pass", tests[i], "\x1b[0m"
