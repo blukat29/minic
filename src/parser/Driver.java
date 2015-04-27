@@ -1,4 +1,6 @@
 package parser;
+import ast.*;
+import symbol.*;
 import java.io.*;
 import java_cup.runtime.ScannerBuffer;
 import java_cup.runtime.ComplexSymbolFactory;
@@ -11,12 +13,13 @@ public class Driver
     Reader input = new BufferedReader(new InputStreamReader(System.in));
     ComplexSymbolFactory csf = new ComplexSymbolFactory();
     ScannerBuffer lexer = new ScannerBuffer(new Lexer(input, csf));
-    Parser p = new Parser(lexer, csf);
-    ComplexSymbol s;
+    Parser parser = new Parser(lexer, csf);
     try
     {
-      s = (ComplexSymbol)p.parse();
-      System.out.println(s.value);
+      ComplexSymbol startSymbol = (ComplexSymbol)parser.parse();
+      Program p = (Program)startSymbol.value;
+      System.out.println(p);
+      System.out.println(SymbolTable.getInstance());
     }
     catch (Exception e)
     {

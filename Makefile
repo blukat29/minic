@@ -20,8 +20,10 @@ CLASSPATH=".:$(LIBDIR)/cup/java-cup-11b-runtime.jar:bin/"
 CC=javac -cp $(CLASSPATH) -d bin/
 
 AST_SRC=$(shell find src/ast -name "*.java")
+SYMBOL_SRC=$(shell find src/symbol -name "*.java")
 PARSER_SRC=$(shell find src/parser -name "*.java")
 AST_CLS=$(patsubst src/%.java, bin/%.class, $(AST_SRC))
+SYMBOL_CLS=$(patsubst src/%.java, bin/%.class, $(SYMBOL_SRC))
 PARSER_CLS=$(patsubst src/%.java, bin/%.class, $(PARSER_SRC))
 
 all: bin classes
@@ -37,10 +39,10 @@ $(CUP_OUT): $(CUP_SRC)
 
 classes: $(PARSER_CLS)
 
-$(AST_CLS): $(AST_SRC)
-	$(CC) $(AST_SRC)
+$(AST_CLS) $(SYMBOL_CLS): $(AST_SRC) $(SYMBOL_SRC)
+	$(CC) $(AST_SRC) $(SYMBOL_SRC)
 
-$(PARSER_CLS): $(FLEX_OUT) $(CUP_OUT) $(AST_CLS) $(PARSER_SRC)
+$(PARSER_CLS): $(FLEX_OUT) $(CUP_OUT) $(AST_CLS) $(SYMBOL_CLS) $(PARSER_SRC)
 	$(CC) $(PARSER_SRC) $(FLEX_OUT) $(CUP_OUT)
 
 run:
