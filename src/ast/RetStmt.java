@@ -14,7 +14,7 @@ public class RetStmt extends Stmt {
       ASTWriter.write("return;\n", indent);
     else {
       ASTWriter.write("return ", indent);
-      ASTWriter.write("expr");
+      expr.dumpAST(0);
       ASTWriter.write(";\n");
     }
   }

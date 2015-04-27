@@ -4,7 +4,7 @@ public class FloatNum extends Expr {
   public FloatNum(String s) {
     value = Float.parseFloat(s);
   }
-  public String toString() {
-    return value + "f";
+  public void dumpAST(int indent) {
+    ASTWriter.write(value + "f", indent);
   }
 }

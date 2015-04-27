@@ -15,7 +15,7 @@ public class IfStmt extends Stmt {
 
   public void dumpAST(int indent) {
     ASTWriter.write("if ( ", indent);
-    ASTWriter.write("expr");
+    cond.dumpAST(0);
     ASTWriter.write(" )\n");
     ASTWriter.write("{\n", indent);
     thenStmt.dumpAST(indent + 1);

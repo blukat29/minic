@@ -16,7 +16,7 @@ public class ForStmt extends Stmt {
     ASTWriter.write("for ( ", indent);
     init.dumpAST(0);
     ASTWriter.write(" ; ");
-    ASTWriter.write("expr");
+    cond.dumpAST(0);
     ASTWriter.write(" ; ");
     incr.dumpAST(0);
     ASTWriter.write(" )\n");

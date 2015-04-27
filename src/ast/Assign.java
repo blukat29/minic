@@ -17,12 +17,14 @@ public class Assign extends Node {
     if (idx == null) {
       id.dumpAST(indent);
       ASTWriter.write(" = ");
-      ASTWriter.write("expr");
+      val.dumpAST(0);
     }
     else {
       id.dumpAST(indent);
-      ASTWriter.write("[ expr ] = ");
-      ASTWriter.write("expr");
+      ASTWriter.write("[");
+      idx.dumpAST(0);
+      ASTWriter.write("] = ");
+      val.dumpAST(0);
     }
   }
 }

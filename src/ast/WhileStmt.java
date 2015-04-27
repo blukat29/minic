@@ -16,12 +16,12 @@ public class WhileStmt extends Stmt {
       ASTWriter.write("{\n", indent);
       body.dumpAST(indent + 1);
       ASTWriter.write("} while ( ", indent);
-      ASTWriter.write("expr");
+      cond.dumpAST(0);
       ASTWriter.write(" );\n");
     }
     else {
       ASTWriter.write("while ( ", indent);
-      ASTWriter.write("expr");
+      cond.dumpAST(0);
       ASTWriter.write(" )\n");
       ASTWriter.write("{\n", indent);
       body.dumpAST(indent + 1);

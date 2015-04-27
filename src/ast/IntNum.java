@@ -7,9 +7,6 @@ public class IntNum extends Expr {
   public int getValue() {
     return value;
   }
-  public String toString() {
-    return value + "i";
-  }
   public void dumpAST(int indent) {
     ASTWriter.write(value + "i", indent);
   }
