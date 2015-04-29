@@ -11,5 +11,6 @@ public class CallStmt extends Stmt {
     ASTWriter.write(";\n");
   }
   public void compile(Scope scope) {
+    call.compile(scope);
   }
 }

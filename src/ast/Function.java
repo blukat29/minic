@@ -32,10 +32,21 @@ public class Function extends Node {
   }
 
   public void compile(Scope scope) {
+
+    if (SymbolTable.lookupFunction(name) != null) {
+      ErrorWriter.error(String.format("function '%s' is already defined.", name));
+      return;
+    }
+    SymbolTable.addFunction(this);
+
     scope.push(this);
     if (params != null)
       params.compile(scope);
     body.compile(scope);
     scope.pop();
+  }
+
+  public String toString() {
+    return name;
   }
 }
