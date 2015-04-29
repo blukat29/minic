@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class UnOpExpr extends Expr {
   private String op;
   private Expr r;
@@ -12,5 +14,9 @@ public class UnOpExpr extends Expr {
     ASTWriter.write(op + " ( ", indent);
     r.dumpAST(0);
     ASTWriter.write(" )");
+  }
+
+  public void compile(Scope scope) {
+    r.compile(scope);
   }
 }

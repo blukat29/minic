@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class BinOpExpr extends Expr {
   private Expr l;
   String op;
@@ -16,6 +18,11 @@ public class BinOpExpr extends Expr {
     ASTWriter.write(" " + op + " ");
     r.dumpAST(0);
     ASTWriter.write(")");
+  }
+
+  public void compile(Scope scope) {
+    l.compile(scope);
+    r.compile(scope);
   }
 }
 
