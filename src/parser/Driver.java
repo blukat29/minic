@@ -15,19 +15,23 @@ public class Driver
     ScannerBuffer lexer = new ScannerBuffer(new Lexer(input, csf));
     Parser parser = new Parser(lexer, csf);
 
+    /* Parse the program */
     ComplexSymbol startSymbol = null;
     Program program = null;
     try {
       startSymbol = (ComplexSymbol)parser.parse();
       program = (Program)startSymbol.value;
-      ASTWriter.setWriter(tree);
     }
     catch (Exception e) {
       System.err.println("Parse error: " + e.getMessage());
       return;
     }
+
+    /* Print AST representation */
+    Printer.setASTWriter(tree);
     program.dumpAST(0);
 
+    /* Compile the AST */
     try {
       program.compile();
     }
@@ -35,6 +39,8 @@ public class Driver
       System.err.println("Compile error: " + e.getMessage());
       return;
     }
+
+    /* Dump symbol table */
     try {
       SymbolTable.getInstance().dumpTable(table);
     } catch (IOException e) {
