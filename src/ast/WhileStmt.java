@@ -32,5 +32,7 @@ public class WhileStmt extends Stmt {
   }
 
   public void compile(Scope scope) {
+    cond.compile(scope);
+    body.compile(scope);
   }
 }

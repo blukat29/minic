@@ -20,5 +20,7 @@ public class SwitchStmt extends Stmt {
   }
 
   public void compile(Scope scope) {
+    value.compile(scope);
+    caseList.compile(scope);
   }
 }

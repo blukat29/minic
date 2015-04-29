@@ -28,5 +28,9 @@ public class ForStmt extends Stmt {
   }
 
   public void compile(Scope scope) {
+    init.compile(scope);
+    cond.compile(scope);
+    incr.compile(scope);
+    body.compile(scope);
   }
 }

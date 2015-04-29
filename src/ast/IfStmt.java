@@ -31,5 +31,9 @@ public class IfStmt extends Stmt {
   }
 
   public void compile(Scope scope) {
+    cond.compile(scope);
+    thenStmt.compile(scope);
+    if (elseStmt != null)
+      elseStmt.compile(scope);
   }
 }

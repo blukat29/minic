@@ -1,13 +1,17 @@
 package ast;
+import symbol.*;
+
 public class CaseBlock extends Node {
   private IntNum num;
   private StmtList stmtList;
   private boolean hasBreak;
+
   public CaseBlock(IntNum num, StmtList stmtList, boolean hasBreak) {
     this.num = num;
     this.stmtList = stmtList;
     this.hasBreak = hasBreak;
   }
+
   public void dumpAST(int indent) {
     ASTWriter.write("case ", indent);
     num.dumpAST(0);
@@ -15,5 +19,10 @@ public class CaseBlock extends Node {
     stmtList.dumpAST(indent + 1);
     if (hasBreak)
       ASTWriter.write("break;\n", indent + 1);
+  }
+
+  public void compile(Scope scope) {
+    num.compile(scope);
+    stmtList.compile(scope);
   }
 }
