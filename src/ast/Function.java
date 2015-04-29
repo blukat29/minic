@@ -3,26 +3,26 @@ import symbol.*;
 
 public class Function extends Node {
   private TypeInfo retTy;
-  private IdExpr name;
+  private String name;
   private ParamList params;
   private CompoundStmt body;
 
-  public Function(TypeInfo retTy, IdExpr name, CompoundStmt body) {
+  public Function(TypeInfo retTy, String name, CompoundStmt body) {
     this(retTy, name, null, body);
   }
-  public Function(TypeInfo retTy, IdExpr name, ParamList params, CompoundStmt body) {
+  public Function(TypeInfo retTy, String name, ParamList params, CompoundStmt body) {
     this.retTy = retTy;
     this.name = name;
     this.params = params;
     this.body = body;
   }
   public String getName() {
-    return name.getName();
+    return name;
   }
 
   public void dumpAST(int indent) {
     retTy.dumpAST(indent);
-    ASTWriter.write(name.getName() + " ", indent);
+    ASTWriter.write(name + " ", indent);
     if (params != null)
       params.dumpAST(indent);
     else

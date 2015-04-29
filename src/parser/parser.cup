@@ -16,7 +16,7 @@ terminal            SEMI, COMMA, EQUALS, COLON,
                     RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT;
 terminal String     MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
 terminal TypeInfo   TYPE;
-terminal IdExpr     ID;
+terminal String     ID;
 terminal IntNum     INTNUM;
 terminal FloatNum   FLOATNUM;
 
@@ -185,7 +185,7 @@ Expr         ::= MINUS:op Expr:r                {: RESULT = new UnOpExpr(op, r);
                | Call:c                         {: RESULT = c; :}
                | INTNUM:i                       {: RESULT = i; :}
                | FLOATNUM:f                     {: RESULT = f; :}
-               | ID:id                          {: RESULT = id; :}
+               | ID:id                          {: RESULT = new IdExpr(id); :}
                | ID:id LBRACKET Expr:idx RBRACKET {: RESULT = new ArrayIndexExpr(id, idx); :}
                | LPAREN Expr:e RPAREN           {: RESULT = e; :}
                ;

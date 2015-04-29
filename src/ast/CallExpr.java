@@ -1,20 +1,19 @@
 package ast;
 import java.util.*;
 public class CallExpr extends Expr {
-  private IdExpr id;
+  private String id;
   private List<Expr> args;
 
-  public CallExpr(IdExpr id) {
+  public CallExpr(String id) {
     this(id, null);
   }
-  public CallExpr(IdExpr id, List<Expr> args) {
+  public CallExpr(String id, List<Expr> args) {
     this.id = id;
     this.args = args;
   }
 
   public void dumpAST(int indent) {
-    id.dumpAST(indent);
-    ASTWriter.write("(");
+    ASTWriter.write(id + "(", indent);
     if (args != null) {
       args.get(0).dumpAST(0);
       for (int i=1; i<args.size(); i++) {
