@@ -33,6 +33,8 @@ public class Function extends Node {
 
   public void compile(Scope scope) {
     scope.push(this);
+    if (params != null)
+      params.compile(scope);
     body.compile(scope);
     scope.pop();
   }

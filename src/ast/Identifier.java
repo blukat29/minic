@@ -29,10 +29,10 @@ public class Identifier extends Node {
     return id.getName();
   }
 
-  public Symbol toSymbol(Scope scope, TypeInfo ty) {
+  public Symbol toSymbol(Scope scope, TypeInfo ty, boolean isParam) {
     if (!isArray)
-      return new Symbol(scope, ty, id.getName());
+      return new Symbol(scope, ty, id.getName(), isParam);
     else
-      return new Symbol(scope, ty, id.getName(), n.getValue());
+      return new Symbol(scope, ty, id.getName(), isParam, n.getValue());
   }
 }

@@ -14,4 +14,12 @@ public class TypeInfo extends Node {
     else if (ty == FLOAT)
       ASTWriter.write("float ", indent);
   }
+
+  public String toString() {
+    if (ty == INT)
+      return "int";
+    else if (ty == FLOAT)
+      return "float";
+    return "";
+  }
 }

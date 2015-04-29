@@ -1,8 +1,11 @@
 package ast;
 import java.util.*;
+import symbol.*;
+
 public class ParamList extends Node {
   private List<TypeInfo> tyList;
   private List<Identifier> idList;
+
   public ParamList() {
     tyList = new ArrayList<TypeInfo>();
     idList = new ArrayList<Identifier>();
@@ -12,6 +15,7 @@ public class ParamList extends Node {
     idList.add(id);
     return this;
   }
+
   public void dumpAST(int indent) {
     ASTWriter.write("(");
     if (tyList.size() > 0) {
@@ -24,5 +28,20 @@ public class ParamList extends Node {
       idList.get(i).dumpAST(0);
     }
     ASTWriter.write(")");
+  }
+
+  public void compile(Scope scope) {
+    SymbolTable table = SymbolTable.getInstance();
+    for (int i=0; i<tyList.size(); i++) {
+      TypeInfo ty = tyList.get(i);
+      Identifier id = idList.get(i);
+      Symbol symbol = id.toSymbol(scope, ty, true);
+      if (table.lookup(scope, id.getName()) != null) {
+        ErrorWriter.error(String.format("variable '%s' is already declared.", id.getName()));
+      }
+      else {
+        table.addSymbol(symbol);
+      }
+    }
   }
 }

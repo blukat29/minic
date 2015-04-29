@@ -30,10 +30,15 @@ public class Driver
 
     try {
       program.compile();
-      table.write(SymbolTable.getInstance().toString());
     }
     catch (Exception e) {
       System.err.println("Compile error: " + e.getMessage());
+      return;
+    }
+    try {
+      SymbolTable.getInstance().dumpTable(table);
+    } catch (IOException e) {
+      System.err.println("Error writing 'table.txt'");
       return;
     }
   }
