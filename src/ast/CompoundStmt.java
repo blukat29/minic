@@ -25,6 +25,7 @@ public class CompoundStmt extends Stmt {
     scope.push(this);
     if (declList != null)
       declList.compile(scope);
+    stmtList.compile(scope);
     scope.pop();
   }
 }

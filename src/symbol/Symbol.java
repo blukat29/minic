@@ -33,6 +33,10 @@ public class Symbol {
     return name;
   }
 
+  public boolean isArray() {
+    return isArray;
+  }
+
   public String toString() {
     String varClass = isParam? "param" : "var";
     if (!isArray)

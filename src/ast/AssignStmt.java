@@ -11,5 +11,6 @@ public class AssignStmt extends Stmt {
     ASTWriter.write(";\n");
   }
   public void compile(Scope scope) {
+    assign.compile(scope);
   }
 }
