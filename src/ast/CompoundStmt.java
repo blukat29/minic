@@ -13,12 +13,12 @@ public class CompoundStmt extends Stmt {
     stmtList = sl;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write("{\n", indent);
+  public void dumpAST(int n) {
+    indent(n); tree("{\n");
     if (declList != null)
-      declList.dumpAST(indent + 1);
-    stmtList.dumpAST(indent + 1);
-    ASTWriter.write("}\n", indent);
+      declList.dumpAST(n + 1);
+    stmtList.dumpAST(n + 1);
+    indent(n); tree("}\n");
   }
 
   public void compile(Scope scope) {

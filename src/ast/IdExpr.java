@@ -9,17 +9,17 @@ public class IdExpr extends Expr {
   public String getName() {
     return name;
   }
-  public void dumpAST(int indent) {
-    ASTWriter.write(name, indent);
+  public void dumpAST(int n) {
+    indent(n); tree(name);
   }
   public void compile(Scope scope) {
     Symbol destSymbol = SymbolTable.lookup(scope, name);
     if (destSymbol == null) {
-      ErrorWriter.error(String.format("variable '%s' is not defined.", name));
+      error(String.format("variable '%s' is not defined.", name));
       return;
     }
     if (destSymbol.isArray()) {
-      ErrorWriter.error(String.format("variable '%s' is an array.", name));
+      error(String.format("variable '%s' is an array.", name));
       return;
     }
   }

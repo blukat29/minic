@@ -11,23 +11,21 @@ public class Declaration extends Node {
     this.identList = il;
   }
 
-  public void dumpAST(int indent) {
-    ty.dumpAST(indent);
+  public void dumpAST(int n) {
+    ty.dumpAST(n);
 
     identList.get(0).dumpAST(0);
     for (int i=1; i<identList.size(); i++) {
-      ASTWriter.write(", ");
-      identList.get(i).dumpAST(0);
+      tree(", "); identList.get(i).dumpAST(0);
     }
-
-    ASTWriter.write(";\n");
+    tree(";\n");
   }
 
   public void compile(Scope scope) {
     for (Identifier id : identList) {
       Symbol symbol = id.toSymbol(scope, ty, false);
       if (SymbolTable.lookup(scope, id.getName()) != null) {
-        ErrorWriter.error(String.format("variable '%s' is already declared.", id.getName()));
+        error(String.format("variable '%s' is already declared.", id.getName()));
       }
       else {
         SymbolTable.addSymbol(symbol);

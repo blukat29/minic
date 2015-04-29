@@ -14,11 +14,11 @@ public class CaseList extends Node {
     this.defaultBlock = defaultBlock;
   }
 
-  public void dumpAST(int indent) {
+  public void dumpAST(int n) {
     for (CaseBlock caseBlock : caseBlocks)
-      caseBlock.dumpAST(indent);
+      caseBlock.dumpAST(n);
     if (defaultBlock != null)
-      defaultBlock.dumpAST(indent);
+      defaultBlock.dumpAST(n);
   }
 
   public void compile(Scope scope) {

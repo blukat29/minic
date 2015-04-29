@@ -12,10 +12,9 @@ public class FuncList extends Node {
     return this;
   }
 
-  public void dumpAST(int indent) {
+  public void dumpAST(int n) {
     for (Function func : funcList) {
-      func.dumpAST(indent);
-      ASTWriter.write("\n", indent);
+      func.dumpAST(n); tree("\n");
     }
   }
 

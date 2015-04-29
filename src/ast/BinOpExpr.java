@@ -12,12 +12,8 @@ public class BinOpExpr extends Expr {
     this.r = r;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write("(");
-    l.dumpAST(indent);
-    ASTWriter.write(" " + op + " ");
-    r.dumpAST(0);
-    ASTWriter.write(")");
+  public void dumpAST(int n) {
+    tree("("); l.dumpAST(n); tree(" " + op + " "); r.dumpAST(0); tree(")");
   }
 
   public void compile(Scope scope) {

@@ -6,9 +6,8 @@ public class CallStmt extends Stmt {
   public CallStmt(CallExpr call) {
     this.call = call;
   }
-  public void dumpAST(int indent) {
-    call.dumpAST(indent);
-    ASTWriter.write(";\n");
+  public void dumpAST(int n) {
+    call.dumpAST(n); tree(";\n");
   }
   public void compile(Scope scope) {
     call.compile(scope);

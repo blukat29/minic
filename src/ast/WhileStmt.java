@@ -12,22 +12,17 @@ public class WhileStmt extends Stmt {
     this.isDoWhile = isDoWhile;
   }
 
-  public void dumpAST(int indent) {
+  public void dumpAST(int n) {
     if (isDoWhile) {
-      ASTWriter.write("do\n", indent);
-      ASTWriter.write("{\n", indent);
-      body.dumpAST(indent + 1);
-      ASTWriter.write("} while ( ", indent);
-      cond.dumpAST(0);
-      ASTWriter.write(" );\n");
+      indent(n); tree("do\n"); indent(n); tree("{\n");
+      body.dumpAST(n + 1);
+      indent(n); tree("} while ( "); cond.dumpAST(0); tree(" );\n");
     }
     else {
-      ASTWriter.write("while ( ", indent);
-      cond.dumpAST(0);
-      ASTWriter.write(" )\n");
-      ASTWriter.write("{\n", indent);
-      body.dumpAST(indent + 1);
-      ASTWriter.write("}\n", indent);
+      indent(n); tree("while ( "); cond.dumpAST(0); tree(" )\n");
+      indent(n); tree("{\n");
+      body.dumpAST(n + 1);
+      indent(n); tree("}\n");
     }
   }
 

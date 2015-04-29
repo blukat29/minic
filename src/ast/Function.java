@@ -20,21 +20,20 @@ public class Function extends Node {
     return name;
   }
 
-  public void dumpAST(int indent) {
-    retTy.dumpAST(indent);
-    ASTWriter.write(name + " ", indent);
+  public void dumpAST(int n) {
+    retTy.dumpAST(n); tree(name + " ");
     if (params != null)
-      params.dumpAST(indent);
+      params.dumpAST(0);
     else
-      ASTWriter.write("(void)");
-    ASTWriter.write("\n");
-    body.dumpAST(indent);
+      tree("(void)");
+    tree("\n");
+    body.dumpAST(n);
   }
 
   public void compile(Scope scope) {
 
     if (SymbolTable.lookupFunction(name) != null) {
-      ErrorWriter.error(String.format("function '%s' is already defined.", name));
+      error(String.format("function '%s' is already defined.", name));
       return;
     }
     SymbolTable.addFunction(this);

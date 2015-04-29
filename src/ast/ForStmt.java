@@ -14,17 +14,12 @@ public class ForStmt extends Stmt {
     this.body = body;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write("for ( ", indent);
-    init.dumpAST(0);
-    ASTWriter.write(" ; ");
-    cond.dumpAST(0);
-    ASTWriter.write(" ; ");
-    incr.dumpAST(0);
-    ASTWriter.write(" )\n");
-    ASTWriter.write("{\n", indent);
-    body.dumpAST(indent + 1);
-    ASTWriter.write("}\n", indent);
+  public void dumpAST(int n) {
+    indent(n); tree("for ( "); init.dumpAST(0); tree(" ; ");
+    cond.dumpAST(0); tree(" ; "); incr.dumpAST(0); tree(" )\n");
+    indent(n); tree("{\n");
+    body.dumpAST(n + 1);
+    indent(n); tree("}\n");
   }
 
   public void compile(Scope scope) {

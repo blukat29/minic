@@ -12,13 +12,12 @@ public class CaseBlock extends Node {
     this.hasBreak = hasBreak;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write("case ", indent);
-    num.dumpAST(0);
-    ASTWriter.write(":\n");
-    stmtList.dumpAST(indent + 1);
-    if (hasBreak)
-      ASTWriter.write("break;\n", indent + 1);
+  public void dumpAST(int n) {
+    indent(n); tree("case "); num.dumpAST(0); tree(":\n");
+    stmtList.dumpAST(n + 1);
+    if (hasBreak) {
+      indent(n + 1); tree("break;\n");
+    }
   }
 
   public void compile(Scope scope) {

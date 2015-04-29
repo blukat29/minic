@@ -11,10 +11,10 @@ public class DeclList extends Node {
     declList.add(decl);
     return this;
   }
-  public void dumpAST(int indent) {
+  public void dumpAST(int n) {
     for (Declaration decl : declList)
-      decl.dumpAST(indent);
-    ASTWriter.write("\n", indent);
+      decl.dumpAST(n);
+    indent(n); tree("\n");
   }
 
   public void compile(Scope scope) {

@@ -15,18 +15,15 @@ public class IfStmt extends Stmt {
     elseStmt = e;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write("if ( ", indent);
-    cond.dumpAST(0);
-    ASTWriter.write(" )\n");
-    ASTWriter.write("{\n", indent);
-    thenStmt.dumpAST(indent + 1);
-    ASTWriter.write("}\n", indent);
+  public void dumpAST(int n) {
+    indent(n); tree("if ( "); cond.dumpAST(0); tree(" )\n");
+    indent(n); tree("{\n");
+    thenStmt.dumpAST(n + 1);
+    indent(n); tree("}\n");
     if (elseStmt != null) {
-      ASTWriter.write("else\n", indent);
-      ASTWriter.write("{\n", indent);
-      elseStmt.dumpAST(indent + 1);
-      ASTWriter.write("}\n", indent);
+      indent(n); tree("else\n"); indent(n); tree("{\n");
+      elseStmt.dumpAST(n + 1);
+      indent(n); tree("}\n");
     }
   }
 

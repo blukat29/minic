@@ -10,10 +10,8 @@ public class UnOpExpr extends Expr {
     this.r = r;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write(op + " ( ", indent);
-    r.dumpAST(0);
-    ASTWriter.write(" )");
+  public void dumpAST(int n) {
+    indent(n); tree(op + " ( "); r.dumpAST(0); tree(" )");
   }
 
   public void compile(Scope scope) {

@@ -8,11 +8,12 @@ public class TypeInfo extends Node {
     this.ty = ty;
   }
 
-  public void dumpAST(int indent) {
+  public void dumpAST(int n) {
+    indent(n);
     if (ty == INT)
-      ASTWriter.write("int ", indent);
+      tree("int ");
     else if (ty == FLOAT)
-      ASTWriter.write("float ", indent);
+      tree("float ");
   }
 
   public String toString() {

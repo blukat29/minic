@@ -10,11 +10,12 @@ public class DefaultBlock extends Node {
     this.hasBreak = hasBreak;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write("default:\n", indent);
-    stmtList.dumpAST(indent + 1);
-    if (hasBreak)
-      ASTWriter.write("break;\n", indent + 1);
+  public void dumpAST(int n) {
+    indent(n); tree("default:\n");
+    stmtList.dumpAST(n + 1);
+    if (hasBreak) {
+      indent(n + 1); tree("break;\n");
+    }
   }
 
   public void compile(Scope scope) {

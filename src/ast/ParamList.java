@@ -16,18 +16,18 @@ public class ParamList extends Node {
     return this;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write("(");
+  public void dumpAST(int n) {
+    tree("(");
     if (tyList.size() > 0) {
       tyList.get(0).dumpAST(0);
       idList.get(0).dumpAST(0);
     }
     for (int i=1; i<tyList.size(); i++) {
-      ASTWriter.write(", ");
+      tree(", ");
       tyList.get(i).dumpAST(0);
       idList.get(i).dumpAST(0);
     }
-    ASTWriter.write(")");
+    tree(")");
   }
 
   public void compile(Scope scope) {
@@ -35,7 +35,7 @@ public class ParamList extends Node {
       TypeInfo ty = tyList.get(i);
       Identifier id = idList.get(i);
       if (SymbolTable.lookup(scope, id.getName()) != null) {
-        ErrorWriter.error(String.format("variable '%s' is already declared.", id.getName()));
+        error(String.format("variable '%s' is already declared.", id.getName()));
       }
       else {
         Symbol symbol = id.toSymbol(scope, ty, true);

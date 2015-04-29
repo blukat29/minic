@@ -11,13 +11,12 @@ public class RetStmt extends Stmt {
     this.expr = expr;
   }
 
-  public void dumpAST(int indent) {
-    if (expr == null)
-      ASTWriter.write("return;\n", indent);
+  public void dumpAST(int n) {
+    if (expr == null) {
+      indent(n); tree("return;\n");
+    }
     else {
-      ASTWriter.write("return ", indent);
-      expr.dumpAST(0);
-      ASTWriter.write(";\n");
+      indent(n); tree("return "); expr.dumpAST(0); tree(";\n");
     }
   }
 

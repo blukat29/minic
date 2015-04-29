@@ -13,9 +13,9 @@ public class StmtList extends Node {
     return this;
   }
 
-  public void dumpAST(int indent) {
+  public void dumpAST(int n) {
     for (Stmt stmt : stmtList)
-      stmt.dumpAST(indent);
+      stmt.dumpAST(n);
   }
 
   public void compile(Scope scope) {

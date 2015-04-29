@@ -15,16 +15,12 @@ public class Assign extends Node {
     this.val = val;
   }
 
-  public void dumpAST(int indent) {
+  public void dumpAST(int n) {
     if (idx == null) {
-      ASTWriter.write(id + " = ", indent);
-      val.dumpAST(0);
+      indent(n); tree(id + " = "); val.dumpAST(0);
     }
     else {
-      ASTWriter.write(id + "[", indent);
-      idx.dumpAST(0);
-      ASTWriter.write("] = ");
-      val.dumpAST(0);
+      indent(n); tree(id + "["); idx.dumpAST(0); tree("]"); val.dumpAST(0);
     }
   }
 
@@ -32,15 +28,15 @@ public class Assign extends Node {
 
     Symbol destSymbol = SymbolTable.lookup(scope, id);
     if (destSymbol == null) {
-      ErrorWriter.error(String.format("variable '%s' is not defined.", id));
+      error(String.format("variable '%s' is not defined.", id));
       return;
     }
     if (idx != null && !destSymbol.isArray()) {
-      ErrorWriter.error(String.format("variable '%s' is not an array.", id));
+      error(String.format("variable '%s' is not an array.", id));
       return;
     }
     if (idx == null && destSymbol.isArray()) {
-      ErrorWriter.error(String.format("variable '%s' is an array.", id));
+      error(String.format("variable '%s' is an array.", id));
       return;
     }
   }

@@ -6,8 +6,8 @@ public class FloatNum extends Expr {
   public FloatNum(String s) {
     value = Float.parseFloat(s);
   }
-  public void dumpAST(int indent) {
-    ASTWriter.write(value + "f", indent);
+  public void dumpAST(int n) {
+    indent(n); tree(value + "f");
   }
   public void compile(Scope scope) {
   }

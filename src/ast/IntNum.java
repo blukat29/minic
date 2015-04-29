@@ -9,8 +9,8 @@ public class IntNum extends Expr {
   public int getValue() {
     return value;
   }
-  public void dumpAST(int indent) {
-    ASTWriter.write(value + "i", indent);
+  public void dumpAST(int n) {
+    indent(n); tree(value + "i");
   }
   public void compile(Scope scope) {
   }

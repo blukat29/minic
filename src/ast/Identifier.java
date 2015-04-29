@@ -16,12 +16,10 @@ public class Identifier extends Node {
     this.n = n;
   }
 
-  public void dumpAST(int indent) {
-    ASTWriter.write(id, indent);
+  public void dumpAST(int n) {
+    indent(n); tree(id);
     if (isArray) {
-      ASTWriter.write("[");
-      n.dumpAST(0);
-      ASTWriter.write("]");
+      tree("["); this.n.dumpAST(0); tree("]");
     }
   }
 
