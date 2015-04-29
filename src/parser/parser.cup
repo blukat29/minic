@@ -146,8 +146,8 @@ WhileStmt    ::= WHILE LPAREN Expr:e RPAREN Stmt:s
 ForStmt      ::= FOR LPAREN Assign:init SEMI Expr:cond SEMI Assign:incr RPAREN Stmt:body
                    {: RESULT = new ForStmt(init, cond, incr, body); :}
                ;
-SwitchStmt   ::= SWITCH LPAREN identifier:id RPAREN LBRACE CaseList:cl RBRACE
-                   {: RESULT = new SwitchStmt(id, cl); :}
+SwitchStmt   ::= SWITCH LPAREN Expr:val RPAREN LBRACE CaseList:cl RBRACE
+                   {: RESULT = new SwitchStmt(val, cl); :}
                ;
 CaseList     ::= CaseBlockList:cbl                    {: RESULT = new CaseList(cbl); :}
                | CaseBlockList:cbl DefaultBlock:db    {: RESULT = new CaseList(cbl, db); :}

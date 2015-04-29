@@ -2,17 +2,17 @@ package ast;
 import symbol.*;
 
 public class SwitchStmt extends Stmt {
-  private Identifier id;
+  private Expr value;
   private CaseList caseList;
 
-  public SwitchStmt(Identifier id, CaseList caseList) {
-    this.id = id;
+  public SwitchStmt(Expr value, CaseList caseList) {
+    this.value = value;
     this.caseList = caseList;
   }
 
   public void dumpAST(int indent) {
     ASTWriter.write("switch ( ", indent);
-    id.dumpAST(0);
+    value.dumpAST(0);
     ASTWriter.write(" )\n");
     ASTWriter.write("{\n", indent);
     caseList.dumpAST(indent + 1);
