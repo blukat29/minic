@@ -31,16 +31,15 @@ public class ParamList extends Node {
   }
 
   public void compile(Scope scope) {
-    SymbolTable table = SymbolTable.getInstance();
     for (int i=0; i<tyList.size(); i++) {
       TypeInfo ty = tyList.get(i);
       Identifier id = idList.get(i);
-      Symbol symbol = id.toSymbol(scope, ty, true);
-      if (table.lookup(scope, id.getName()) != null) {
+      if (SymbolTable.lookup(scope, id.getName()) != null) {
         ErrorWriter.error(String.format("variable '%s' is already declared.", id.getName()));
       }
       else {
-        table.addSymbol(symbol);
+        Symbol symbol = id.toSymbol(scope, ty, true);
+        SymbolTable.addSymbol(symbol);
       }
     }
   }

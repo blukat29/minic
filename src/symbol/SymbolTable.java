@@ -14,11 +14,13 @@ public class SymbolTable {
     return singleton;
   }
 
-  public void addSymbol(Symbol symbol) {
+  public static void addSymbol(Symbol symbol) {
+    List<Symbol>table = SymbolTable.getInstance().table;
     table.add(symbol);
   }
 
-  public Symbol lookup(Scope scope, String name) {
+  public static Symbol lookup(Scope scope, String name) {
+    List<Symbol>table = SymbolTable.getInstance().table;
     for (Symbol symbol : table) {
       if (symbol.getName().equals(name)) {
         if (symbol.getScope().isParentOf(scope))
@@ -28,14 +30,11 @@ public class SymbolTable {
     return null;
   }
 
-  public void dumpTable(Writer writer) throws IOException {
+  public static void dumpTable(Writer writer) throws IOException {
+    List<Symbol>table = SymbolTable.getInstance().table;
     for (Symbol symbol : table) {
       writer.write(symbol.toString());
       writer.write("\n");
     }
-  }
-
-  public String toString() {
-    return table.toString();
   }
 }
