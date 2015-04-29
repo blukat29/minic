@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class ForStmt extends Stmt {
   private Assign init;
   private Expr cond;
@@ -23,5 +25,8 @@ public class ForStmt extends Stmt {
     ASTWriter.write("{\n", indent);
     body.dumpAST(indent + 1);
     ASTWriter.write("}\n", indent);
+  }
+
+  public void compile(Scope scope) {
   }
 }

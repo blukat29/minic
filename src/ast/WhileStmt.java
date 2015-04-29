@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class WhileStmt extends Stmt {
   private Expr cond;
   private Stmt body;
@@ -27,5 +29,8 @@ public class WhileStmt extends Stmt {
       body.dumpAST(indent + 1);
       ASTWriter.write("}\n", indent);
     }
+  }
+
+  public void compile(Scope scope) {
   }
 }

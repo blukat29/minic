@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class SwitchStmt extends Stmt {
   private Identifier id;
   private CaseList caseList;
@@ -15,5 +17,8 @@ public class SwitchStmt extends Stmt {
     ASTWriter.write("{\n", indent);
     caseList.dumpAST(indent + 1);
     ASTWriter.write("}\n", indent);
+  }
+
+  public void compile(Scope scope) {
   }
 }

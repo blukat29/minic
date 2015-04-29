@@ -1,5 +1,7 @@
 package ast;
 import java.util.*;
+import symbol.*;
+
 public class StmtList extends Node {
   private List<Stmt> stmtList;
 
@@ -14,5 +16,10 @@ public class StmtList extends Node {
   public void dumpAST(int indent) {
     for (Stmt stmt : stmtList)
       stmt.dumpAST(indent);
+  }
+
+  public void compile(Scope scope) {
+    for (Stmt stmt : stmtList)
+      stmt.compile(scope);
   }
 }

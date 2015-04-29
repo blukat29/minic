@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class RetStmt extends Stmt {
   private Expr expr;
 
@@ -17,5 +19,8 @@ public class RetStmt extends Stmt {
       expr.dumpAST(0);
       ASTWriter.write(";\n");
     }
+  }
+
+  public void compile(Scope scope) {
   }
 }

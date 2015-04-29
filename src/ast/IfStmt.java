@@ -1,4 +1,6 @@
 package ast;
+import symbol.*;
+
 public class IfStmt extends Stmt {
   private Expr cond;
   private Stmt thenStmt;
@@ -26,5 +28,8 @@ public class IfStmt extends Stmt {
       elseStmt.dumpAST(indent + 1);
       ASTWriter.write("}\n", indent);
     }
+  }
+
+  public void compile(Scope scope) {
   }
 }
