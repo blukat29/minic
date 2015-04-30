@@ -34,16 +34,17 @@ def run_single_test(name):
         print input_code
         print "==check=========================="
         print check_code
-        print "==output========================="
-        print out
+        print "==error=========================="
         print err
     return success
 
 if __name__ == '__main__':
     pass_cnt = 0
     fail_cnt = 0
+    results = []
     for case in tests:
         success = run_single_test(case)
+        results.append(success)
         if success:
             print "\x1b[1;32m", "pass", case, "\x1b[0m"
             pass_cnt += 1

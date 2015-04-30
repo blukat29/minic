@@ -1,5 +1,8 @@
 package parser;
 import java_cup.runtime.*;
+import java.util.*;
+
+import ast.*;
 
 parser code {:
     public Parser(Lexer lexer, ComplexSymbolFactory sf) {
@@ -10,39 +13,40 @@ parser code {:
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, COMMA, EQUALS, COLON,
                     LBRACKET, RBRACKET, LPAREN, RPAREN, LBRACE, RBRACE,
-                    RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT,
-                    MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
-terminal String     TYPE, ID;
-terminal Integer    INTNUM;
-terminal Float      FLOATNUM;
+                    RETURN, WHILE, DO, FOR, IF, ELSE, SWITCH, CASE, BREAK, DEFAULT;
+terminal String     MINUS, TIMES, DIVIDE, PLUS, LT, GT, LE, GE, EQEQ, NE;
+terminal TypeInfo   TYPE;
+terminal String     ID;
+terminal IntNum     INTNUM;
+terminal FloatNum   FLOATNUM;
 
 /* Non terminals */
-non terminal            Program;
-non terminal            DeclList;
-non terminal            FuncList;
-non terminal            Declaration;
-non terminal            IdentList;
-non terminal            identifier;
-non terminal            Function;
-non terminal            ParamList;
-non terminal            CompoundStmt;
-non terminal            StmtList;
-non terminal            Stmt;
-non terminal            AssignStmt;
-non terminal            Assign;
-non terminal            CallStmt;
-non terminal            Call;
-non terminal            RetStmt;
-non terminal            WhileStmt;
-non terminal            ForStmt;
-non terminal            IfStmt;
-non terminal            SwitchStmt;
-non terminal            CaseList;
-non terminal            Expr;
-non terminal            ArgList;
-non terminal            CaseBlockList;
-non terminal            CaseBlock;
-non terminal            DefaultBlock;
+non terminal Program             Program;
+non terminal DeclList            DeclList;
+non terminal FuncList            FuncList;
+non terminal Declaration         Declaration;
+non terminal List<Identifier>    IdentList;
+non terminal Identifier          identifier;
+non terminal Function            Function;
+non terminal ParamList           ParamList;
+non terminal CompoundStmt        CompoundStmt;
+non terminal StmtList            StmtList;
+non terminal Stmt                Stmt;
+non terminal AssignStmt          AssignStmt;
+non terminal Assign              Assign;
+non terminal CallStmt            CallStmt;
+non terminal CallExpr            Call;
+non terminal RetStmt             RetStmt;
+non terminal WhileStmt           WhileStmt;
+non terminal ForStmt             ForStmt;
+non terminal IfStmt              IfStmt;
+non terminal SwitchStmt          SwitchStmt;
+non terminal CaseList            CaseList;
+non terminal Expr                Expr;
+non terminal List<Expr>          ArgList;
+non terminal List<CaseBlock>     CaseBlockList;
+non terminal CaseBlock           CaseBlock;
+non terminal DefaultBlock        DefaultBlock;
 
 /* Precedence. From lower to higher. */
 precedence nonassoc IF;
@@ -57,117 +61,138 @@ precedence right    MINUS;
 precedence left     LPAREN, RPAREN;
 
 /* Top level grammar rules */
-Program      ::= DeclList FuncList
-               | DeclList
-               | FuncList
-               |
+Program      ::= DeclList:dl FuncList:fl {: RESULT = new Program(dl, fl); :}
+               | DeclList:dl             {: RESULT = new Program(dl); :}
+               | FuncList:fl             {: RESULT = new Program(fl); :}
+               |                         {: RESULT = new Program(); :}
                ;
-DeclList     ::= Declaration
-               | DeclList Declaration
+DeclList     ::= Declaration:d           {: RESULT = (new DeclList()).append(d); :}
+               | DeclList:l Declaration:d  {: RESULT = l.append(d); :}
                ;
-FuncList     ::= Function
-               | FuncList Function
+FuncList     ::= Function:f               {: RESULT = (new FuncList()).append(f); :}
+               | FuncList:fl Function:f   {: RESULT = fl.append(f); :}
                ;
 
 /* Variable declarations */
-Declaration  ::= TYPE IdentList SEMI
+Declaration  ::= TYPE:ty IdentList:il SEMI:end
+                   {: RESULT = new Declaration(new Pos(tyxleft, endxright), ty, il); :}
                ;
-IdentList    ::= identifier
-               | IdentList COMMA identifier
+IdentList    ::= identifier:id
+                   {: List<Identifier> l = new ArrayList<Identifier>();
+                      l.add(id); RESULT = l; :}
+               | IdentList:l COMMA identifier:id  {: l.add(id); RESULT = l; :}
                ;
-identifier   ::= ID
-               | ID LBRACKET INTNUM RBRACKET
+identifier   ::= ID:id
+                   {: RESULT = new Identifier(new Pos(idxleft, idxright), id); :}
+               | ID:id LBRACKET INTNUM:n RBRACKET:end
+                   {: RESULT = new Identifier(new Pos(idxleft, endxright), id, n); :}
                ;
 
 /* Function definition */
-Function     ::= TYPE ID LPAREN RPAREN CompoundStmt
-               | TYPE ID LPAREN ParamList RPAREN CompoundStmt
+Function     ::= TYPE:ty ID:id LPAREN RPAREN:end CompoundStmt:body
+                   {: RESULT = new Function(new Pos(tyxleft, endxright), ty, id, body); :}
+               | TYPE:ty ID:id LPAREN ParamList:params RPAREN:end CompoundStmt:body
+                   {: RESULT = new Function(new Pos(tyxleft, endxright), ty, id, params, body); :}
                ;
-ParamList    ::= TYPE ID
-               | ParamList COMMA TYPE identifier
+ParamList    ::= TYPE:ty identifier:id                     {: RESULT = (new ParamList()).append(ty, id); :}
+               | ParamList:pl COMMA TYPE:ty identifier:id  {: RESULT = pl.append(ty, id); :}
                ;
 
 /* Statements */
-CompoundStmt ::= LBRACE StmtList RBRACE
-               | LBRACE DeclList StmtList RBRACE
+CompoundStmt ::= LBRACE StmtList:sl RBRACE              {: RESULT = new CompoundStmt(sl); :}
+               | LBRACE DeclList:dl StmtList:sl RBRACE  {: RESULT = new CompoundStmt(dl, sl); :}
                ;
-StmtList     ::= StmtList Stmt
-               |
+StmtList     ::= StmtList:sl Stmt:s  {: RESULT = sl.append(s); :}
+               |                     {: RESULT = new StmtList(); :}
                ;
-Stmt         ::= SEMI
-               | AssignStmt
-               | CallStmt
-               | RetStmt
-               | WhileStmt
-               | ForStmt
-               | IfStmt
-               | SwitchStmt
-               | CompoundStmt
+Stmt         ::= SEMI                {: RESULT = new EmptyStmt(); :}
+               | AssignStmt:as       {: RESULT = as; :}
+               | CallStmt:cs         {: RESULT = cs; :}
+               | RetStmt:rs          {: RESULT = rs; :}
+               | WhileStmt:ws        {: RESULT = ws; :}
+               | ForStmt:fs          {: RESULT = fs; :}
+               | IfStmt:is           {: RESULT = is; :}
+               | SwitchStmt:ss       {: RESULT = ss; :}
+               | CompoundStmt:cs     {: RESULT = cs; :}
                ;
 
 /* Assignments */
-AssignStmt   ::= Assign SEMI
+AssignStmt   ::= Assign:a SEMI       {: RESULT = new AssignStmt(a); :}
                ;
-Assign       ::= ID EQUALS Expr
-               | ID LBRACKET Expr RBRACKET EQUALS Expr
+Assign       ::= ID:id EQUALS Expr:val
+                    {: RESULT = new Assign(new Pos(idxleft, valxright), id, val); :}
+               | ID:id LBRACKET Expr:idx RBRACKET EQUALS Expr:val
+                    {: RESULT = new Assign(new Pos(idxleft, valxright), id, idx, val); :}
                ;
 
 /* Call statements */
-CallStmt     ::= Call SEMI
+CallStmt     ::= Call:c SEMI             {: RESULT = new CallStmt(c); :}
                ;
-Call         ::= ID LPAREN RPAREN
-               | ID LPAREN ArgList RPAREN
+Call         ::= ID:id LPAREN RPAREN:end
+                   {: RESULT = new CallExpr(new Pos(idxleft, endxright), id); :}
+               | ID:id LPAREN ArgList:al RPAREN:end
+                   {: RESULT = new CallExpr(new Pos(idxleft, endxright), id, al); :}
                ;
-ArgList      ::= Expr
-               | ArgList COMMA Expr
+ArgList      ::= Expr:e
+                  {: List<Expr> l = new ArrayList<Expr>(); l.add(e); RESULT = l; :}
+               | ArgList:al COMMA Expr:e
+                  {: al.add(e); RESULT = al; :}
                ;
 
 /* Control Structures */
-RetStmt      ::= RETURN SEMI
-               | RETURN Expr SEMI
+RetStmt      ::= RETURN SEMI             {: RESULT = new RetStmt(); :}
+               | RETURN Expr:e SEMI      {: RESULT = new RetStmt(e); :}
                ;
-WhileStmt    ::= WHILE LPAREN Expr RPAREN Stmt
-               | DO Stmt WHILE LPAREN Expr RPAREN SEMI
+WhileStmt    ::= WHILE LPAREN Expr:e RPAREN Stmt:s
+                   {: RESULT = new WhileStmt(e, s, false); :}
+               | DO Stmt:s WHILE LPAREN Expr:e RPAREN SEMI
+                   {: RESULT = new WhileStmt(e, s, true); :}
                ;
-ForStmt      ::= FOR LPAREN Assign SEMI Expr SEMI Assign RPAREN Stmt
+ForStmt      ::= FOR LPAREN Assign:init SEMI Expr:cond SEMI Assign:incr RPAREN Stmt:body
+                   {: RESULT = new ForStmt(init, cond, incr, body); :}
                ;
-SwitchStmt   ::= SWITCH LPAREN identifier RPAREN LBRACE CaseList RBRACE
+SwitchStmt   ::= SWITCH LPAREN Expr:val RPAREN LBRACE CaseList:cl RBRACE
+                   {: RESULT = new SwitchStmt(val, cl); :}
                ;
-CaseList     ::= CaseBlockList
-               | CaseBlockList DefaultBlock
+CaseList     ::= CaseBlockList:cbl                    {: RESULT = new CaseList(cbl); :}
+               | CaseBlockList:cbl DefaultBlock:db    {: RESULT = new CaseList(cbl, db); :}
                ;
-CaseBlockList ::= CaseBlockList CaseBlock
-                |
+CaseBlockList ::= CaseBlockList:cbl CaseBlock:cb      {: cbl.add(cb); RESULT = cbl; :}
+                |                                     {: RESULT = new ArrayList<CaseBlock>(); :}
                 ;
-CaseBlock    ::= CASE INTNUM COLON StmtList
-               | CASE INTNUM COLON StmtList BREAK SEMI
+CaseBlock    ::= CASE INTNUM:n COLON StmtList:sl            {: RESULT = new CaseBlock(n, sl, false); :}
+               | CASE INTNUM:n COLON StmtList:sl BREAK SEMI {: RESULT = new CaseBlock(n, sl, true); :}
                ;
-DefaultBlock ::= DEFAULT COLON StmtList
-               | DEFAULT COLON StmtList BREAK SEMI
+DefaultBlock ::= DEFAULT COLON StmtList:sl            {: RESULT = new DefaultBlock(sl, false); :}
+               | DEFAULT COLON StmtList:sl BREAK SEMI {: RESULT = new DefaultBlock(sl, true); :}
                ;
 
 /* Shift/Reduce conflict between two cases. */
 /* Assigned precedence IF < IF-ELSE to resolve the ambiguity. */
-IfStmt       ::= IF LPAREN Expr RPAREN Stmt            %prec IF
-               | IF LPAREN Expr RPAREN Stmt ELSE Stmt
+IfStmt       ::= IF LPAREN Expr:c RPAREN Stmt:t
+                   {: RESULT = new IfStmt(c, t); :}           %prec IF
+               | IF LPAREN Expr:c RPAREN Stmt:t ELSE Stmt:e
+                   {: RESULT = new IfStmt(c, t, e); :}
                ;
 
 /* Expressions */
-Expr         ::= MINUS Expr
-               | Expr MINUS Expr
-               | Expr TIMES Expr
-               | Expr DIVIDE Expr
-               | Expr PLUS Expr
-               | Expr LT Expr
-               | Expr GT Expr
-               | Expr LE Expr
-               | Expr GE Expr
-               | Expr EQEQ Expr
-               | Expr NE Expr
-               | Call
-               | INTNUM
-               | FLOATNUM
-               | ID
-               | ID LBRACKET Expr RBRACKET
-               | LPAREN Expr RPAREN
+Expr         ::= MINUS:op Expr:r                {: RESULT = new UnOpExpr(op, r); :}
+               | Expr:l MINUS:op Expr:r         {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l TIMES:op Expr:r         {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l DIVIDE:op Expr:r        {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l PLUS:op Expr:r          {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l LT:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l GT:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l LE:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l GE:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l EQEQ:op Expr:r          {: RESULT = new BinOpExpr(l, op, r); :}
+               | Expr:l NE:op Expr:r            {: RESULT = new BinOpExpr(l, op, r); :}
+               | Call:c                         {: RESULT = c; :}
+               | INTNUM:i                       {: RESULT = i; :}
+               | FLOATNUM:f                     {: RESULT = f; :}
+               | ID:id
+                   {: RESULT = new IdExpr(new Pos(idxleft, idxright), id); :}
+               | ID:id LBRACKET Expr:idx RBRACKET:end
+                   {: RESULT = new ArrayIndexExpr(new Pos(idxleft, endxright), id, idx); :}
+               | LPAREN Expr:e RPAREN           {: RESULT = e; :}
                ;
