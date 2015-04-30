@@ -6,10 +6,11 @@ public class Assign extends Node {
   private Expr idx;
   private Expr val;
 
-  public Assign(String id, Expr val) {
-    this(id, null, val);
+  public Assign(Pos pos, String id, Expr val) {
+    this(pos, id, null, val);
   }
-  public Assign(String id, Expr idx, Expr val) {
+  public Assign(Pos pos, String id, Expr idx, Expr val) {
+    super(pos);
     this.id = id;
     this.idx = idx;
     this.val = val;

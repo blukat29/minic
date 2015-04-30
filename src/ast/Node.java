@@ -19,11 +19,11 @@ abstract public class Node {
     Printer.astWriter.indent(n);
   }
   protected void error(String s) {
-    System.err.println(String.format("Error at %s: %s", pos, s));
+    System.err.println(String.format("error at %s: %s", pos, s));
     pos.showSource();
   }
   protected void error(String s, Node target) {
-    System.err.println(String.format("Error at %s: %s", pos, s));
+    System.err.println(String.format("error at %s: %s", pos, s));
     target.pos.showSource();
   }
 }

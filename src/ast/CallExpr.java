@@ -6,10 +6,11 @@ public class CallExpr extends Expr {
   private String id;
   private List<Expr> args;
 
-  public CallExpr(String id) {
-    this(id, null);
+  public CallExpr(Pos pos, String id) {
+    this(pos, id, null);
   }
-  public CallExpr(String id, List<Expr> args) {
+  public CallExpr(Pos pos, String id, List<Expr> args) {
+    super(pos);
     this.id = id;
     this.args = args;
   }

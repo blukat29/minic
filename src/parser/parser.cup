@@ -89,10 +89,10 @@ identifier   ::= ID:id
                ;
 
 /* Function definition */
-Function     ::= TYPE:ty ID:id LPAREN RPAREN CompoundStmt:body
-                    {: RESULT = new Function(ty, id, body); :}
-               | TYPE:ty ID:id LPAREN ParamList:params RPAREN CompoundStmt:body
-                    {: RESULT = new Function(ty, id, params, body); :}
+Function     ::= TYPE:ty ID:id LPAREN RPAREN:end CompoundStmt:body
+                   {: RESULT = new Function(new Pos(tyxleft, endxright), ty, id, body); :}
+               | TYPE:ty ID:id LPAREN ParamList:params RPAREN:end CompoundStmt:body
+                   {: RESULT = new Function(new Pos(tyxleft, endxright), ty, id, params, body); :}
                ;
 ParamList    ::= TYPE:ty identifier:id                     {: RESULT = (new ParamList()).append(ty, id); :}
                | ParamList:pl COMMA TYPE:ty identifier:id  {: RESULT = pl.append(ty, id); :}
@@ -120,16 +120,18 @@ Stmt         ::= SEMI                {: RESULT = new EmptyStmt(); :}
 AssignStmt   ::= Assign:a SEMI       {: RESULT = new AssignStmt(a); :}
                ;
 Assign       ::= ID:id EQUALS Expr:val
-                    {: RESULT = new Assign(id, val); :}
+                    {: RESULT = new Assign(new Pos(idxleft, valxright), id, val); :}
                | ID:id LBRACKET Expr:idx RBRACKET EQUALS Expr:val
-                    {: RESULT = new Assign(id, idx, val); :}
+                    {: RESULT = new Assign(new Pos(idxleft, valxright), id, idx, val); :}
                ;
 
 /* Call statements */
 CallStmt     ::= Call:c SEMI             {: RESULT = new CallStmt(c); :}
                ;
-Call         ::= ID:id LPAREN RPAREN            {: RESULT = new CallExpr(id); :}
-               | ID:id LPAREN ArgList:al RPAREN {: RESULT = new CallExpr(id, al); :}
+Call         ::= ID:id LPAREN RPAREN:end
+                   {: RESULT = new CallExpr(new Pos(idxleft, endxright), id); :}
+               | ID:id LPAREN ArgList:al RPAREN:end
+                   {: RESULT = new CallExpr(new Pos(idxleft, endxright), id, al); :}
                ;
 ArgList      ::= Expr:e
                   {: List<Expr> l = new ArrayList<Expr>(); l.add(e); RESULT = l; :}
@@ -188,7 +190,9 @@ Expr         ::= MINUS:op Expr:r                {: RESULT = new UnOpExpr(op, r);
                | Call:c                         {: RESULT = c; :}
                | INTNUM:i                       {: RESULT = i; :}
                | FLOATNUM:f                     {: RESULT = f; :}
-               | ID:id                          {: RESULT = new IdExpr(id); :}
-               | ID:id LBRACKET Expr:idx RBRACKET {: RESULT = new ArrayIndexExpr(id, idx); :}
+               | ID:id
+                   {: RESULT = new IdExpr(new Pos(idxleft, idxright), id); :}
+               | ID:id LBRACKET Expr:idx RBRACKET:end
+                   {: RESULT = new ArrayIndexExpr(new Pos(idxleft, endxright), id, idx); :}
                | LPAREN Expr:e RPAREN           {: RESULT = e; :}
                ;

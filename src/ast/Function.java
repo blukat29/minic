@@ -7,10 +7,11 @@ public class Function extends Node {
   private ParamList params;
   private CompoundStmt body;
 
-  public Function(TypeInfo retTy, String name, CompoundStmt body) {
-    this(retTy, name, null, body);
+  public Function(Pos pos, TypeInfo retTy, String name, CompoundStmt body) {
+    this(pos, retTy, name, null, body);
   }
-  public Function(TypeInfo retTy, String name, ParamList params, CompoundStmt body) {
+  public Function(Pos pos, TypeInfo retTy, String name, ParamList params, CompoundStmt body) {
+    super(pos);
     this.retTy = retTy;
     this.name = name;
     this.params = params;

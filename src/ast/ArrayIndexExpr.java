@@ -5,7 +5,8 @@ public class ArrayIndexExpr extends Expr {
   private String id;
   private Expr idx;
 
-  public ArrayIndexExpr(String id, Expr idx) {
+  public ArrayIndexExpr(Pos pos, String id, Expr idx) {
+    super(pos);
     this.id = id;
     this.idx = idx;
   }
