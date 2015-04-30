@@ -1,4 +1,5 @@
 float avg(int count, int value[4]){
+  int i;
   float total;
   total= 0.0;
   for (i =0; i < count; i=i+1) {

@@ -26,6 +26,7 @@ public class Driver
     }
     catch (Exception e) {
       System.err.println("Parse error: " + e.getMessage());
+      e.printStackTrace();
       return;
     }
 
@@ -39,6 +40,7 @@ public class Driver
     }
     catch (Exception e) {
       System.err.println("Compile error: " + e.getMessage());
+      e.printStackTrace();
       return;
     }
 

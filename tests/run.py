@@ -51,12 +51,6 @@ if __name__ == '__main__':
         else:
             print "\x1b[1;31m", "FAIL", case, "\x1b[0m"
             fail_cnt += 1
-    print "\n==========summary=========="
-    for i in range(len(tests)):
-        if results[i]:
-            print "\x1b[1;32m", "pass", tests[i], "\x1b[0m"
-        else:
-            print "\x1b[1;31m", "FAIL", tests[i], "\x1b[0m"
     print "pass %d fail %d" % (pass_cnt, fail_cnt)
 
 

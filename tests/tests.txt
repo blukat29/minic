@@ -1,12 +1,10 @@
 decl
 decl_bad
-empty
-func_head
 call
 assignret
 loop
 if
 switch
-switch_bad
 expr
 sample_avg
+error

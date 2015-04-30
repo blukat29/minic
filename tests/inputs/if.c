@@ -1,16 +1,18 @@
 int main()
 {
+  int a;
   if (1)
   {
     if (2)
       a = 1;
     else
-      b = 2;
+      a = 2;
   }
   if (1)
     if (2)
       if (3)
-        c = 3;
+        a = 3;
       else
-        d = 4;
+        a = 4;
+  return a;
 }

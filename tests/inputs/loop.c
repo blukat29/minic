@@ -1,15 +1,18 @@
 int main()
 {
+  int i;
+  int s;
+  s = 0;
   for (i=0; i < 10; i= i + 1)
   {
-    b = 3;
+    s = s + i;
   }
-  while (c < 9)
+  while (i < 20)
   {
-    c = c + 1;
-    a = 1;
+    i = i + 2;
   }
   do {
-    b = b - 1;
-  } while (b > 0);
+    s = s - 10;
+  } while (s > 0);
+  return s;
 }

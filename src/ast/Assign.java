@@ -21,7 +21,7 @@ public class Assign extends Node {
       indent(n); tree(id + " = "); val.dumpAST(0);
     }
     else {
-      indent(n); tree(id + "["); idx.dumpAST(0); tree("]"); val.dumpAST(0);
+      indent(n); tree(id + "["); idx.dumpAST(0); tree("] = "); val.dumpAST(0);
     }
   }
 
@@ -40,5 +40,8 @@ public class Assign extends Node {
       error(String.format("variable '%s' is an array.", id));
       return;
     }
+    if (idx != null)
+      idx.compile(scope);
+    val.compile(scope);
   }
 }
