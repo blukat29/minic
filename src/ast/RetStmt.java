@@ -21,6 +21,7 @@ public class RetStmt extends Stmt {
   }
 
   public void compile(Scope scope) {
-    expr.compile(scope);
+    if (expr != null)
+      expr.compile(scope);
   }
 }
