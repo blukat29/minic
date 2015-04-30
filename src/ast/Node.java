@@ -1,9 +1,16 @@
 package ast;
 
 abstract public class Node {
-  private int row;
-  private int column;
-  public abstract void dumpAST(int indent);
+  private Pos pos;
+
+  protected Node() {
+    this(new Pos());
+  }
+  protected Node(Pos pos) {
+    this.pos = pos;
+  }
+
+  public abstract void dumpAST(int indentLevel);
 
   protected void tree(String s) {
     Printer.astWriter.write(s);
@@ -12,6 +19,11 @@ abstract public class Node {
     Printer.astWriter.indent(n);
   }
   protected void error(String s) {
-    System.err.println(s);
+    System.err.println(String.format("Error at %s: %s", pos, s));
+    pos.showSource();
+  }
+  protected void error(String s, Node target) {
+    System.err.println(String.format("Error at %s: %s", pos, s));
+    target.pos.showSource();
   }
 }

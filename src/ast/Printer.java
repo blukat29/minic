@@ -34,8 +34,4 @@ public class Printer {
       System.exit(1);
     }
   }
-
-  public static void error(String msg) {
-    System.err.println(msg + "\n");
-  }
 }

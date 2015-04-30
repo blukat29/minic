@@ -10,7 +10,9 @@ public class Driver
 {
   private static void run(InputStream source, Writer tree, Writer table)
   {
-    Reader input = new BufferedReader(new InputStreamReader(source));
+    SourceManager sm = new SourceManager(source);
+    Pos.setSourceManager(sm);
+    Reader input = sm.getReader();
     ComplexSymbolFactory csf = new ComplexSymbolFactory();
     ScannerBuffer lexer = new ScannerBuffer(new Lexer(input, csf));
     Parser parser = new Parser(lexer, csf);

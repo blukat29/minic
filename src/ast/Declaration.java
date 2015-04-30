@@ -6,7 +6,8 @@ public class Declaration extends Node {
   private TypeInfo ty;
   private List<Identifier> identList;
 
-  public Declaration(TypeInfo ty, List<Identifier> il) {
+  public Declaration(Pos pos, TypeInfo ty, List<Identifier> il) {
+    super(pos);
     this.ty = ty;
     this.identList = il;
   }
