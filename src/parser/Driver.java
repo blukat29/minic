@@ -8,7 +8,7 @@ import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 public class Driver
 {
-  private static void run(InputStream source, Writer tree, Writer table)
+  private static void run(InputStream source, Writer treeWriter, Writer tableWriter)
   {
     SourceManager sm = new SourceManager(source);
     Pos.setSourceManager(sm);
@@ -31,7 +31,7 @@ public class Driver
     }
 
     /* Print AST representation */
-    Printer.setASTWriter(tree);
+    Printer.setASTWriter(treeWriter);
     program.dumpAST(0);
 
     /* Compile the AST */
@@ -46,7 +46,7 @@ public class Driver
 
     /* Dump symbol table */
     try {
-      SymbolTable.getInstance().dumpTable(table);
+      SymbolTable.getInstance().dumpTable(tableWriter);
     } catch (IOException e) {
       System.err.println("Error writing 'table.txt'");
       return;
@@ -55,10 +55,19 @@ public class Driver
 
   public static void main(String[] args) throws Exception
   {
-    Writer tree = new BufferedWriter(new FileWriter("tree.txt"));
-    Writer table = new BufferedWriter(new FileWriter("table.txt"));
-    run(System.in, tree, table);
-    tree.close();
-    table.close();
+    InputStream source = null;
+    if (args.length > 0)
+      source = new FileInputStream(args[0]);
+    else
+      source = System.in;
+    Writer treeWriter = new BufferedWriter(new FileWriter("tree.txt"));
+    Writer tableWriter = new BufferedWriter(new FileWriter("table.txt"));
+
+    run(source, treeWriter, tableWriter);
+
+    if (args.length > 0)
+      source.close();
+    treeWriter.close();
+    tableWriter.close();
   }
 }

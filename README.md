@@ -1,6 +1,8 @@
 Mini-C compiler
 ===============
 
+KAIST CS420 Introduction to Compiler Project
+
 ### Requirements
 - java
 - javac
@@ -8,17 +10,25 @@ Mini-C compiler
 - wget
 - tar
 
-### How to use
+### Setup
 ```
 make install
 make
-make run < input_file.c
 make test
-make clean
+```
+
+### Run
+
+```
+make run < input_file.c
+```
+or
+```
+./mcc < input_file.c
+./mcc input_file.c
 ```
 
 ### Based on
 - JFlex
 - CUP
-- Sample code from "Modern Compiler Implementation in Java” written by Andrew Appel
 
