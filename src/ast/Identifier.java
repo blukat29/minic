@@ -6,13 +6,16 @@ public class Identifier extends Node {
   private boolean isArray;
   private IntNum n;
 
-  public Identifier(String id) {
-    this.id = id;
-    isArray = false;
+  public Identifier(Pos pos, String id) {
+    this(pos, id, false, null);
   }
-  public Identifier(String id, IntNum n) {
+  public Identifier(Pos pos, String id, IntNum n) {
+    this(pos, id, true, n);
+  }
+  public Identifier(Pos pos, String id, boolean isArray, IntNum n) {
+    super(pos);
     this.id = id;
-    isArray = true;
+    this.isArray = isArray;
     this.n = n;
   }
 

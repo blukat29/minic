@@ -82,8 +82,10 @@ IdentList    ::= identifier:id
                       l.add(id); RESULT = l; :}
                | IdentList:l COMMA identifier:id  {: l.add(id); RESULT = l; :}
                ;
-identifier   ::= ID:id                            {: RESULT = new Identifier(id); :}
-               | ID:id LBRACKET INTNUM:n RBRACKET {: RESULT = new Identifier(id, n); :}
+identifier   ::= ID:id
+                   {: RESULT = new Identifier(new Pos(idxleft, idxright), id); :}
+               | ID:id LBRACKET INTNUM:n RBRACKET:end
+                   {: RESULT = new Identifier(new Pos(idxleft, endxright), id, n); :}
                ;
 
 /* Function definition */
