@@ -34,7 +34,7 @@ public class ParamList extends Node {
     for (int i=0; i<tyList.size(); i++) {
       TypeInfo ty = tyList.get(i);
       Identifier id = idList.get(i);
-      if (SymbolTable.lookup(scope, id.getName()) != null) {
+      if (SymbolTable.lookupInSameScope(scope, id.getName()) != null) {
         error(String.format("variable '%s' is already declared.", id.getName()), id);
       }
       else {

@@ -25,7 +25,7 @@ public class Declaration extends Node {
   public void compile(Scope scope) {
     for (Identifier id : identList) {
       Symbol symbol = id.toSymbol(scope, ty, false);
-      if (SymbolTable.lookup(scope, id.getName()) != null) {
+      if (SymbolTable.lookupInSameScope(scope, id.getName()) != null) {
         error(String.format("variable '%s' is already declared.", id.getName()), id);
       }
       else {

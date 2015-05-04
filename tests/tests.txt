@@ -8,3 +8,4 @@ switch
 expr
 sample_avg
 error
+scope

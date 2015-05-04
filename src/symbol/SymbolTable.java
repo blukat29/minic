@@ -26,17 +26,24 @@ public class SymbolTable {
     List<Symbol>table = SymbolTable.getInstance().table;
     Scope scope = scope_.clone();
     while (true) {
-      for (Symbol symbol : table) {
-        if (symbol.getName().equals(name)) {
-          if (symbol.getScope().equals(scope)) {
-            return symbol;
-          }
-        }
-      }
+      Symbol result = lookupInSameScope(scope, name);
+      if (result != null)
+        return result;
       if (!scope.isEmpty())
         scope.pop();
       else
         break;
+    }
+    return null;
+  }
+
+  public static Symbol lookupInSameScope (Scope scope, String name) {
+    List<Symbol>table = SymbolTable.getInstance().table;
+    for (Symbol symbol : table) {
+      if (symbol.getName().equals(name)) {
+        if (symbol.getScope().equals(scope))
+          return symbol;
+      }
     }
     return null;
   }
