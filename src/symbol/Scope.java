@@ -42,21 +42,12 @@ public class Scope {
     stack.pop();
   }
 
-  public boolean isParentOf(Scope other) {
-    if (this.stack.empty())  // Any scope is under global scope
-      return true;
+  public boolean isEmpty() {
+    return stack.isEmpty();
+  }
 
-    Iterator<ScopeLevel> thisIter = this.stack.iterator();
-    Iterator<ScopeLevel> otherIter = other.stack.iterator();
-    while (thisIter.hasNext()) {
-      ScopeLevel thisLevel = thisIter.next();
-      if (!otherIter.hasNext())
-        return false;
-      ScopeLevel otherLevel = otherIter.next();
-      if (!thisLevel.equals(otherLevel))
-        return false;
-    }
-    return true;
+  public boolean equals(Scope other) {
+    return this.stack.equals(other.stack);
   }
 
   @SuppressWarnings("unchecked")

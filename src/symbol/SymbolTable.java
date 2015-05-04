@@ -22,13 +22,21 @@ public class SymbolTable {
     table.add(symbol);
   }
 
-  public static Symbol lookup(Scope scope, String name) {
+  public static Symbol lookup(Scope scope_, String name) {
     List<Symbol>table = SymbolTable.getInstance().table;
-    for (Symbol symbol : table) {
-      if (symbol.getName().equals(name)) {
-        if (symbol.getScope().isParentOf(scope))
-          return symbol;
+    Scope scope = scope_.clone();
+    while (true) {
+      for (Symbol symbol : table) {
+        if (symbol.getName().equals(name)) {
+          if (symbol.getScope().equals(scope)) {
+            return symbol;
+          }
+        }
       }
+      if (!scope.isEmpty())
+        scope.pop();
+      else
+        break;
     }
     return null;
   }
