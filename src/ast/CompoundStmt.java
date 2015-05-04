@@ -28,4 +28,10 @@ public class CompoundStmt extends Stmt {
     stmtList.compile(scope);
     scope.pop();
   }
+
+  public void compileFunctionBlock(Scope scope) {
+    if (declList != null)
+      declList.compile(scope);
+    stmtList.compile(scope);
+  }
 }

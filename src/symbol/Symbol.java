@@ -38,10 +38,10 @@ public class Symbol {
   }
 
   public String toString() {
-    String varClass = isParam? "param" : "var";
+    String varClass = isParam? "param" : " var ";
     if (!isArray)
-      return String.format("%s %s %s %s", scope, varClass, ty, name);
+      return String.format("%s%s %s %s", scope, varClass, ty, name);
     else
-      return String.format("%s %s %s %s[%d]", scope, varClass, ty, name, arraySize);
+      return String.format("%s%s %s %s[%d]", scope, varClass, ty, name, arraySize);
   }
 }

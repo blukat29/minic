@@ -42,7 +42,7 @@ public class Function extends Node {
     scope.push(this);
     if (params != null)
       params.compile(scope);
-    body.compile(scope);
+    body.compileFunctionBlock(scope);
     scope.pop();
   }
 

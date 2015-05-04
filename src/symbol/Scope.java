@@ -68,7 +68,7 @@ public class Scope {
 
   public String toString() {
     if (stack.empty())
-      return "global";
+      return "global ";
     else {
       String s = "";
       for (ScopeLevel level : stack) {
