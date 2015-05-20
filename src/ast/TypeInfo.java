@@ -23,4 +23,8 @@ public class TypeInfo extends Node {
       return "float";
     return "";
   }
+
+  public boolean equals(TypeInfo other) {
+    return this.ty == other.ty;
+  }
 }
