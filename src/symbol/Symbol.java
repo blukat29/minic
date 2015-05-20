@@ -29,6 +29,10 @@ public class Symbol {
     return scope;
   }
 
+  public TypeInfo getType() {
+    return ty;
+  }
+
   public String getName() {
     return name;
   }

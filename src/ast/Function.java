@@ -20,6 +20,9 @@ public class Function extends Node {
   public String getName() {
     return name;
   }
+  public TypeInfo getRetTy() {
+    return retTy;
+  }
 
   public void dumpAST(int n) {
     retTy.dumpAST(n); tree(name + " ");

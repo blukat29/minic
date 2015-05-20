@@ -2,8 +2,8 @@ package ast;
 import symbol.*;
 
 abstract public class Expr extends Node {
+  protected TypeInfo ty = null;
   public Expr() {
-    super();
   }
   public Expr(Pos pos) {
     super(pos);

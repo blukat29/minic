@@ -26,5 +26,6 @@ public class ArrayIndexExpr extends Expr {
       return;
     }
     idx.compile(scope);
+    this.ty = destSymbol.getType();
   }
 }

@@ -16,5 +16,6 @@ public class UnOpExpr extends Expr {
 
   public void compile(Scope scope) {
     r.compile(scope);
+    this.ty = r.ty;
   }
 }

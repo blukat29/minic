@@ -10,5 +10,6 @@ public class FloatNum extends Expr {
     indent(n); tree(value + "f");
   }
   public void compile(Scope scope) {
+    this.ty = new TypeInfo(TypeInfo.FLOAT);
   }
 }

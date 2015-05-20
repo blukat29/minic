@@ -32,5 +32,6 @@ public class CallExpr extends Expr {
       error(String.format("function '%s' is not defined.", id));
       return;
     }
+    this.ty = func.getRetTy();
   }
 }

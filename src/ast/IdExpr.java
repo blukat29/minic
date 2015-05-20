@@ -26,5 +26,6 @@ public class IdExpr extends Expr {
       error(String.format("variable '%s' is an array.", name));
       return;
     }
+    this.ty = destSymbol.getType();
   }
 }

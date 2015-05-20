@@ -13,5 +13,6 @@ public class IntNum extends Expr {
     indent(n); tree(value + "i");
   }
   public void compile(Scope scope) {
+    this.ty = new TypeInfo(TypeInfo.INT);
   }
 }
