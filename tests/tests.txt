@@ -9,3 +9,4 @@ expr
 sample_avg
 error
 scope
+type

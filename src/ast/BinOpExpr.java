@@ -36,10 +36,14 @@ public class BinOpExpr extends Expr {
       this.ty = l.ty;
     }
     else {
-      if (l.ty.equals(intTy))
+      if (l.ty.equals(intTy)) {
         l = new TypeCast(floatTy, l);
-      else
+        l.compile(scope);
+      }
+      else {
         r = new TypeCast(floatTy, r);
+        r.compile(scope);
+      }
       this.ty = floatTy;
     }
     if (isCompare())

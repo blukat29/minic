@@ -40,8 +40,23 @@ public class Assign extends Node {
       error(String.format("variable '%s' is an array.", id));
       return;
     }
-    if (idx != null)
+    if (idx != null) {
       idx.compile(scope);
+      if (idx.ty == null || !idx.ty.equals(new TypeInfo(TypeInfo.INT))) {
+        error(String.format("Array index must be integer.", idx));
+        return;
+      }
+    }
     val.compile(scope);
+    if (val.ty != null) {
+      TypeInfo lhsTy = destSymbol.getType();
+      TypeInfo rhsTy = val.ty;
+      if (!lhsTy.equals(rhsTy)) {
+        warn(String.format("Implicitly casting %s to %s", rhsTy, lhsTy), this);
+        val = new TypeCast(lhsTy, val);
+        val.compile(scope);
+        return;
+      }
+    }
   }
 }

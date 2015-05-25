@@ -26,4 +26,8 @@ abstract public class Node {
     System.err.println(String.format("error at %s: %s", pos, s));
     target.pos.showSource();
   }
+  protected void warn(String s, Node target) {
+    System.err.println(String.format("warning at %s: %s", pos, s));
+    target.pos.showSource();
+  }
 }
