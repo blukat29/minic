@@ -11,3 +11,4 @@ error
 scope
 type
 type_call
+type_control

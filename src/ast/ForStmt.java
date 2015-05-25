@@ -27,5 +27,9 @@ public class ForStmt extends Stmt {
     cond.compile(scope);
     incr.compile(scope);
     body.compile(scope);
+    if (cond.isArray) {
+      error("An array cannot be boolean", cond);
+      return;
+    }
   }
 }

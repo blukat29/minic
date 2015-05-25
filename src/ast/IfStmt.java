@@ -32,5 +32,9 @@ public class IfStmt extends Stmt {
     thenStmt.compile(scope);
     if (elseStmt != null)
       elseStmt.compile(scope);
+    if (cond.isArray) {
+      error("An array cannot be boolean", cond);
+      return;
+    }
   }
 }

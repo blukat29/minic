@@ -19,6 +19,16 @@ public class SwitchStmt extends Stmt {
 
   public void compile(Scope scope) {
     value.compile(scope);
+    if (value.isArray) {
+      error("An array cannot be value", value);
+      return;
+    }
+    TypeInfo intTy = new TypeInfo(TypeInfo.INT);
+    if (!value.ty.equals(intTy)) {
+      warn("Implicitly casting float to int", value);
+      value = new TypeCast(intTy, value);
+      value.compile(scope);
+    }
     caseList.compile(scope);
   }
 }

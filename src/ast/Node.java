@@ -19,15 +19,15 @@ abstract public class Node {
     Printer.astWriter.indent(n);
   }
   protected void error(String s) {
-    System.err.println(String.format("error at %s: %s", pos, s));
+    System.err.println(String.format("error at %s: %s", this.pos, s));
     pos.showSource();
   }
   protected void error(String s, Node target) {
-    System.err.println(String.format("error at %s: %s", pos, s));
+    System.err.println(String.format("error at %s: %s", target.pos, s));
     target.pos.showSource();
   }
   protected void warn(String s, Node target) {
-    System.err.println(String.format("warning at %s: %s", pos, s));
+    System.err.println(String.format("warning at %s: %s", target.pos, s));
     target.pos.showSource();
   }
 }

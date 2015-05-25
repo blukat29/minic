@@ -26,12 +26,14 @@ class ScopeLevel {
 
 public class Scope {
   Stack<ScopeLevel> stack;
+  Function func;
 
   public Scope() {
     stack = new Stack<ScopeLevel>();
   }
 
   public void push(Function func) {
+    this.func = func;
     stack.push(new ScopeLevel(func));
   }
   public void push(CompoundStmt cs) {
@@ -40,6 +42,10 @@ public class Scope {
 
   public void pop() {
     stack.pop();
+  }
+
+  public Function getFunction() {
+    return func;
   }
 
   public boolean isEmpty() {
