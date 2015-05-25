@@ -26,6 +26,7 @@ public class CompoundStmt extends Stmt {
     if (declList != null)
       declList.compile(scope);
     stmtList.compile(scope);
+    this.hasReturned = stmtList.hasReturned;
     scope.pop();
   }
 
@@ -33,5 +34,6 @@ public class CompoundStmt extends Stmt {
     if (declList != null)
       declList.compile(scope);
     stmtList.compile(scope);
+    this.hasReturned = stmtList.hasReturned;
   }
 }

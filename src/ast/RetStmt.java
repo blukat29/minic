@@ -34,5 +34,6 @@ public class RetStmt extends Stmt {
       expr = new TypeCast(retTy, expr);
       expr.compile(scope);
     }
+    hasReturned = true;
   }
 }

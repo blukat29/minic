@@ -36,5 +36,9 @@ public class IfStmt extends Stmt {
       error("An array cannot be boolean", cond);
       return;
     }
+    if (elseStmt == null && thenStmt.hasReturned)
+      this.hasReturned = true;
+    if (elseStmt != null && thenStmt.hasReturned && elseStmt.hasReturned)
+      this.hasReturned = true;
   }
 }

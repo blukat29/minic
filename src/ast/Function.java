@@ -50,6 +50,10 @@ public class Function extends Node {
       params.compile(scope);
     body.compileFunctionBlock(scope);
     scope.pop();
+    if (!body.hasReturned) {
+      error(String.format("Function '%s' did not return a value", name), this);
+      return;
+    }
   }
 
   public String toString() {

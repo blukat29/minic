@@ -3,6 +3,7 @@ import java.util.*;
 import symbol.*;
 
 public class StmtList extends Node {
+  protected boolean hasReturned = false;
   private List<Stmt> stmtList;
 
   public StmtList() {
@@ -19,7 +20,10 @@ public class StmtList extends Node {
   }
 
   public void compile(Scope scope) {
-    for (Stmt stmt : stmtList)
+    for (Stmt stmt : stmtList) {
       stmt.compile(scope);
+      if (stmt.hasReturned)
+        this.hasReturned = true;
+    }
   }
 }
