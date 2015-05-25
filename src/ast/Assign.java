@@ -48,6 +48,10 @@ public class Assign extends Node {
       }
     }
     val.compile(scope);
+    if (val.isArray) {
+      error("Cannot assign an array.", val);
+      return;
+    }
     if (val.ty != null) {
       TypeInfo lhsTy = destSymbol.getType();
       TypeInfo rhsTy = val.ty;

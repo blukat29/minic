@@ -16,6 +16,10 @@ public class UnOpExpr extends Expr {
 
   public void compile(Scope scope) {
     r.compile(scope);
+    if (r.isArray) {
+      error("Cannot operate on array", r);
+      return;
+    }
     this.ty = r.ty;
   }
 }

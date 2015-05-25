@@ -29,6 +29,15 @@ public class BinOpExpr extends Expr {
     l.compile(scope);
     r.compile(scope);
 
+    if (l.isArray) {
+      error("Cannot operate on array", l);
+      return;
+    }
+    if (r.isArray) {
+      error("Cannot operate on array", r);
+      return;
+    }
+
     /* Cast to float if operands' types are different. */
     TypeInfo intTy = new TypeInfo(TypeInfo.INT);
     TypeInfo floatTy = new TypeInfo(TypeInfo.FLOAT);
