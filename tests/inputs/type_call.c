@@ -18,6 +18,7 @@ int main() {
   v[0] = 1.0;
   v[1] = 2.0;
   n = normsq(v);
+  n = normsq(9.8);
   m = max(1.2, 3.5);
   m = max(1,2,3,4,5);
   return 0;

@@ -56,7 +56,12 @@ public class CallExpr extends Expr {
       for (int i=0; i<tyList.size(); i++) {
         Expr expr = args.get(i);
         TypeInfo paramTy = tyList.get(i);
+        Identifier paramId = idList.get(i);
         if (expr.ty == null) return;     /* There must be an error. Stop compiling. */
+        if (expr.isArray != paramId.isArray()) {
+          error("Incompatible argument", expr);
+          return;
+        }
         if (!expr.ty.equals(paramTy)) {
           warn(String.format("Implicitly casting %s to %s", expr.ty, paramTy), expr);
           expr = new TypeCast(paramTy, expr);

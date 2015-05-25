@@ -18,6 +18,9 @@ public class Identifier extends Node {
     this.isArray = isArray;
     this.n = n;
   }
+  public boolean isArray() {
+    return isArray;
+  }
 
   public void dumpAST(int n) {
     indent(n); tree(id);
