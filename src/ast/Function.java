@@ -23,6 +23,9 @@ public class Function extends Node {
   public TypeInfo getRetTy() {
     return retTy;
   }
+  public ParamList getParams() {
+    return params;
+  }
 
   public void dumpAST(int n) {
     retTy.dumpAST(n); tree(name + " ");

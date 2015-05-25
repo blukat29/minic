@@ -15,6 +15,15 @@ public class ParamList extends Node {
     idList.add(id);
     return this;
   }
+  public int size() {
+    return tyList.size();
+  }
+  public List<TypeInfo> getTyList() {
+    return tyList;
+  }
+  public List<Identifier> getIdList() {
+    return idList;
+  }
 
   public void dumpAST(int n) {
     tree("(");

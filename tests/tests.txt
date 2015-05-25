@@ -10,3 +10,4 @@ sample_avg
 error
 scope
 type
+type_call

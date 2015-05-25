@@ -32,6 +32,38 @@ public class CallExpr extends Expr {
       error(String.format("function '%s' is not defined.", id));
       return;
     }
+
+    ParamList params = func.getParams();
+
+    int argCount, paramCount;
+    if (args == null) argCount = 0;
+    else argCount = args.size();
+    if (params == null) paramCount = 0;
+    else paramCount = params.size();
+
+    if (argCount != paramCount) {
+      error(String.format("Argument count mismatch - %d expected, %d given.", paramCount, argCount), this);
+      return;
+    }
+
+    if (args != null) {
+      for (Expr expr : args) {
+        expr.compile(scope);
+      }
+
+      List<TypeInfo> tyList = params.getTyList();
+      List<Identifier> idList = params.getIdList();
+      for (int i=0; i<tyList.size(); i++) {
+        Expr expr = args.get(i);
+        TypeInfo paramTy = tyList.get(i);
+        if (expr.ty == null) return;     /* There must be an error. Stop compiling. */
+        if (!expr.ty.equals(paramTy)) {
+          warn(String.format("Implicitly casting %s to %s", expr.ty, paramTy), expr);
+          expr = new TypeCast(paramTy, expr);
+          expr.compile(scope);
+        }
+      }
+    }
     this.ty = func.getRetTy();
   }
 }

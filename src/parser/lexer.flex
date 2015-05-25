@@ -36,6 +36,12 @@ import ast.*;
     return sf.newSymbol(Symbols.terminalNames[type], type, left, right, value);
   }
 
+  private Pos currentPos() {
+    Location left = new Location(yyline+1, yycolumn+1, yychar);
+    Location right = new Location(yyline+1, yycolumn+yylength(), yychar+yylength());
+    return new Pos(left, right);
+  }
+
   private void error(String message) {
     System.err.println("Lexer error at line " + (yyline+1) + ", column " + (yycolumn+1) + " : " + message);
   }
@@ -91,8 +97,8 @@ FLOATNUM = [0-9]+\.[0-9]+
     "!="            { return symbol( Symbols.NE, "!=" ); }
 
     {ID}            { return symbol( Symbols.ID, yytext() ); }
-    {INTNUM}        { return symbol( Symbols.INTNUM, new IntNum( yytext() ) ); }
-    {FLOATNUM}      { return symbol( Symbols.FLOATNUM, new FloatNum( yytext() ) ); }
+    {INTNUM}        { return symbol( Symbols.INTNUM, new IntNum( currentPos(), yytext() ) ); }
+    {FLOATNUM}      { return symbol( Symbols.FLOATNUM, new FloatNum( currentPos(), yytext() ) ); }
     {WhiteSpace}    { /* ignore */ }
 }
 

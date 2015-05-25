@@ -55,7 +55,6 @@ public class Assign extends Node {
         warn(String.format("Implicitly casting %s to %s", rhsTy, lhsTy), this);
         val = new TypeCast(lhsTy, val);
         val.compile(scope);
-        return;
       }
     }
   }
