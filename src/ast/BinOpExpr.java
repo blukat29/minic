@@ -30,6 +30,7 @@ public class BinOpExpr extends Expr {
   public void compile(Scope scope) {
     l.compile(scope);
     r.compile(scope);
+    if (l.ty == null || r.ty == null) return;
 
     if (l.isArray) {
       error("Cannot operate on array", l);

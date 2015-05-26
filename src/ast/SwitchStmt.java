@@ -18,6 +18,7 @@ public class SwitchStmt extends Stmt {
 
   public void compile(Scope scope) {
     value.compile(scope);
+    if (value.ty == null) return;
     if (value.isArray) {
       error("An array cannot be value", value);
       return;

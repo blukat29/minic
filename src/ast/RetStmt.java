@@ -20,6 +20,8 @@ public class RetStmt extends Stmt {
   public void compile(Scope scope) {
     if (expr != null)
       expr.compile(scope);
+    else
+      return;
     if (expr.isArray) {
       error("Cannot return an array", expr);
       return;
