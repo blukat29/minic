@@ -17,6 +17,7 @@ public class Program extends Node {
     this.declList = declList;
     this.funcList = funcList;
   }
+
   public void dumpAST(int n) {
     if (declList != null)
       declList.dumpAST(n);

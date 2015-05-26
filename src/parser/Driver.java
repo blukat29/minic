@@ -30,26 +30,17 @@ public class Driver
       return;
     }
 
-    /* Print AST representation */
-    Printer.setASTWriter(treeWriter);
-    program.dumpAST(0);
-
     /* Compile the AST */
-    try {
-      program.compile();
-    }
-    catch (Exception e) {
-      System.err.println("Compile error: " + e.getMessage());
-      e.printStackTrace();
-      return;
-    }
+    program.compile();
+    int errorCount = program.getErrorCount();
+    int warnCount = program.getWarnCount();
+    System.out.printf("Compile complete. %d errors, %d warnings.\n", errorCount, warnCount);
 
-    /* Dump symbol table */
-    try {
+    /* Print AST representation and dump symbol table. */
+    if (errorCount == 0) {
+      Printer.setASTWriter(treeWriter);
+      program.dumpAST(0);
       SymbolTable.getInstance().dumpTable(tableWriter);
-    } catch (IOException e) {
-      System.err.println("Error writing 'table.txt'");
-      return;
     }
   }
 

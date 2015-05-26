@@ -62,16 +62,20 @@ public class SymbolTable {
     return null;
   }
 
-  public static void dumpTable(Writer writer) throws IOException {
+  public static void dumpTable(Writer writer) {
     List<Symbol>table = SymbolTable.getInstance().table;
     List<Function>functions = SymbolTable.getInstance().functions;
-    writer.write("# Variables\n");
-    for (Symbol symbol : table) {
-      writer.write(symbol + "\n");
-    }
-    writer.write("# Functions\n");
-    for (Function func : functions) {
-      writer.write(func + "\n");
+    try {
+      writer.write("# Variables\n");
+      for (Symbol symbol : table) {
+        writer.write(symbol + "\n");
+      }
+      writer.write("# Functions\n");
+      for (Function func : functions) {
+        writer.write(func + "\n");
+      }
+    } catch (IOException e) {
+      System.err.println("Error writing symbol table.");
     }
   }
 }
