@@ -11,10 +11,9 @@ public class SwitchStmt extends Stmt {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree("switch ( "); value.dumpAST(0); tree(" )\n");
-    indent(n); tree("{\n");
-    caseList.dumpAST(n + 1);
-    indent(n); tree("}\n");
+    indent(n); tree("SwitchStmt\n");
+    value.dumpAST(n+1);
+    caseList.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

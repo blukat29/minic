@@ -15,11 +15,11 @@ public class ForStmt extends Stmt {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree("for ( "); init.dumpAST(0); tree(" ; ");
-    cond.dumpAST(0); tree(" ; "); incr.dumpAST(0); tree(" )\n");
-    indent(n); tree("{\n");
-    body.dumpAST(n + 1);
-    indent(n); tree("}\n");
+    indent(n); tree("ForStmt\n");
+    init.dumpAST(n+1);
+    cond.dumpAST(n+1);
+    incr.dumpAST(n+1);
+    body.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

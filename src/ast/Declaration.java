@@ -13,13 +13,9 @@ public class Declaration extends Node {
   }
 
   public void dumpAST(int n) {
-    ty.dumpAST(n);
-
-    identList.get(0).dumpAST(0);
-    for (int i=1; i<identList.size(); i++) {
-      tree(", "); identList.get(i).dumpAST(0);
-    }
-    tree(";\n");
+    indent(n); tree("Declaration " + ty.toString() + "\n");
+    for (Identifier id : identList)
+      id.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

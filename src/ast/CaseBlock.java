@@ -13,7 +13,7 @@ public class CaseBlock extends Node {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree("case "); num.dumpAST(0); tree(":\n");
+    indent(n); tree("CaseBlock (" + num + ")\n");
     stmtList.dumpAST(n + 1);
     if (hasBreak) {
       indent(n + 1); tree("break;\n");

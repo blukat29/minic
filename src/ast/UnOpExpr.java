@@ -11,7 +11,8 @@ public class UnOpExpr extends Expr {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree(op + " ( "); r.dumpAST(0); tree(" )");
+    indent(n); tree("UnOpExpr(" + op + ")\n");
+    r.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

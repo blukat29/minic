@@ -25,8 +25,9 @@ public class Identifier extends Node {
   public void dumpAST(int n) {
     indent(n); tree(id);
     if (isArray) {
-      tree("["); this.n.dumpAST(0); tree("]");
+      tree("[" + n + "]");
     }
+    tree("\n");
   }
 
   public String getName() {

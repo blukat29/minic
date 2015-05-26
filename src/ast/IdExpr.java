@@ -13,7 +13,7 @@ public class IdExpr extends Expr {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree(name);
+    indent(n); tree("ID:" + name + "\n");
   }
 
   public void compile(Scope scope) {
@@ -24,5 +24,8 @@ public class IdExpr extends Expr {
     }
     this.isArray = destSymbol.isArray();
     this.ty = destSymbol.getType();
+  }
+  public String toString() {
+    return name;
   }
 }

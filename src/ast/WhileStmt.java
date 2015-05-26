@@ -14,15 +14,14 @@ public class WhileStmt extends Stmt {
 
   public void dumpAST(int n) {
     if (isDoWhile) {
-      indent(n); tree("do\n"); indent(n); tree("{\n");
-      body.dumpAST(n + 1);
-      indent(n); tree("} while ( "); cond.dumpAST(0); tree(" );\n");
+      indent(n); tree("WhileStmt(do-while)\n");
+      body.dumpAST(n+1);
+      cond.dumpAST(n+1);
     }
     else {
-      indent(n); tree("while ( "); cond.dumpAST(0); tree(" )\n");
-      indent(n); tree("{\n");
-      body.dumpAST(n + 1);
-      indent(n); tree("}\n");
+      indent(n); tree("WhileStmt(while)\n");
+      cond.dumpAST(n+1);
+      body.dumpAST(n+1);
     }
   }
 

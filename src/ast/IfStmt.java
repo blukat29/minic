@@ -16,15 +16,11 @@ public class IfStmt extends Stmt {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree("if ( "); cond.dumpAST(0); tree(" )\n");
-    indent(n); tree("{\n");
-    thenStmt.dumpAST(n + 1);
-    indent(n); tree("}\n");
-    if (elseStmt != null) {
-      indent(n); tree("else\n"); indent(n); tree("{\n");
-      elseStmt.dumpAST(n + 1);
-      indent(n); tree("}\n");
-    }
+    indent(n); tree("IfStmt\n");
+    cond.dumpAST(n+1);
+    thenStmt.dumpAST(n+1);
+    if (elseStmt != null)
+      elseStmt.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

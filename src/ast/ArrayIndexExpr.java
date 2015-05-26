@@ -12,7 +12,9 @@ public class ArrayIndexExpr extends Expr {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree(id + "["); idx.dumpAST(0); tree("]");
+    indent(n); tree("ArrayIndexExpr\n");
+    indent(n+1); tree(id + "\n");
+    idx.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

@@ -11,7 +11,8 @@ public class TypeCast extends Expr {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree("(" + ty + ")");
+    indent(n); tree("TypeCast(" + destTy + ")\n");
+    body.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

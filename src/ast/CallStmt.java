@@ -7,7 +7,7 @@ public class CallStmt extends Stmt {
     this.call = call;
   }
   public void dumpAST(int n) {
-    call.dumpAST(n); tree(";\n");
+    call.dumpAST(n);
   }
   public void compile(Scope scope) {
     call.compile(scope);

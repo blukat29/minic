@@ -14,9 +14,12 @@ public class IntNum extends Expr {
     return value;
   }
   public void dumpAST(int n) {
-    indent(n); tree(value + "i");
+    indent(n); tree("INT:" + value + "\n");
   }
   public void compile(Scope scope) {
     this.ty = new TypeInfo(TypeInfo.INT);
+  }
+  public String toString() {
+    return Integer.toString(value);
   }
 }

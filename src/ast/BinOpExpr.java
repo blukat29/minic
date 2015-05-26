@@ -15,7 +15,9 @@ public class BinOpExpr extends Expr {
   }
 
   public void dumpAST(int n) {
-    tree("("); l.dumpAST(n); tree(" " + op + " "); r.dumpAST(0); tree(")");
+    indent(n); tree("BinOpExpr(" + op + ")\n");
+    l.dumpAST(n+1);
+    r.dumpAST(n+1);
   }
 
   private boolean isCompare() {

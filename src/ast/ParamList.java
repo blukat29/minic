@@ -26,17 +26,11 @@ public class ParamList extends Node {
   }
 
   public void dumpAST(int n) {
-    tree("(");
-    if (tyList.size() > 0) {
-      tyList.get(0).dumpAST(0);
-      idList.get(0).dumpAST(0);
-    }
-    for (int i=1; i<tyList.size(); i++) {
-      tree(", ");
-      tyList.get(i).dumpAST(0);
+    indent(n); tree("ParamList\n");
+    for (int i=0; i < tyList.size(); i++) {
+      tyList.get(i).dumpAST(n+1);
       idList.get(i).dumpAST(0);
     }
-    tree(")");
   }
 
   public void compile(Scope scope) {

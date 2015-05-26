@@ -11,7 +11,7 @@ public class FloatNum extends Expr {
     value = Float.parseFloat(s);
   }
   public void dumpAST(int n) {
-    indent(n); tree(value + "f");
+    indent(n); tree("FLOAT:" + value + "\n");
   }
   public void compile(Scope scope) {
     this.ty = new TypeInfo(TypeInfo.FLOAT);

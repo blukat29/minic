@@ -11,7 +11,7 @@ public class DefaultBlock extends Node {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree("default:\n");
+    indent(n); tree("DefaultBlock\n");
     stmtList.dumpAST(n + 1);
     if (hasBreak) {
       indent(n + 1); tree("break;\n");

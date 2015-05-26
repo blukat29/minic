@@ -12,12 +12,9 @@ public class RetStmt extends Stmt {
   }
 
   public void dumpAST(int n) {
-    if (expr == null) {
-      indent(n); tree("return;\n");
-    }
-    else {
-      indent(n); tree("return "); expr.dumpAST(0); tree(";\n");
-    }
+    indent(n); tree("ReturnStmt\n");
+    if (expr != null)
+      expr.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

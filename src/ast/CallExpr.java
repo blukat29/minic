@@ -16,14 +16,11 @@ public class CallExpr extends Expr {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree(id + "(");
+    indent(n); tree("Call " + id + "\n");
     if (args != null) {
-      args.get(0).dumpAST(0);
-      for (int i=1; i<args.size(); i++) {
-        tree(", "); args.get(i).dumpAST(0);
-      }
+      for (Expr arg : args)
+        arg.dumpAST(n+1);
     }
-    tree(")");
   }
 
   public void compile(Scope scope) {

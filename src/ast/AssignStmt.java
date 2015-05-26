@@ -7,7 +7,7 @@ public class AssignStmt extends Stmt {
     this.assign = assign;
   }
   public void dumpAST(int n) {
-    assign.dumpAST(n); tree(";\n");
+    assign.dumpAST(n);
   }
   public void compile(Scope scope) {
     assign.compile(scope);

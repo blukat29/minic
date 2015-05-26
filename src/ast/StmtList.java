@@ -15,8 +15,9 @@ public class StmtList extends Node {
   }
 
   public void dumpAST(int n) {
+    indent(n); tree("StmtList\n");
     for (Stmt stmt : stmtList)
-      stmt.dumpAST(n);
+      stmt.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

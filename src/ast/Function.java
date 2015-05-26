@@ -28,13 +28,14 @@ public class Function extends Node {
   }
 
   public void dumpAST(int n) {
-    retTy.dumpAST(n); tree(name + " ");
-    if (params != null)
-      params.dumpAST(0);
-    else
-      tree("(void)");
-    tree("\n");
-    body.dumpAST(n);
+    indent(n); tree("Function " + retTy + " " + name + "\n");
+    if (params != null) {
+      params.dumpAST(n+1);
+    } else {
+      indent(n+1);
+      tree("(void)\n");
+    }
+    body.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

@@ -14,11 +14,10 @@ public class CompoundStmt extends Stmt {
   }
 
   public void dumpAST(int n) {
-    indent(n); tree("{\n");
+    indent(n); tree("CompoundStmt\n");
     if (declList != null)
       declList.dumpAST(n + 1);
     stmtList.dumpAST(n + 1);
-    indent(n); tree("}\n");
   }
 
   public void compile(Scope scope) {

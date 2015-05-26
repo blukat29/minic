@@ -12,9 +12,9 @@ public class DeclList extends Node {
     return this;
   }
   public void dumpAST(int n) {
+    indent(n); tree("DeclList\n");
     for (Declaration decl : declList)
-      decl.dumpAST(n);
-    indent(n); tree("\n");
+      decl.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {

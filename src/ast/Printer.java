@@ -2,7 +2,7 @@ package ast;
 import java.io.*;
 
 public class Printer {
-  private static final String indent = "  ";
+  private static final String indent = ".   ";
   private Writer writer;
   public static Printer astWriter;
 

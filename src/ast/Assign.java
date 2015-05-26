@@ -17,12 +17,11 @@ public class Assign extends Node {
   }
 
   public void dumpAST(int n) {
-    if (idx == null) {
-      indent(n); tree(id + " = "); val.dumpAST(0);
-    }
-    else {
-      indent(n); tree(id + "["); idx.dumpAST(0); tree("] = "); val.dumpAST(0);
-    }
+    indent(n); tree("Assign\n");
+    indent(n+1); tree(id + "\n");
+    if (idx != null)
+      idx.dumpAST(n+1);
+    val.dumpAST(n+1);
   }
 
   public void compile(Scope scope) {
