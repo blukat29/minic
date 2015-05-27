@@ -9,7 +9,7 @@ public class AssignStmt extends Stmt {
   public void dumpAST(int n) {
     assign.dumpAST(n);
   }
-  public void compile(Scope scope) {
-    assign.compile(scope);
+  public void analyse(Scope scope) {
+    assign.analyse(scope);
   }
 }

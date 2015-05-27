@@ -24,7 +24,7 @@ public class Assign extends Node {
     val.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
 
     Symbol destSymbol = SymbolTable.lookup(scope, id);
     if (destSymbol == null) {
@@ -40,13 +40,13 @@ public class Assign extends Node {
       return;
     }
     if (idx != null) {
-      idx.compile(scope);
+      idx.analyse(scope);
       if (idx.ty == null || !idx.ty.equals(new TypeInfo(TypeInfo.INT))) {
         error(String.format("Array index must be integer.", idx));
         return;
       }
     }
-    val.compile(scope);
+    val.analyse(scope);
     if (val.isArray) {
       error("Cannot assign an array.", val);
       return;
@@ -57,7 +57,7 @@ public class Assign extends Node {
       if (!lhsTy.equals(rhsTy)) {
         warn(String.format("Implicitly casting %s to %s", rhsTy, lhsTy), this);
         val = new TypeCast(lhsTy, val);
-        val.compile(scope);
+        val.analyse(scope);
       }
     }
   }

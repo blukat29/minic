@@ -16,8 +16,8 @@ public class SwitchStmt extends Stmt {
     caseList.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
-    value.compile(scope);
+  public void analyse(Scope scope) {
+    value.analyse(scope);
     if (value.ty == null) return;
     if (value.isArray) {
       error("An array cannot be value", value);
@@ -27,8 +27,8 @@ public class SwitchStmt extends Stmt {
     if (!value.ty.equals(intTy)) {
       warn("Implicitly casting float to int", value);
       value = new TypeCast(intTy, value);
-      value.compile(scope);
+      value.analyse(scope);
     }
-    caseList.compile(scope);
+    caseList.analyse(scope);
   }
 }

@@ -25,9 +25,9 @@ public class WhileStmt extends Stmt {
     }
   }
 
-  public void compile(Scope scope) {
-    cond.compile(scope);
-    body.compile(scope);
+  public void analyse(Scope scope) {
+    cond.analyse(scope);
+    body.analyse(scope);
     if (cond.isArray) {
       error("An array cannot be boolean", cond);
       return;

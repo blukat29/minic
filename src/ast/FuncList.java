@@ -18,8 +18,8 @@ public class FuncList extends Node {
     }
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     for (Function func : funcList)
-      func.compile(scope);
+      func.analyse(scope);
   }
 }

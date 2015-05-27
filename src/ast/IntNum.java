@@ -16,7 +16,7 @@ public class IntNum extends Expr {
   public void dumpAST(int n) {
     indent(n); tree("INT:" + value + "\n");
   }
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     this.ty = new TypeInfo(TypeInfo.INT);
   }
   public String toString() {

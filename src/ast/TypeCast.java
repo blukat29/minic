@@ -15,7 +15,7 @@ public class TypeCast extends Expr {
     body.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     this.ty = destTy;
   }
 }

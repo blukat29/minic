@@ -6,6 +6,6 @@ public class EmptyStmt extends Stmt {
   }
   public void dumpAST(int n) {
   }
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
   }
 }

@@ -20,19 +20,19 @@ public class CompoundStmt extends Stmt {
     stmtList.dumpAST(n + 1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     scope.push(this);
     if (declList != null)
-      declList.compile(scope);
-    stmtList.compile(scope);
+      declList.analyse(scope);
+    stmtList.analyse(scope);
     this.hasReturned = stmtList.hasReturned;
     scope.pop();
   }
 
-  public void compileFunctionBlock(Scope scope) {
+  public void analyseFunctionBlock(Scope scope) {
     if (declList != null)
-      declList.compile(scope);
-    stmtList.compile(scope);
+      declList.analyse(scope);
+    stmtList.analyse(scope);
     this.hasReturned = stmtList.hasReturned;
   }
 }

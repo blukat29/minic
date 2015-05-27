@@ -17,7 +17,7 @@ public class ArrayIndexExpr extends Expr {
     idx.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     Symbol destSymbol = SymbolTable.lookup(scope, id);
     if (destSymbol == null) {
       error(String.format("variable '%s' is not defined.", id));
@@ -27,7 +27,7 @@ public class ArrayIndexExpr extends Expr {
       error(String.format("variable '%s' is not an array.", id));
       return;
     }
-    idx.compile(scope);
+    idx.analyse(scope);
     this.ty = destSymbol.getType();
   }
 }

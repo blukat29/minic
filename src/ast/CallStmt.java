@@ -9,7 +9,7 @@ public class CallStmt extends Stmt {
   public void dumpAST(int n) {
     call.dumpAST(n);
   }
-  public void compile(Scope scope) {
-    call.compile(scope);
+  public void analyse(Scope scope) {
+    call.analyse(scope);
   }
 }

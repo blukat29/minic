@@ -18,7 +18,7 @@ public class DefaultBlock extends Node {
     }
   }
 
-  public void compile(Scope scope) {
-    stmtList.compile(scope);
+  public void analyse(Scope scope) {
+    stmtList.analyse(scope);
   }
 }

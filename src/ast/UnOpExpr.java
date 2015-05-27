@@ -15,8 +15,8 @@ public class UnOpExpr extends Expr {
     r.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
-    r.compile(scope);
+  public void analyse(Scope scope) {
+    r.analyse(scope);
     if (r.isArray) {
       error("Cannot operate on array", r);
       return;

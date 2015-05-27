@@ -23,7 +23,7 @@ public class CallExpr extends Expr {
     }
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     Function func = SymbolTable.lookupFunction(id);
     if (func == null) {
       error(String.format("function '%s' is not defined.", id));
@@ -45,7 +45,7 @@ public class CallExpr extends Expr {
 
     if (args != null) {
       for (Expr expr : args) {
-        expr.compile(scope);
+        expr.analyse(scope);
       }
 
       List<TypeInfo> tyList = params.getTyList();
@@ -62,7 +62,7 @@ public class CallExpr extends Expr {
         if (!expr.ty.equals(paramTy)) {
           warn(String.format("Implicitly casting %s to %s", expr.ty, paramTy), expr);
           expr = new TypeCast(paramTy, expr);
-          expr.compile(scope);
+          expr.analyse(scope);
         }
       }
     }

@@ -20,9 +20,9 @@ public class StmtList extends Node {
       stmt.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     for (Stmt stmt : stmtList) {
-      stmt.compile(scope);
+      stmt.analyse(scope);
       if (stmt.hasReturned)
         this.hasReturned = true;
     }

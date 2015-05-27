@@ -25,11 +25,11 @@ public class Program extends Node {
       funcList.dumpAST(n);
   }
 
-  public void compile() {
+  public void analyse() {
     Scope scope = new Scope();
     if (declList != null)
-      declList.compile(scope);
+      declList.analyse(scope);
     if (funcList != null)
-      funcList.compile(scope);
+      funcList.analyse(scope);
   }
 }

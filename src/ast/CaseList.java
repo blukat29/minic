@@ -21,10 +21,10 @@ public class CaseList extends Node {
       defaultBlock.dumpAST(n);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     for (CaseBlock caseBlock : caseBlocks)
-      caseBlock.compile(scope);
+      caseBlock.analyse(scope);
     if (defaultBlock != null)
-      defaultBlock.compile(scope);
+      defaultBlock.analyse(scope);
   }
 }

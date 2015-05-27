@@ -30,8 +30,8 @@ public class Driver
       return;
     }
 
-    /* Compile the AST */
-    program.compile();
+    /* Semantic analysis of the AST */
+    program.analyse();
     int errorCount = program.getErrorCount();
     int warnCount = program.getWarnCount();
     System.out.printf("Compile complete. %d errors, %d warnings.\n", errorCount, warnCount);

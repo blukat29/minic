@@ -17,8 +17,8 @@ public class DeclList extends Node {
       decl.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     for (Declaration decl : declList)
-      decl.compile(scope);
+      decl.analyse(scope);
   }
 }

@@ -27,9 +27,9 @@ public class BinOpExpr extends Expr {
     }
     return false;
   }
-  public void compile(Scope scope) {
-    l.compile(scope);
-    r.compile(scope);
+  public void analyse(Scope scope) {
+    l.analyse(scope);
+    r.analyse(scope);
     if (l.ty == null || r.ty == null) return;
 
     if (l.isArray) {
@@ -50,11 +50,11 @@ public class BinOpExpr extends Expr {
     else {
       if (l.ty.equals(intTy)) {
         l = new TypeCast(floatTy, l);
-        l.compile(scope);
+        l.analyse(scope);
       }
       else {
         r = new TypeCast(floatTy, r);
-        r.compile(scope);
+        r.analyse(scope);
       }
       this.ty = floatTy;
     }

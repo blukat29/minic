@@ -20,8 +20,8 @@ public class CaseBlock extends Node {
     }
   }
 
-  public void compile(Scope scope) {
-    num.compile(scope);
-    stmtList.compile(scope);
+  public void analyse(Scope scope) {
+    num.analyse(scope);
+    stmtList.analyse(scope);
   }
 }

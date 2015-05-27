@@ -16,7 +16,7 @@ public class IdExpr extends Expr {
     indent(n); tree("ID:" + name + "\n");
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     Symbol destSymbol = SymbolTable.lookup(scope, name);
     if (destSymbol == null) {
       error(String.format("variable '%s' is not defined.", name));

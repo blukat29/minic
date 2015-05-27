@@ -23,11 +23,11 @@ public class IfStmt extends Stmt {
       elseStmt.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
-    cond.compile(scope);
-    thenStmt.compile(scope);
+  public void analyse(Scope scope) {
+    cond.analyse(scope);
+    thenStmt.analyse(scope);
     if (elseStmt != null)
-      elseStmt.compile(scope);
+      elseStmt.analyse(scope);
     if (cond.isArray) {
       error("An array cannot be boolean", cond);
       return;

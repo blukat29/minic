@@ -17,9 +17,9 @@ public class RetStmt extends Stmt {
       expr.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     if (expr != null)
-      expr.compile(scope);
+      expr.analyse(scope);
     else
       return;
     if (expr.isArray) {
@@ -31,7 +31,7 @@ public class RetStmt extends Stmt {
     if (!expr.ty.equals(retTy)) {
       warn(String.format("Implicitly casting %s to %s", expr.ty, retTy), expr);
       expr = new TypeCast(retTy, expr);
-      expr.compile(scope);
+      expr.analyse(scope);
     }
     hasReturned = true;
   }

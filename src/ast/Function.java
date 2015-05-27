@@ -38,7 +38,7 @@ public class Function extends Node {
     body.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
 
     if (SymbolTable.lookupFunction(name) != null) {
       error(String.format("function '%s' is already defined.", name));
@@ -48,8 +48,8 @@ public class Function extends Node {
 
     scope.push(this);
     if (params != null)
-      params.compile(scope);
-    body.compileFunctionBlock(scope);
+      params.analyse(scope);
+    body.analyseFunctionBlock(scope);
     scope.pop();
     if (!body.hasReturned) {
       error(String.format("Function '%s' did not return a value", name), this);

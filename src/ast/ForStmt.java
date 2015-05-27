@@ -22,11 +22,11 @@ public class ForStmt extends Stmt {
     body.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
-    init.compile(scope);
-    cond.compile(scope);
-    incr.compile(scope);
-    body.compile(scope);
+  public void analyse(Scope scope) {
+    init.analyse(scope);
+    cond.analyse(scope);
+    incr.analyse(scope);
+    body.analyse(scope);
     if (cond.isArray) {
       error("An array cannot be boolean", cond);
       return;

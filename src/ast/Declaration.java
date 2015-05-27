@@ -18,7 +18,7 @@ public class Declaration extends Node {
       id.dumpAST(n+1);
   }
 
-  public void compile(Scope scope) {
+  public void analyse(Scope scope) {
     for (Identifier id : identList) {
       Symbol symbol = id.toSymbol(scope, ty, false);
       if (SymbolTable.lookupInSameScope(scope, id.getName()) != null) {
