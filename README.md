@@ -4,6 +4,8 @@ Mini-C compiler
 KAIST CS420 Compiler Design 2015 Spring
 20130598 Jeong Yunjong
 
+## How to use
+
 ### Requirements
 - java
 - javac
@@ -29,7 +31,8 @@ make test
 - JFlex
 - CUP
 
-### Semantic checks
+## Semantic checks
+
 These are considered errors:
 - Using undeclared variable.
 - Declaring variables of the same name in the same scope.
@@ -46,4 +49,47 @@ These generate warnings:
 - Arithmetic / comparison operations between expressions of different types.
 
 Note that the result of comparison (>, <, >=, <=, ==, !=) is int type.
+
+## Code generation
+
+This compiler generates assembly code for T-machine.
+
+### Registers and memory
+
+The machine will have SP(stack pointer), FP(frame pointer), VR(virtual registers), MEM(Main memory)
+SP always points to the top element of the stack.
+FP always points to the part of stack that has old_fp.
+There are infinite number of virtual registers.
+The main memory has global variables and stack.
+
+```
+Mem[0]            initial SP
+v                     v
+[  Global variables  ][  Runtime stack ...
+```
+
+### Call convention
+
+All registers are caller-save. Callers must save their registers for local variables themselves.
+Arguments are pushed into stack, from right to left. Then the return address (label) is pushed.
+The caller clears all the stack.
+Return value is passed via register VR(0).
+
+### Stack structure
+
+The stack is used for passing arguments and storing return addresses.
+Local variables are not stored in stack because we have infinite virtual registers.
+The stack grows upward (low address to high address)
+
+```
+; Low address
+saved_regs
+param2
+param1
+retn_addr
+old_fp     <-- FP
+saved_regs
+param1     <-- SP
+; High address
+```
 
