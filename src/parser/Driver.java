@@ -8,7 +8,7 @@ import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 public class Driver
 {
-  private static void run(InputStream source, Writer treeWriter, Writer tableWriter)
+  private static boolean run(InputStream source, Writer treeWriter, Writer tableWriter, Writer codeWriter)
   {
     SourceManager sm = new SourceManager(source);
     Pos.setSourceManager(sm);
@@ -27,7 +27,7 @@ public class Driver
     catch (Exception e) {
       System.err.println("Parse error: " + e.getMessage());
       e.printStackTrace();
-      return;
+      return false;
     }
 
     /* Semantic analysis of the AST */
@@ -36,11 +36,18 @@ public class Driver
     int warnCount = program.getWarnCount();
     System.out.printf("Compile complete. %d errors, %d warnings.\n", errorCount, warnCount);
 
-    /* Print AST representation and dump symbol table. */
     if (errorCount == 0) {
+      /* Print AST representation and dump symbol table. */
       Printer.setASTWriter(treeWriter);
       program.dumpAST(0);
       SymbolTable.getInstance().dumpTable(tableWriter);
+      /* Generate assembly code */
+      Printer.setCodeWriter(codeWriter);
+      program.codegen();
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
@@ -53,12 +60,17 @@ public class Driver
       source = System.in;
     Writer treeWriter = new BufferedWriter(new FileWriter("tree.txt"));
     Writer tableWriter = new BufferedWriter(new FileWriter("table.txt"));
+    Writer codeWriter = new BufferedWriter(new FileWriter("code.T"));
 
-    run(source, treeWriter, tableWriter);
+    boolean success = run(source, treeWriter, tableWriter, codeWriter);
 
     if (args.length > 0)
       source.close();
     treeWriter.close();
     tableWriter.close();
+    codeWriter.close();
+
+    if (success) System.exit(0);
+    else System.exit(1);
   }
 }

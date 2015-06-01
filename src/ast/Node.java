@@ -20,6 +20,9 @@ abstract public class Node {
   protected void indent(int n) {
     Printer.astWriter.indent(n);
   }
+  protected void code(String s) {
+    Printer.codeWriter.write(s + "\n");
+  }
   protected void error(String s) {
     System.err.println(String.format("error at %s: %s", this.pos, s));
     pos.showSource();

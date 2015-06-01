@@ -5,6 +5,7 @@ public class Printer {
   private static final String indent = ".   ";
   private Writer writer;
   public static Printer astWriter;
+  public static Printer codeWriter;
 
   public Printer(Writer writer) {
     this.writer = writer;
@@ -12,6 +13,10 @@ public class Printer {
 
   public static void setASTWriter(Writer writer) {
     astWriter = new Printer(writer);
+  }
+
+  public static void setCodeWriter(Writer writer) {
+    codeWriter = new Printer(writer);
   }
 
   public void write(String s) {

@@ -32,4 +32,17 @@ public class Program extends Node {
     if (funcList != null)
       funcList.analyse(scope);
   }
+
+  public void codegen() {
+    code("AREA SP");
+    code("AREA FP");
+    code("AREA VR");
+    code("AREA MEM");
+    code("\n\n");
+    code("LAB START");
+
+    code("WRITE \"Hello world!\"");
+
+    code("LAB END");
+  }
 }

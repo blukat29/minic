@@ -56,5 +56,5 @@ test:
 	tests/run.py
 
 clean:
-	rm -rf bin/ tree.txt table.txt
+	rm -rf bin/ tree.txt table.txt code.T
 
