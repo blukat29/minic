@@ -26,6 +26,15 @@ public class Declaration extends Node {
       }
       else {
         SymbolTable.addSymbol(symbol);
+        if (scope.getFunction() == null) { /* Global scope. */
+          int offset = scope.nextGlobalOffset(id.getSize());
+          symbol.setOffset(offset);
+        }
+        else {
+          Function func = scope.getFunction();
+          int offset = func.nextStackOffset(id.getSize());
+          symbol.setOffset(offset);
+        }
       }
     }
   }

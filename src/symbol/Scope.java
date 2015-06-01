@@ -26,7 +26,8 @@ class ScopeLevel {
 
 public class Scope {
   Stack<ScopeLevel> stack;
-  Function func;
+  Function func = null;
+  private int globalSize = 0;
 
   public Scope() {
     stack = new Stack<ScopeLevel>();
@@ -46,6 +47,12 @@ public class Scope {
 
   public Function getFunction() {
     return func;
+  }
+
+  public int nextGlobalOffset(int size) {
+    int result = globalSize;
+    globalSize += size;
+    return result;
   }
 
   public boolean isEmpty() {

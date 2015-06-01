@@ -21,6 +21,12 @@ public class Identifier extends Node {
   public boolean isArray() {
     return isArray;
   }
+  public int getSize() {
+    if (isArray)
+      return n.getValue();
+    else
+      return 1;
+  }
 
   public void dumpAST(int n) {
     indent(n); tree(id);

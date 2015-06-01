@@ -6,6 +6,7 @@ public class Function extends Node {
   private String name;
   private ParamList params;
   private CompoundStmt body;
+  private int stackSize = 1; /* Initially it has old FP. */
 
   public Function(Pos pos, TypeInfo retTy, String name, CompoundStmt body) {
     this(pos, retTy, name, null, body);
@@ -25,6 +26,12 @@ public class Function extends Node {
   }
   public ParamList getParams() {
     return params;
+  }
+
+  public int nextStackOffset(int size) {
+    int result = stackSize;
+    stackSize += size;
+    return result;
   }
 
   public void dumpAST(int n) {

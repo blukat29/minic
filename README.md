@@ -77,18 +77,20 @@ Return value is passed via register VR(0).
 
 ### Stack structure
 
-The stack is used for passing arguments and storing return addresses.
-Local variables are not stored in stack because we have infinite virtual registers.
+The stack is used for passing arguments and storing return addresses and local variables.
+Local variable addresses are assigned at semantic analysis time.
 The stack grows upward (low address to high address)
 
 ```
 ; Low address
-saved_regs
-param2
-param1
-retn_addr
+param2         FP-3
+param1         FP-2
+retn_addr      FP-1
 old_fp     <-- FP
-saved_regs
+local_vars     FP+ofs
+saved_regs     stored via push/pop
+param3
+param2
 param1     <-- SP
 ; High address
 ```
