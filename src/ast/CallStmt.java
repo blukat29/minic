@@ -12,4 +12,7 @@ public class CallStmt extends Stmt {
   public void analyse(Scope scope) {
     call.analyse(scope);
   }
+  public void codegen() {
+    code("// CallStmt, not implemented");
+  }
 }

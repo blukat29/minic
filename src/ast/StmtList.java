@@ -27,4 +27,9 @@ public class StmtList extends Node {
         this.hasReturned = true;
     }
   }
+
+  public void codegen() {
+    for (Stmt stmt : stmtList)
+      stmt.codegen();
+  }
 }

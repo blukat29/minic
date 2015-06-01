@@ -12,4 +12,7 @@ public class AssignStmt extends Stmt {
   public void analyse(Scope scope) {
     assign.analyse(scope);
   }
+  public void codegen() {
+    assign.codegen();
+  }
 }

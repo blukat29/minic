@@ -32,4 +32,8 @@ public class ForStmt extends Stmt {
       return;
     }
   }
+
+  public void codegen() {
+    code("// ForStmt not impl.");
+  }
 }

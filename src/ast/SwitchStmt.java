@@ -31,4 +31,8 @@ public class SwitchStmt extends Stmt {
     }
     caseList.analyse(scope);
   }
+
+  public void codegen() {
+    code("// SwitchStmt");
+  }
 }

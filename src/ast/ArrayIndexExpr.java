@@ -30,4 +30,8 @@ public class ArrayIndexExpr extends Expr {
     idx.analyse(scope);
     this.ty = destSymbol.getType();
   }
+
+  public void codegen() {
+    code("// ArrayIndexExpr");
+  }
 }

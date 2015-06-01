@@ -35,4 +35,8 @@ public class RetStmt extends Stmt {
     }
     hasReturned = true;
   }
+
+  public void codegen() {
+    code("// RetStmt");
+  }
 }

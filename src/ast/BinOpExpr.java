@@ -61,5 +61,9 @@ public class BinOpExpr extends Expr {
     if (isCompare())
       this.ty = intTy;
   }
+
+  public void codegen() {
+    code("// BinOpExpr");
+  }
 }
 

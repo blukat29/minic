@@ -8,4 +8,6 @@ public class EmptyStmt extends Stmt {
   }
   public void analyse(Scope scope) {
   }
+  public void codegen() {
+  }
 }

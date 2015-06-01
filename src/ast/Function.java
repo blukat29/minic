@@ -78,6 +78,8 @@ public class Function extends Node {
     /* Move stack pointer for stack size. */
     code(String.format("ADD SP@ %d SP", this.stackSize));
 
+    body.codegen();
+
     /* Clear local variables in the stack. */
     code(String.format("SUB SP@ %d SP", this.stackSize));
 

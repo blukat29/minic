@@ -68,4 +68,8 @@ public class CallExpr extends Expr {
     }
     this.ty = func.getRetTy();
   }
+
+  public void codegen() {
+    code("// CallExpr");
+  }
 }

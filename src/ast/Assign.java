@@ -5,6 +5,7 @@ public class Assign extends Node {
   private String id;
   private Expr idx;
   private Expr val;
+  Symbol symbol;
 
   public Assign(Pos pos, String id, Expr val) {
     this(pos, id, null, val);
@@ -60,5 +61,10 @@ public class Assign extends Node {
         val.analyse(scope);
       }
     }
+    this.symbol = destSymbol;
+  }
+
+  public void codegen() {
+    code(String.format("// assign local var @%d", symbol.getOffset()));
   }
 }

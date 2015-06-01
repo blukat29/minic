@@ -33,4 +33,8 @@ public class WhileStmt extends Stmt {
       return;
     }
   }
+
+  public void codegen() {
+    code("// WhileStmt");
+  }
 }

@@ -18,4 +18,8 @@ public class TypeCast extends Expr {
   public void analyse(Scope scope) {
     this.ty = destTy;
   }
+
+  public void codegen() {
+    code("// typecast");
+  }
 }

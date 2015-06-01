@@ -37,4 +37,8 @@ public class IfStmt extends Stmt {
     if (elseStmt != null && thenStmt.hasReturned && elseStmt.hasReturned)
       this.hasReturned = true;
   }
+
+  public void codegen() {
+    code("// IfStmt");
+  }
 }

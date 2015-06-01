@@ -35,4 +35,8 @@ public class CompoundStmt extends Stmt {
     stmtList.analyse(scope);
     this.hasReturned = stmtList.hasReturned;
   }
+
+  public void codegen() {
+    stmtList.codegen();
+  }
 }

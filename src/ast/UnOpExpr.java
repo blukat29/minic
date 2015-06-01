@@ -23,4 +23,8 @@ public class UnOpExpr extends Expr {
     }
     this.ty = r.ty;
   }
+
+  public void codegen() {
+    code("// UnOpExpr");
+  }
 }
