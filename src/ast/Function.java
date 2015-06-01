@@ -67,4 +67,26 @@ public class Function extends Node {
   public String toString() {
     return name;
   }
+
+  public void codegen() {
+    code("\n// function " + name);
+
+    /* Save old FP. */
+    code("MOVE FP@ MEM(SP@)");
+    code("ADD SP@ 1 SP");
+
+    /* Move stack pointer for stack size. */
+    code(String.format("ADD SP@ %d SP", this.stackSize));
+
+    /* Clear local variables in the stack. */
+    code(String.format("SUB SP@ %d SP", this.stackSize));
+
+    /* Restore old FP. */
+    code("SUB SP@ 1 SP");
+    code("MOVE MEM(SP@)@ FP");
+
+    /* Pop return address and jump there. */
+    code("SUB SP@ 1 SP");
+    code("JMP MEM(SP@)@");
+  }
 }

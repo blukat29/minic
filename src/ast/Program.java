@@ -4,6 +4,8 @@ import symbol.*;
 public class Program extends Node {
   private DeclList declList;
   private FuncList funcList;
+  private Scope scope;
+
   public Program() {
     this(null, null);
   }
@@ -26,23 +28,34 @@ public class Program extends Node {
   }
 
   public void analyse() {
-    Scope scope = new Scope();
+    this.scope = new Scope();
     if (declList != null)
-      declList.analyse(scope);
+      declList.analyse(this.scope);
     if (funcList != null)
-      funcList.analyse(scope);
+      funcList.analyse(this.scope);
   }
 
   public void codegen() {
     code("AREA SP");
     code("AREA FP");
     code("AREA VR");
-    code("AREA MEM");
-    code("\n\n");
+    code("AREA MEM\n");
     code("LAB START");
+
+    /* Set initial SP and FP. */
+    code(String.format("MOVE %d SP", this.scope.nextGlobalOffset(0) + 1));
+    code("MOVE 0 FP");
+
+    /* Push final return address. */
+    code("MOVE EXIT MEM(SP@)");
+    code("ADD SP@ 1 SP");
 
     code("WRITE \"Hello world!\"");
 
+    funcList.codegen();
+
+    code("\nLAB EXIT");
+    code("WRITE \"Bye world!\"");
     code("LAB END");
   }
 }

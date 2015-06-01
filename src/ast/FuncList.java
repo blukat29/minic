@@ -22,4 +22,9 @@ public class FuncList extends Node {
     for (Function func : funcList)
       func.analyse(scope);
   }
+
+  public void codegen() {
+    for (Function func : funcList)
+      func.codegen();
+  }
 }
