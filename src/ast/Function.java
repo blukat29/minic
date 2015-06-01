@@ -81,6 +81,10 @@ public class Function extends Node {
     resetReg();
     body.codegen();
 
+    codegenReturn();
+  }
+
+  public void codegenReturn() {
     /* Clear local variables in the stack. */
     code(String.format("SUB SP@ %d SP", this.stackSize + 1));
 

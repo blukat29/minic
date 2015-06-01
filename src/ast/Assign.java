@@ -65,6 +65,7 @@ public class Assign extends Node {
   }
 
   public void codegen() {
+    code("//      Assign");
     String dst;
     int offset = symbol.getOffset();
     if (idx != null) {

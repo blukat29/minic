@@ -3,6 +3,7 @@ import symbol.*;
 
 public class RetStmt extends Stmt {
   private Expr expr;
+  private Function func;
 
   public RetStmt() {
     this(null);
@@ -34,9 +35,14 @@ public class RetStmt extends Stmt {
       expr.analyse(scope);
     }
     hasReturned = true;
+    this.func = scope.getFunction();
   }
 
   public void codegen() {
-    code("// RetStmt");
+    if (expr != null) {
+      expr.codegen();
+      code("// return");
+      code(String.format("MOVE VR(%d)@ VR(0)", expr.reg));
+    }
   }
 }
