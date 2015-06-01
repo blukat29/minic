@@ -71,20 +71,20 @@ public class Function extends Node {
   public void codegen() {
     code("\n// function " + name);
 
-    /* Save old FP. */
+    /* Save old FP and change FP. */
     code("MOVE FP@ MEM(SP@)");
-    code("ADD SP@ 1 SP");
+    code("MOVE SP@ FP");
 
     /* Move stack pointer for stack size. */
-    code(String.format("ADD SP@ %d SP", this.stackSize));
+    code(String.format("ADD SP@ %d SP", this.stackSize + 1));
 
+    resetReg();
     body.codegen();
 
     /* Clear local variables in the stack. */
-    code(String.format("SUB SP@ %d SP", this.stackSize));
+    code(String.format("SUB SP@ %d SP", this.stackSize + 1));
 
     /* Restore old FP. */
-    code("SUB SP@ 1 SP");
     code("MOVE MEM(SP@)@ FP");
 
     /* Pop return address and jump there. */

@@ -16,4 +16,8 @@ public class FloatNum extends Expr {
   public void analyse(Scope scope) {
     this.ty = new TypeInfo(TypeInfo.FLOAT);
   }
+  public void codegen() {
+    this.reg = nextReg();
+    code(String.format("MOVE %d VR(%d)", value, reg));
+  }
 }

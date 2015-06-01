@@ -4,6 +4,7 @@ abstract public class Node {
   private Pos pos;
   private static int errorCount = 0;
   private static int warnCount = 0;
+  private static int nextReg = 0;
 
   protected Node() {
     this(new Pos());
@@ -43,5 +44,13 @@ abstract public class Node {
   }
   public static int getWarnCount() {
     return warnCount;
+  }
+
+  public static int nextReg() {
+    nextReg ++;
+    return nextReg;
+  }
+  public static void resetReg() {
+    nextReg = 0;
   }
 }

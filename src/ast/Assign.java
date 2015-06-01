@@ -65,6 +65,19 @@ public class Assign extends Node {
   }
 
   public void codegen() {
-    code(String.format("// assign local var @%d", symbol.getOffset()));
+    String dst;
+    int offset = symbol.getOffset();
+    if (idx != null) {
+      idx.codegen();
+      // dst = idx + FP + offset
+      code(String.format("ADD VR(%d)@ FP@ VR(%d)", idx.reg, idx.reg));
+      dst = String.format("MEM(VR(%d)@(%d))", idx.reg, offset);
+    }
+    else {
+      // dst = FP + offset
+      dst = String.format("MEM(FP@(%d))", offset);
+    }
+    val.codegen();
+    code(String.format("MOVE VR(%d)@ %s", val.reg, dst));
   }
 }

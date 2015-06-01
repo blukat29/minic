@@ -22,4 +22,8 @@ public class IntNum extends Expr {
   public String toString() {
     return Integer.toString(value);
   }
+  public void codegen() {
+    this.reg = nextReg();
+    code(String.format("MOVE %d VR(%d)", value, reg));
+  }
 }
