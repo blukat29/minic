@@ -56,6 +56,7 @@ public class Program extends Node {
 
     code("\nLAB EXIT");
     code("WRITE \"Bye world!\"");
+    code("WRITE VR(0)@");
     code("LAB END");
   }
 }

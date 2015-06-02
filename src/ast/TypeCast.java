@@ -20,6 +20,11 @@ public class TypeCast extends Expr {
   }
 
   public void codegen() {
-    code("// typecast");
+    body.codegen();
+    if (destTy.equals(new TypeInfo(TypeInfo.INT)))
+      code(String.format("F2I VR(%d)@ VR(%d)", body.reg, body.reg));
+    else
+      code(String.format("I2F VR(%d)@ VR(%d)", body.reg, body.reg));
+    this.reg = body.reg;
   }
 }

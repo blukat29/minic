@@ -18,6 +18,6 @@ public class FloatNum extends Expr {
   }
   public void codegen() {
     this.reg = nextReg();
-    code(String.format("MOVE %d VR(%d)", value, reg));
+    code(String.format("MOVE %f VR(%d)", value, reg));
   }
 }
