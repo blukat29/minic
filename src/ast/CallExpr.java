@@ -5,6 +5,8 @@ import symbol.*;
 public class CallExpr extends Expr {
   private String id;
   private List<Expr> args;
+  private Function func;
+  private static int nextLabel = 0;
 
   public CallExpr(Pos pos, String id) {
     this(pos, id, null);
@@ -24,7 +26,7 @@ public class CallExpr extends Expr {
   }
 
   public void analyse(Scope scope) {
-    Function func = SymbolTable.lookupFunction(id);
+    this.func = SymbolTable.lookupFunction(id);
     if (func == null) {
       error(String.format("function '%s' is not defined.", id));
       return;
@@ -71,5 +73,21 @@ public class CallExpr extends Expr {
 
   public void codegen() {
     code("// CallExpr");
+    if (args != null) {
+      for (Expr expr : args) {
+        expr.codegen();
+        code(String.format("MOVE VR(%d)@ MEM(SP@)", expr.reg));
+        code("ADD SP@ 1 SP");
+      }
+    }
+
+    String label = "call_" + (++nextLabel);
+    code(String.format("MOVE %s MEM(SP@)", label));
+    code("ADD SP@ 1 SP");
+    code("JMP function_" + func.getName());
+    code("LAB " + label);
+    if (args != null) {
+      code(String.format("SUB SP@ %d SP", args.size()));
+    }
   }
 }

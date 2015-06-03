@@ -70,6 +70,7 @@ public class Function extends Node {
 
   public void codegen() {
     code("\n// function " + name);
+    code("LAB function_" + name);
 
     /* Save old FP and change FP. */
     code("MOVE FP@ MEM(SP@)");

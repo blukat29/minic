@@ -52,6 +52,8 @@ public class Program extends Node {
 
     code("WRITE \"Hello world!\"");
 
+    code("JMP function_main");
+
     funcList.codegen();
 
     code("\nLAB EXIT");
