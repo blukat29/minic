@@ -4,7 +4,7 @@ import symbol.*;
 abstract public class Expr extends Node {
   protected TypeInfo ty = null;
   protected boolean isArray = false;
-  protected int reg;
+  protected int reg = -9999999; // for debugging.
   public Expr() {
   }
   public Expr(Pos pos) {

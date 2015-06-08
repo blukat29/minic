@@ -13,5 +13,5 @@ int main()
   int s, x;
   s = add (1, 2);
   x = one();
-  return 0;
+  return s * 10 + x;
 }

@@ -4,6 +4,7 @@ import symbol.*;
 public class ArrayIndexExpr extends Expr {
   private String id;
   private Expr idx;
+  private Symbol symbol;
 
   public ArrayIndexExpr(Pos pos, String id, Expr idx) {
     super(pos);
@@ -28,10 +29,19 @@ public class ArrayIndexExpr extends Expr {
       return;
     }
     idx.analyse(scope);
+    this.symbol = destSymbol;
     this.ty = destSymbol.getType();
   }
 
   public void codegen() {
-    code("// ArrayIndexExpr");
+    // MEM(FP + offset + VR(idxReg))
+    int offset = symbol.getOffset();
+    int addr = nextReg();
+    int dst = nextReg();
+    idx.codegen();
+    code(String.format("ADD FP@ VR(%d)@ VR(%d)", idx.reg, addr));
+    code(String.format("ADD VR(%d)@ %d VR(%d)", addr, offset, addr));
+    code(String.format("MOVE MEM(VR(%d)@)@ VR(%d)", addr, dst));
+    this.reg = dst;
   }
 }

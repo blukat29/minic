@@ -2,7 +2,7 @@ int main()
 {
   int a, c;
   a = 1;
-  c = 100;
+  c = 900;
   switch (c)
   {
     case 100:
