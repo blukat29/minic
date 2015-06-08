@@ -21,4 +21,10 @@ public class DefaultBlock extends Node {
   public void analyse(Scope scope) {
     stmtList.analyse(scope);
   }
+
+  public void codegen(String exitLabel) {
+    stmtList.codegen();
+    if (hasBreak)
+      code("JMP " + exitLabel);
+  }
 }

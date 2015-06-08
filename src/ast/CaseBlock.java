@@ -11,6 +11,9 @@ public class CaseBlock extends Node {
     this.stmtList = stmtList;
     this.hasBreak = hasBreak;
   }
+  public int getValue() {
+    return num.getValue();
+  }
 
   public void dumpAST(int n) {
     indent(n); tree("CaseBlock (" + num + ")\n");
@@ -23,5 +26,11 @@ public class CaseBlock extends Node {
   public void analyse(Scope scope) {
     num.analyse(scope);
     stmtList.analyse(scope);
+  }
+
+  public void codegen(String exitLabel) {
+    stmtList.codegen();
+    if (hasBreak)
+      code("JMP " + exitLabel);
   }
 }
