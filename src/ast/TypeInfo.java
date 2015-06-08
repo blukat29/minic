@@ -2,6 +2,7 @@ package ast;
 public class TypeInfo extends Node {
   public static final int INT = 1;
   public static final int FLOAT = 2;
+  public static final int ANY = 3;
   private int ty;
 
   public TypeInfo(int ty) {
@@ -25,6 +26,9 @@ public class TypeInfo extends Node {
   }
 
   public boolean equals(TypeInfo other) {
-    return this.ty == other.ty;
+    if (this.ty == ANY || other.ty == ANY)
+      return true;
+    else
+      return this.ty == other.ty;
   }
 }

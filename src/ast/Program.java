@@ -5,6 +5,12 @@ public class Program extends Node {
   private DeclList declList;
   private FuncList funcList;
   private Scope scope;
+  private static String library = "" +
+    "LAB function_printf\n" +
+    "WRITE MEM(SP@(-2))@\n" +
+    "MOVE 0 VR(0)\n" +
+    "SUB SP@ 1 SP\n" +
+    "JMP MEM(SP@)@\n";
 
   public Program() {
     this(null, null);
@@ -29,6 +35,18 @@ public class Program extends Node {
 
   public void analyse() {
     this.scope = new Scope();
+
+    ParamList printfParams = (new ParamList()).append(
+        new TypeInfo(TypeInfo.ANY),
+        new Identifier(new Pos(), "printf_var"));
+    Function printf = new Function(
+        new Pos(),
+        new TypeInfo(TypeInfo.INT),
+        "printf",
+        printfParams,
+        null);
+    SymbolTable.addFunction(printf);
+
     if (declList != null)
       declList.analyse(this.scope);
     if (funcList != null)
@@ -40,6 +58,9 @@ public class Program extends Node {
     code("AREA FP");
     code("AREA VR");
     code("AREA MEM\n");
+
+    code(library);
+
     code("LAB START");
 
     /* Set initial SP and FP. */
