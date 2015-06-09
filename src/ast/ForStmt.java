@@ -43,7 +43,7 @@ public class ForStmt extends Stmt {
      *   jump for_start
      * for_end:
      */
-    code("// ForStmt not impl.");
+    code("// ------ ForStmt");
     int labelIdx = ++nextLabel;
 
     init.codegen();

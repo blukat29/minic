@@ -39,10 +39,13 @@ public class RetStmt extends Stmt {
   }
 
   public void codegen() {
+    code("// ------ RetStmt");
+
     if (expr != null) {
       expr.codegen();
-      code("// return");
       code(String.format("MOVE VR(%d)@ VR(0)", expr.reg));
     }
+
+    this.func.codegenReturn();
   }
 }

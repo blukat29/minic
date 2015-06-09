@@ -57,15 +57,14 @@ public class BinOpExpr extends Expr {
         r = new TypeCast(floatTy, r);
         r.analyse(scope);
       }
-      this.isFloat = true;
       this.ty = floatTy;
     }
+    this.isFloat = (this.ty.equals(floatTy));
     if (isCompare())
       this.ty = intTy;
   }
 
   public void codegen() {
-    code("// BinOpExpr(" + op + ")");
     l.codegen();
     r.codegen();
     int lreg = l.reg;

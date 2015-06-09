@@ -44,7 +44,7 @@ public class WhileStmt extends Stmt {
      *   jmp loop_start
      * loop_end:
      */
-    code("// WhileStmt");
+    code("// ------ WhileStmt");
 
     int labelIdx = ++nextLabel;
     if(!isDoWhile)

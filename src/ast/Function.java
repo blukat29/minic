@@ -69,7 +69,7 @@ public class Function extends Node {
   }
 
   public void codegen() {
-    code("\n// function " + name);
+    code("\n\n// ------ Function " + name);
     code("LAB function_" + name);
 
     /* Save old FP and change FP. */
@@ -96,4 +96,5 @@ public class Function extends Node {
     code("SUB SP@ 1 SP");
     code("JMP MEM(SP@)@");
   }
+
 }

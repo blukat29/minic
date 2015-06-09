@@ -13,6 +13,7 @@ public class AssignStmt extends Stmt {
     assign.analyse(scope);
   }
   public void codegen() {
+    code("// ------ AssignStmt");
     assign.codegen();
   }
 }

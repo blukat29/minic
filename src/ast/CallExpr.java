@@ -119,6 +119,7 @@ public class CallExpr extends Expr {
 
   public void codegen() {
 
+    code("// ========== Call " + id);
     if (id.equals("scanf")) {
       this.scanfAssign.codegen();
       return;

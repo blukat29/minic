@@ -33,7 +33,7 @@ public class SwitchStmt extends Stmt {
   }
 
   public void codegen() {
-    code("// SwitchStmt");
+    code("// ------ SwitchStmt");
     value.codegen();
     caseList.codegen(value.reg);
   }

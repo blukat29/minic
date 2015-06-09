@@ -50,6 +50,7 @@ public class IfStmt extends Stmt {
     int labelIdx = ++nextLabel;
     boolean hasElse = (elseStmt != null);
 
+    code("// ------ IfStmt");
     cond.codegen();
     if (hasElse)
       code(String.format("JMPZ VR(%d)@ if_else_%d", cond.reg, labelIdx));

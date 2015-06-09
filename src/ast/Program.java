@@ -86,6 +86,7 @@ public class Program extends Node {
 
     if (funcList != null)
       funcList.codegen();
+    code("\n\n");
     code(printf_minic);
     code(readi_minic);
     code(readf_minic);
