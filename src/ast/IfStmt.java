@@ -5,6 +5,7 @@ public class IfStmt extends Stmt {
   private Expr cond;
   private Stmt thenStmt;
   private Stmt elseStmt;
+  private static int nextLabel = 0;
 
   public IfStmt(Expr c, Stmt t) {
     this(c, t, null);
@@ -39,6 +40,28 @@ public class IfStmt extends Stmt {
   }
 
   public void codegen() {
-    code("// IfStmt");
+    /* if (cond == 0) jmp if_else
+           ThenStmt
+           jmp if_done
+       if_else:
+           ElseStmt
+       if_done:
+     */
+    int labelIdx = ++nextLabel;
+    boolean hasElse = (elseStmt != null);
+
+    cond.codegen();
+    if (hasElse)
+      code(String.format("JMPZ VR(%d)@ if_else_%d", cond.reg, labelIdx));
+    else
+      code(String.format("JMPZ VR(%d)@ if_done_%d", cond.reg, labelIdx));
+
+    thenStmt.codegen();
+    if (hasElse) {
+      code(String.format("JMP if_done_%d", labelIdx));
+      code(String.format("LAB if_else_%d", labelIdx));
+      elseStmt.codegen();
+    }
+    code(String.format("LAB if_done_%d", labelIdx));
   }
 }
