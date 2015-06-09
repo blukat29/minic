@@ -2,6 +2,7 @@ Mini-C compiler
 ===============
 
 KAIST CS420 Compiler Design 2015 Spring
+
 20130598 Jeong Yunjong
 
 ## How to use
@@ -70,10 +71,8 @@ v                     v
 
 ### Call convention
 
-All registers are caller-save. Callers must save their registers for local variables themselves.
 Arguments are pushed into stack, from right to left. Then the return address (label) is pushed.
-The caller clears all the stack.
-Return value is passed via register VR(0).
+The caller clears all the stack. Return value is passed via register VR(0).
 
 ### Stack structure
 
@@ -88,10 +87,16 @@ param1         FP-2
 retn_addr      FP-1
 old_fp     <-- FP
 local_vars     FP+ofs
-saved_regs     stored via push/pop
 param3
 param2
 param1     <-- SP
 ; High address
 ```
+
+## Language features
+
+`printf(int_or_float var)` function prints the content of a variable.
+`scanf(int_or_float var)` function reads an integer or floating point number stores
+at the location of the variable. This is the only call-by-reference call. Because of
+this speciality, scanf is implemented as a language construct, not a library call.
 
