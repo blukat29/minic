@@ -7,6 +7,7 @@ public class CallExpr extends Expr {
   private List<Expr> args;
   private Function func;
   private static int nextLabel = 0;
+  private Assign scanfAssign;
 
   public CallExpr(Pos pos, String id) {
     this(pos, id, null);
@@ -23,9 +24,54 @@ public class CallExpr extends Expr {
       for (Expr arg : args)
         arg.dumpAST(n+1);
     }
+    if (id.equals("scanf"))
+      scanfAssign.dumpAST(n+1);
+  }
+
+  /* scanf is treated specially because it is not a function, but a language construct.
+   * scanf(var) is replaced by an assignment var = readi_minic(); or var = readf_minic();
+   * depending on the type of variable. */
+  private void analyse_scanf(Scope scope) {
+
+    if (args == null || args.size() != 1) {
+      error(String.format("Argument count mismatch - %d expected, %d given.", 1, args.size()), this);
+      return;
+    }
+
+    Expr arg = args.get(0);
+    arg.analyse(scope);
+
+    CallExpr readCall;
+    if (arg.ty.equals(new TypeInfo(TypeInfo.INT)))
+      readCall = new CallExpr(this.pos, "readi_minic");
+    else
+      readCall = new CallExpr(this.pos, "readf_minic");
+
+    if (arg instanceof IdExpr) {
+      IdExpr id = (IdExpr)arg;
+      this.scanfAssign = new Assign(this.pos, id.getName(), readCall);
+      this.scanfAssign.analyse(scope);
+    }
+    else if (arg instanceof ArrayIndexExpr) {
+      ArrayIndexExpr arr = (ArrayIndexExpr)arg;
+      this.scanfAssign = new Assign(this.pos, arr.getId(), arr.getIdx(), readCall);
+      this.scanfAssign.analyse(scope);
+    }
+    else {
+      error("Argument to scanf() must be a variable name or arr[idx].", this);
+      return;
+    }
   }
 
   public void analyse(Scope scope) {
+
+    if (id.equals("scanf")) {
+      analyse_scanf(scope);
+      this.func = SymbolTable.lookupFunction(id);
+      this.ty = func.getRetTy();
+      return;
+    }
+
     this.func = SymbolTable.lookupFunction(id);
     if (func == null) {
       error(String.format("function '%s' is not defined.", id));
@@ -72,7 +118,12 @@ public class CallExpr extends Expr {
   }
 
   public void codegen() {
-    code("// CallExpr");
+
+    if (id.equals("scanf")) {
+      this.scanfAssign.codegen();
+      return;
+    }
+
     if (args != null) {
       for (Expr expr : args) {
         expr.codegen();
@@ -89,5 +140,7 @@ public class CallExpr extends Expr {
     if (args != null) {
       code(String.format("SUB SP@ %d SP", args.size()));
     }
+
+    this.reg = 0;
   }
 }

@@ -1,7 +1,7 @@
 package ast;
 
 abstract public class Node {
-  private Pos pos;
+  protected Pos pos;
   private static int errorCount = 0;
   private static int warnCount = 0;
   private static int nextReg = 0;

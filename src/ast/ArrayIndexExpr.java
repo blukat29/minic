@@ -11,6 +11,12 @@ public class ArrayIndexExpr extends Expr {
     this.id = id;
     this.idx = idx;
   }
+  public String getId() {
+    return this.id;
+  }
+  public Expr getIdx() {
+    return this.idx;
+  }
 
   public void dumpAST(int n) {
     indent(n); tree("ArrayIndexExpr\n");

@@ -5,10 +5,20 @@ public class Program extends Node {
   private DeclList declList;
   private FuncList funcList;
   private Scope scope;
-  private static String library = "" +
+  private static String printf_minic = "" +
     "LAB function_printf\n" +
     "WRITE MEM(SP@(-2))@\n" +
     "MOVE 0 VR(0)\n" +
+    "SUB SP@ 1 SP\n" +
+    "JMP MEM(SP@)@\n";
+  private static String readi_minic = "" +
+    "LAB function_readi_minic\n" +
+    "READI VR(0)\n" +
+    "SUB SP@ 1 SP\n" +
+    "JMP MEM(SP@)@\n";
+  private static String readf_minic = "" +
+    "LAB function_readf_minic\n" +
+    "READF VR(0)\n" +
     "SUB SP@ 1 SP\n" +
     "JMP MEM(SP@)@\n";
 
@@ -36,16 +46,20 @@ public class Program extends Node {
   public void analyse() {
     this.scope = new Scope();
 
-    ParamList printfParams = (new ParamList()).append(
+    ParamList params = (new ParamList()).append(
         new TypeInfo(TypeInfo.ANY),
-        new Identifier(new Pos(), "printf_var"));
-    Function printf = new Function(
-        new Pos(),
-        new TypeInfo(TypeInfo.INT),
-        "printf",
-        printfParams,
-        null);
+        new Identifier(new Pos(), "var"));
+    TypeInfo intTy = new TypeInfo(TypeInfo.INT);
+    TypeInfo floatTy = new TypeInfo(TypeInfo.FLOAT);
+
+    Function printf = new Function(new Pos(), intTy, "printf", params, null);
+    Function scanf = new Function(new Pos(), intTy, "scanf", params, null);
+    Function readi = new Function(new Pos(), intTy, "readi_minic", null);
+    Function readf = new Function(new Pos(), floatTy, "readf_minic", null);
     SymbolTable.addFunction(printf);
+    SymbolTable.addFunction(scanf);
+    SymbolTable.addFunction(readi);
+    SymbolTable.addFunction(readf);
 
     if (declList != null)
       declList.analyse(this.scope);
@@ -59,8 +73,6 @@ public class Program extends Node {
     code("AREA VR");
     code("AREA MEM\n");
 
-    code(library);
-
     code("LAB START");
 
     /* Set initial SP and FP. */
@@ -70,15 +82,15 @@ public class Program extends Node {
     /* Push final return address. */
     code("MOVE EXIT MEM(SP@)");
     code("ADD SP@ 1 SP");
-
-    code("WRITE \"Hello world!\"");
-
     code("JMP function_main");
 
-    funcList.codegen();
+    if (funcList != null)
+      funcList.codegen();
+    code(printf_minic);
+    code(readi_minic);
+    code(readf_minic);
 
     code("\nLAB EXIT");
-    code("WRITE \"Bye world!\"");
     code("WRITE VR(0)@");
     code("LAB END");
   }
