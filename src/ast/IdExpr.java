@@ -35,6 +35,9 @@ public class IdExpr extends Expr {
   public void codegen() {
     int offset = symbol.getOffset();
     this.reg = nextReg();
-    code(String.format("MOVE MEM(FP@(%d))@ VR(%d)", offset, reg));
+    if (symbol.isGlobal())
+      code(String.format("MOVE MEM(%d)@ VR(%d)", offset, reg));
+    else
+      code(String.format("MOVE MEM(FP@(%d))@ VR(%d)", offset, reg));
   }
 }

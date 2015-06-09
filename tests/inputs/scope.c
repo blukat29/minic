@@ -1,4 +1,5 @@
 int x;
+float y[5];
 
 int foo(int a)
 {
@@ -9,13 +10,15 @@ int foo(int a)
     int a;
     a = b;
     x = x + a;
+    y[b] = b / 10.0;
   }
   return a;
 }
 
-int main()
+float main()
 {
-  x = 1;
-  return foo (3);
+  x = 800;
+  foo (30);
+  return x + y[2];
 }
 

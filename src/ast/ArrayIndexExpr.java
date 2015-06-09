@@ -45,9 +45,14 @@ public class ArrayIndexExpr extends Expr {
     int addr = nextReg();
     int dst = nextReg();
     idx.codegen();
-    code(String.format("ADD FP@ VR(%d)@ VR(%d)", idx.reg, addr));
-    code(String.format("ADD VR(%d)@ %d VR(%d)", addr, offset, addr));
-    code(String.format("MOVE MEM(VR(%d)@)@ VR(%d)", addr, dst));
+    if (symbol.isGlobal()) {
+      code(String.format("MOVE MEM(VR(%d)@(%d))@ VR(%d)", idx.reg, offset, dst));
+    }
+    else {
+      code(String.format("ADD FP@ VR(%d)@ VR(%d)", idx.reg, addr));
+      code(String.format("ADD VR(%d)@ %d VR(%d)", addr, offset, addr));
+      code(String.format("MOVE MEM(VR(%d)@)@ VR(%d)", addr, dst));
+    }
     this.reg = dst;
   }
 }

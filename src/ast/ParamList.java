@@ -43,7 +43,7 @@ public class ParamList extends Node {
       else {
         Symbol symbol = id.toSymbol(scope, ty, true);
         SymbolTable.addSymbol(symbol);
-        symbol.setOffset(-2-i); /* FP+0: old FP. FP-1: return address. */
+        symbol.setLocation(false, -2-i); /* FP+0: old FP. FP-1: return address. */
       }
     }
   }

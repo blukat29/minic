@@ -28,12 +28,12 @@ public class Declaration extends Node {
         SymbolTable.addSymbol(symbol);
         if (scope.getFunction() == null) { /* Global scope. */
           int offset = scope.nextGlobalOffset(id.getSize());
-          symbol.setOffset(offset);
+          symbol.setLocation(true, offset);
         }
         else {
           Function func = scope.getFunction();
           int offset = func.nextStackOffset(id.getSize());
-          symbol.setOffset(offset);
+          symbol.setLocation(false, offset);
         }
       }
     }

@@ -7,6 +7,7 @@ public class Symbol {
   private boolean isParam;
   private boolean isArray;
   private int arraySize;
+  private boolean isGlobal;
   private int offset; /* Offset in global memory or local stack */
 
   public Symbol(Scope scope, TypeInfo ty, String name, boolean isParam) {
@@ -23,11 +24,13 @@ public class Symbol {
     this.isArray = isArray;
     this.arraySize = arraySize;
   }
-  public void setOffset(int offset) {
+  public void setLocation(boolean isGlobal, int offset) {
+    this.isGlobal = isGlobal;
     this.offset = offset;
   }
 
   public int getOffset() { return offset; }
+  public boolean isGlobal() { return isGlobal; }
   public Scope getScope() { return scope; }
   public TypeInfo getType() { return ty; }
   public String getName() { return name; }
