@@ -65,24 +65,14 @@ public class Assign extends Node {
   }
 
   public void codegen() {
-
     code("// ========== Assign");
-
     String dst;
-    int offset = symbol.getOffset();
     if (idx != null) {
       idx.codegen();
-      // dst = idx + offset [+ FP]
-      if (!this.symbol.isGlobal())
-        code(String.format("ADD VR(%d)@ FP@ VR(%d)", idx.reg, idx.reg));
-      dst = String.format("MEM(VR(%d)@(%d))", idx.reg, offset);
+      dst = getMemoryAccess(symbol, idx.reg);
     }
     else {
-      // dst = offset [+ FP]
-      if (this.symbol.isGlobal())
-        dst = String.format("MEM(%d)", offset);
-      else
-        dst = String.format("MEM(FP@(%d))", offset);
+      dst = getMemoryAccess(symbol);
     }
     val.codegen();
     code(String.format("MOVE VR(%d)@ %s", val.reg, dst));

@@ -40,19 +40,10 @@ public class ArrayIndexExpr extends Expr {
   }
 
   public void codegen() {
-    // MEM(FP + offset + VR(idxReg))
-    int offset = symbol.getOffset();
-    int addr = nextReg();
     int dst = nextReg();
     idx.codegen();
-    if (symbol.isGlobal()) {
-      code(String.format("MOVE MEM(VR(%d)@(%d))@ VR(%d)", idx.reg, offset, dst));
-    }
-    else {
-      code(String.format("ADD FP@ VR(%d)@ VR(%d)", idx.reg, addr));
-      code(String.format("ADD VR(%d)@ %d VR(%d)", addr, offset, addr));
-      code(String.format("MOVE MEM(VR(%d)@)@ VR(%d)", addr, dst));
-    }
+    String src = getMemoryAccess(this.symbol, idx.reg);
+    code(String.format("MOVE %s@ VR(%d)", src, dst));
     this.reg = dst;
   }
 }

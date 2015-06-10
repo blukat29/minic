@@ -1,4 +1,5 @@
 package ast;
+import symbol.*;
 
 abstract public class Node {
   protected Pos pos;
@@ -52,5 +53,18 @@ abstract public class Node {
   }
   public static void resetReg() {
     nextReg = 0;
+  }
+
+  protected String getMemoryAccess(Symbol symbol) {
+    if (symbol.isGlobal())
+      return String.format("MEM(%d)", symbol.getOffset());
+    else
+      return String.format("MEM(FP@(%d))", symbol.getOffset());
+  }
+  protected String getMemoryAccess(Symbol symbol, int idxReg) {
+    if (!symbol.isGlobal()) {
+      code(String.format("ADD VR(%d)@ FP@ VR(%d)",idxReg, idxReg));
+    }
+    return String.format("MEM(VR(%d)@(%d))", idxReg, symbol.getOffset());
   }
 }
