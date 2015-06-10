@@ -126,7 +126,8 @@ public class CallExpr extends Expr {
     }
 
     if (args != null) {
-      for (Expr expr : args) {
+      for (int i = args.size() - 1; i >= 0; i --) {
+        Expr expr = args.get(i);
         expr.codegen();
         code(String.format("MOVE VR(%d)@ MEM(SP@)", expr.reg));
         code("ADD SP@ 1 SP");

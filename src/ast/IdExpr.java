@@ -33,8 +33,17 @@ public class IdExpr extends Expr {
   }
 
   public void codegen() {
-    this.reg = nextReg();
-    String src = getMemoryAccess(this.symbol);
-    code(String.format("MOVE %s@ VR(%d)", src, this.reg));
+    int dst = nextReg();
+    if (isArray) {
+      if (symbol.isGlobal())
+        code(String.format("MOVE %d VR(%d)", symbol.getOffset(), dst));
+      else
+        code(String.format("ADD FP@ %d VR(%d)", symbol.getOffset(), dst));
+    }
+    else {
+      String src = getMemoryAccess(this.symbol);
+      code(String.format("MOVE %s@ VR(%d)", src, dst));
+    }
+    this.reg = dst;
   }
 }

@@ -63,7 +63,14 @@ abstract public class Node {
   }
   protected String getMemoryAccess(Symbol symbol, int idxReg) {
     if (!symbol.isGlobal()) {
-      code(String.format("ADD VR(%d)@ FP@ VR(%d)",idxReg, idxReg));
+      if (symbol.isParam() && symbol.isArray()) { // MEM[FP + ofs] + idx
+        int addrReg = nextReg();
+        code(String.format("MOVE MEM(FP@(%d))@ VR(%d)", symbol.getOffset(), addrReg));
+        code(String.format("ADD VR(%d)@ VR(%d)@ VR(%d)", addrReg, idxReg, addrReg));
+        return String.format("MEM(VR(%d)@)", addrReg);
+      }
+      else // FP + ofs + idx
+        code(String.format("ADD VR(%d)@ FP@ VR(%d)",idxReg, idxReg));
     }
     return String.format("MEM(VR(%d)@(%d))", idxReg, symbol.getOffset());
   }

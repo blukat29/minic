@@ -31,6 +31,7 @@ public class Symbol {
 
   public int getOffset() { return offset; }
   public boolean isGlobal() { return isGlobal; }
+  public boolean isParam() { return isParam; }
   public Scope getScope() { return scope; }
   public TypeInfo getType() { return ty; }
   public String getName() { return name; }
