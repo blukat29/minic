@@ -13,12 +13,15 @@ tests = open(os.path.join(base_dir, "tests.txt"), "r").read()
 tests = filter(None, tests.split('\n'))
 
 def compile(input_data):
-    os.unlink("code.T")
+    try:
+        os.remove("code.T")
+    except OSError:
+        pass
     p = Popen(["make", "run"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     return p.communicate(input_data)
 
 def check_execution(expected, user_input=None):
-    p = Popen(["./machine/mac-T", "code.T"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    p = Popen(["./machine/run-T", "code.T"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
     out, err = p.communicate(user_input)
 
     result = []
