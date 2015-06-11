@@ -11,7 +11,9 @@ int foo(int a)
     a = b;
     x = x + a;
     y[b] = b / 10.0;
+    printf(a);
   }
+  printf(a);
   return a;
 }
 
@@ -19,6 +21,7 @@ float main()
 {
   x = 800;
   foo (30);
+  printf(x);
   return x + y[2];
 }
 

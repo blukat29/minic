@@ -18,7 +18,7 @@ float var(float a[3]) {
   return s;
 }
 
-int main()
+float main()
 {
   int s, x;
   float a[3];
@@ -27,5 +27,5 @@ int main()
   x = one();
   a[0] = 1.0; a[1] = 2.0; a[2] = 3.0;
   v = var(a);
-  return s * 10 + x + v * 1000;
+  return s * 10 + x + v / 100.0;
 }

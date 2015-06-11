@@ -13,8 +13,27 @@ tests = open(os.path.join(base_dir, "tests.txt"), "r").read()
 tests = filter(None, tests.split('\n'))
 
 def compile(input_data):
-    p = Popen(["make", "run"], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=False)
+    os.unlink("code.T")
+    p = Popen(["make", "run"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     return p.communicate(input_data)
+
+def check_execution(expected, user_input=None):
+    p = Popen(["./machine/mac-T", "code.T"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    out, err = p.communicate(user_input)
+
+    result = []
+    begin = False
+    for line in out.splitlines():
+        if not begin and "//// START" in line:
+            begin = True
+        elif begin and "////" in line:
+            break
+        elif begin and line != "":
+            if "." in line:
+                result.append(int(float(line) * 1000 + 0.5) / 1000.0)
+            else:
+                result.append(int(line))
+    return (expected == result)
 
 def run_single_test(name):
     input_file = open(os.path.join(inputs_dir, name + ".c"), "r")

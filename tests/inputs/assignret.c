@@ -5,5 +5,5 @@ int main()
   x = 3;
   a[2] = 5;
   a[x] = 8;
-  return 7;
+  return a[x-1];
 }

@@ -7,12 +7,14 @@ int main()
   {
     s = s + i;
   }
-  while (i < 20)
+  while (i < 100)
   {
-    i = i + 2;
+    i = i + 20;
+    printf(i);
   }
   do {
-    s = s - 10;
-  } while (s > 0);
-  return s;
+    s = s - 7;
+    printf(s);
+  } while (s > 7);
+  return s + i;
 }

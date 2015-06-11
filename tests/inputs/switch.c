@@ -1,8 +1,6 @@
-int main()
+int test(int c)
 {
-  int a, c;
-  a = 1;
-  c = 900;
+  int a;
   switch (c)
   {
     case 100:
@@ -17,5 +15,18 @@ int main()
     default:
       a = 8;
   }
+  printf(a);
   return a;
+}
+
+int main()
+{
+  test(0);
+  test(100);
+  test(123);
+  test(200);
+  test(300);
+  test(400);
+  test(500);
+  return 0;
 }
